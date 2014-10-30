@@ -28,7 +28,7 @@ public class SimpleDamageAbility extends Ability{
 	public void useAbility(int id, float mouseGameX, float mouseGameY) {
 		Player usingPlayer = Model.model.getPlayer(id);
 		System.out.println("ability used");
-		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(), mouseGameX - usingPlayer.getXPos()));
+		float angle = (float) Math.toDegrees(Math.atan2(usingPlayer.getYPos() - mouseGameY ,mouseGameX - usingPlayer.getXPos()  ));
 		
 		SpellAreaOfEffect spell = new SpellAreaOfEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), new Circle(usingPlayer.getXPos(),usingPlayer.getYPos(), 10) , TextureHandler.getInstance().getImageByName("fireball.png"), true);
 		spell.setVectorByDegree(60, angle);
