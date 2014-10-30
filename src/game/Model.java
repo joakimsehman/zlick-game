@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import abilities.Ability;
+import abilities.SimpleDamageAbility;
 import utilities.TextureHandler;
 import entities.Entity;
 import entities.Player;
@@ -54,6 +55,7 @@ public class Model {
 		id = -1;
 		otherPlayers = new ArrayList<Player>();
 		isGaming = false;
+		activeSpells = new ArrayList<SpellAreaOfEffect>();
 	}
 	
 	public static Model getModel(){
@@ -122,6 +124,7 @@ public class Model {
 			id = 1;
 			modelNetState = netState.SERVER;
 			myself = new Player(50f, 50f, new Vector2f(0, 0), new Rectangle(50f, 50f, 50, 50), 100, name, id);
+			myself.setAbility(new SimpleDamageAbility("fireball"), 1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -176,6 +179,9 @@ public class Model {
 	}
 	
 	public Player getPlayer(int id){
+		if(id == getMyself().getID()){
+			return getMyself();
+		}
 		for(int i = 0; i < otherPlayers.size(); i++){
 			if(id == otherPlayers.get(i).getID()){
 				return otherPlayers.get(i);
@@ -251,9 +257,9 @@ public class Model {
 		
 	}
 	
-	private void executeAbility(int id2, Ability ability, float mouseGameX,
+	private void executeAbility(int id, Ability ability, float mouseGameX,
 			float mouseGameY) {
-		
+		ability.useAbility(id, mouseGameX, mouseGameY);
 		
 	}
 
@@ -268,6 +274,17 @@ public class Model {
 	public void setCamera(float cameraX, float cameraY){
 		this.cameraX = cameraX;
 		this.cameraY = cameraY;
+	}
+
+	public void updateAbilities(int delta) {
+		for(int i = 0; i < activeSpells.size(); i++){
+			activeSpells.get(i).update(delta, null);
+		}
+		
+	}
+	
+	public ArrayList<SpellAreaOfEffect> getActiveSpells(){
+		return activeSpells;
 	}
 
 	

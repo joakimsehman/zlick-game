@@ -92,6 +92,7 @@ public abstract class Entity {
 	}
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
+		
 		if (image != null) {
 			g.drawImage(image, getXPos() - cameraX, getYPos() - cameraY);
 		}

@@ -11,6 +11,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 import abilities.Ability;
+import abilities.SimpleDamageAbility;
 import utilities.TextureHandler;
 
 public class Player extends Minion{
@@ -95,7 +96,15 @@ public class Player extends Minion{
 
 	public Ability getAbility(int abilityNumber) {
 		// TODO Auto-generated method stub
-		return abilities[abilityNumber];
+		return abilities[abilityNumber-1];
+	}
+
+	public void setAbility(Ability ability, int i) {
+		
+		if(i < 5 && i > 0){
+			abilities[i-1] = ability;
+		}
+		
 	}
 	
 }

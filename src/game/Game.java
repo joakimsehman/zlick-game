@@ -226,6 +226,12 @@ public class Game implements GameState {
 				+ "   playerX:" + Model.model.getMyself().getXPos()
 				+ "   playerY:" + Model.model.getMyself().getYPos(), 100, 100);
 
+		
+		for(int i = 0; i < Model.model.getActiveSpells().size(); i++){
+			Model.model.getActiveSpells().get(i).draw(g, cameraX, cameraY);
+		}
+		
+		
 	}
 
 	@Override
@@ -239,9 +245,9 @@ public class Game implements GameState {
 		boolean upKeyPressed = false;
 		boolean downKeyPressed = false;
 		
-		boolean isSpaceDown = false;
 		
-		//convert these
+		
+		
 		if (gc.getInput().isKeyDown(17)) {
 			upKeyPressed = true;
 		}
@@ -255,13 +261,9 @@ public class Game implements GameState {
 			rightKeyPressed = true;
 		}
 		
-		//to like this, 
-		isSpaceDown = gc.getInput().isKeyDown(57);
-		if(isSpaceDown){
-			Model.model.setPlayerSpeed(50);
-		}else{
-			Model.model.setPlayerSpeed(30);
-		}
+		
+		
+		
 		
 		Model.model.handlePlayerMovement(upKeyPressed, downKeyPressed,
 				leftKeyPressed, rightKeyPressed);
@@ -271,6 +273,8 @@ public class Game implements GameState {
 		for(int i = 0; i < Model.model.getOtherPlayers().size(); i++){
 			Model.model.getOtherPlayers().get(i).update(delta, null);
 		}
+		
+		Model.model.updateAbilities(delta);
 
 	}
 

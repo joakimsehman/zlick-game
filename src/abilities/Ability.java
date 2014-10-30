@@ -11,7 +11,7 @@ public abstract class Ability{
 	}
 	
 	//should contain mouse coordinates, and probobly alot else..
-	public abstract void useAbility();
+	public abstract void useAbility(int id, float mouseGameX, float mouseGameY);
 	
 	public String getName(){
 		return name;

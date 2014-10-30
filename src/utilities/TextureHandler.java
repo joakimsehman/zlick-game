@@ -44,6 +44,7 @@ public class TextureHandler {
 			addImage("startGame.png");
 			addImage("playerRight.png");
 			addImage("playerLeft.png");
+			addImage("fireball.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
