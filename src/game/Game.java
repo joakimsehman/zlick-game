@@ -211,6 +211,8 @@ public class Game implements GameState {
 				/ 2;
 		float cameraY = Model.model.getMyself().getYPos()
 				- gc.getScreenHeight() / 2;
+		
+		Model.model.setCamera(cameraX, cameraY);
 		Model.model.getMyself().draw(g, cameraX, cameraY);
 		for (Entity e : Model.model.getTerrain()) {
 			e.draw(g, cameraX, cameraY);

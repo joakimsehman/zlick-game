@@ -40,6 +40,8 @@ public class Model {
 	private ArrayList<Player> otherPlayers;
 	
 	private int id;
+	private float cameraX;
+	private float cameraY;
 	
 	
 	
@@ -223,12 +225,15 @@ public class Model {
 	public void useAbility(int abilityNumber, int mouseXPos, int mouseYPos) {
 		System.out.println("ability: " + abilityNumber + " used");
 		
+		float mouseGameX = cameraX + mouseXPos;
+		float mouseGameY = cameraY + mouseYPos;
+		
 		if(abilityNumber > 0 && abilityNumber < 5){
 			
 			Ability ability = getMyself().getAbility(abilityNumber);
 			if(ability != null){
-				network.sendAbility(getMyself().getID(), ability);
-				
+				network.sendAbility(getMyself().getID(), ability, mouseGameX, mouseGameY);
+				executeAbility(getMyself().getID(), ability, mouseGameX, mouseGameY);
 			}
 		}else if(abilityNumber == 5){
 			
@@ -246,12 +251,23 @@ public class Model {
 		
 	}
 	
+	private void executeAbility(int id2, Ability ability, float mouseGameX,
+			float mouseGameY) {
+		
+		
+	}
+
 	public void setPlayerSpeed(float playerSpeed){
 		this.playerSpeed = playerSpeed;
 	}
 	
 	public float getPlayerSpeed(){
 		return playerSpeed;
+	}
+	
+	public void setCamera(float cameraX, float cameraY){
+		this.cameraX = cameraX;
+		this.cameraY = cameraY;
 	}
 
 	
