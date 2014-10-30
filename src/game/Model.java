@@ -12,6 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import abilities.Ability;
 import utilities.TextureHandler;
 import entities.Entity;
 import entities.Player;
@@ -222,7 +223,14 @@ public class Model {
 	public void useAbility(int abilityNumber, int mouseXPos, int mouseYPos) {
 		System.out.println("ability: " + abilityNumber + " used");
 		
-		if(abilityNumber == 5){
+		if(abilityNumber > 0 && abilityNumber < 5){
+			
+			Ability ability = getMyself().getAbility(abilityNumber);
+			if(ability != null){
+				network.sendAbility(getMyself().getID(), ability);
+				
+			}
+		}else if(abilityNumber == 5){
 			
 			
 			if(getMyself().getSpeedDurationLeft() <= 0) {

@@ -31,7 +31,7 @@ public abstract class Minion extends Entity {
 	public void setMaxHealthPoints(int healthPoints) {
 		this.maxHealthPoints = healthPoints;
 	}
-	//hej
+	
 	public void applyMovementModifyer(float amount, int duration){
 		speedDurationLeft = duration;
 		this.setSpeedModifyer(amount);

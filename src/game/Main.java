@@ -14,7 +14,7 @@ public class Main {
 		try
 		{
 			AppGameContainer appgc;
-			appgc = new AppGameContainer(new Application("Simple Slick Game"));
+			appgc = new AppGameContainer(new Application("Za Bleyzpleyz"));
 			appgc.setDisplayMode(appgc.getScreenWidth(), appgc.getScreenHeight(), true);
 			appgc.start();
 		}

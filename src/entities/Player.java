@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import abilities.Ability;
 import utilities.TextureHandler;
 
 public class Player extends Minion{
@@ -20,6 +21,7 @@ public class Player extends Minion{
 	private Image rightImage;
 	private Image currentImage;
 	private float energy;
+	private Ability[] abilities;
 	
 	
 	public Player(float xPos, float yPos, Vector2f vector, Shape boundingBox, int healthPoints, String name, int id) {
@@ -30,6 +32,7 @@ public class Player extends Minion{
 		currentImage = rightImage;
 		this.name = name;
 		energy = 100f;
+		abilities = new Ability[4];
 		
 	}
 	
@@ -41,7 +44,7 @@ public class Player extends Minion{
 		currentImage = rightImage;
 		this.name = name;
 		energy = 100f;
-		
+		abilities = new Ability[4];
 	}
 
 	public int getID() {
@@ -88,6 +91,11 @@ public class Player extends Minion{
 		if(energy < 100){
 			energy = energy + ((float)delta)/100;
 		}
+	}
+
+	public Ability getAbility(int abilityNumber) {
+		// TODO Auto-generated method stub
+		return abilities[abilityNumber];
 	}
 	
 }
