@@ -1,5 +1,6 @@
 package networking;
 
+import utilities.AbilityCreator;
 import entities.Player;
 import game.Model;
 import networking.Packet.Packet0LoginRequest;
@@ -8,6 +9,7 @@ import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
 import networking.Packet.Packet4AddPlayer;
 import networking.Packet.Packet5StartThread;
+import networking.Packet.Packet6AddAbility;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -87,6 +89,10 @@ public class ServerListener extends Listener{
 			
 		}else if(obj instanceof Packet5StartThread){
 			
+		}else if(obj instanceof Packet6AddAbility){
+			Packet6AddAbility addAbility = (Packet6AddAbility)obj;
+			server.sendTCPToAll(addAbility);
+			Model.model.executeAbility(addAbility.playerID, AbilityCreator.getNewAbility(addAbility.abilityID), addAbility.mouseGameX, addAbility.mouseGameY);
 		}
 	}
 }

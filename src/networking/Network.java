@@ -26,10 +26,7 @@ public abstract class Network {
 	
 	public abstract void sendTCPToAll(Object obj);
 
-	public void sendAbility(int id, Ability ability, float mouseGameX, float mouseGameY) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void sendAbility(int id, Ability ability, float mouseGameX, float mouseGameY) ;
 	
 	
 	

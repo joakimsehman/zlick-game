@@ -10,6 +10,8 @@ import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
 import networking.Packet.Packet4AddPlayer;
 import networking.Packet.Packet5StartThread;
+import networking.Packet.Packet6AddAbility;
+import abilities.Ability;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
@@ -91,6 +93,18 @@ public class BlazeClient extends Network implements Runnable{
 	public void sendTCPToAll(Object obj) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void sendAbility(int id, Ability ability, float mouseGameX,
+			float mouseGameY) {
+		
+		Packet6AddAbility abilitySender = new Packet6AddAbility();
+		abilitySender.abilityID = ability.getID();
+		abilitySender.playerID = id;
+		abilitySender.mouseGameX = mouseGameX;
+		abilitySender.mouseGameY = mouseGameY;
+		client.sendTCP(abilitySender);
 	}
 	
 }

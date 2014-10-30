@@ -23,8 +23,15 @@ public class Packet {
 		String name;
 	}
 	public static class Packet5StartThread{}
+	public static class Packet6AddAbility{
+		int playerID;
+		int abilityID;
+		float mouseGameX;
+		float mouseGameY;
+	}
 	
 	public static void registerPackets(){
 		
 	}
+	
 }

@@ -95,7 +95,7 @@ public class Player extends Minion{
 	}
 
 	public Ability getAbility(int abilityNumber) {
-		// TODO Auto-generated method stub
+		
 		return abilities[abilityNumber-1];
 	}
 

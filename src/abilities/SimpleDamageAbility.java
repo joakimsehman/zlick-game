@@ -14,11 +14,12 @@ import utilities.TextureHandler;
 public class SimpleDamageAbility extends Ability{
 
 	
+	private int duration;
 	
 	
-	
-	public SimpleDamageAbility(String name) {
+	public SimpleDamageAbility(String name, int duration) {
 		super(name);
+		this.duration = duration;
 		
 	}
 
@@ -27,14 +28,21 @@ public class SimpleDamageAbility extends Ability{
 	@Override
 	public void useAbility(int id, float mouseGameX, float mouseGameY) {
 		Player usingPlayer = Model.model.getPlayer(id);
-		System.out.println("ability used");
+		
 		float angle = (float) Math.toDegrees(Math.atan2(usingPlayer.getYPos() - mouseGameY ,mouseGameX - usingPlayer.getXPos()  ));
 		
-		SpellAreaOfEffect spell = new SpellAreaOfEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), new Circle(usingPlayer.getXPos(),usingPlayer.getYPos(), 10) , TextureHandler.getInstance().getImageByName("fireball.png"), true);
-		spell.setVectorByDegree(60, angle);
+		SpellAreaOfEffect spell = new SpellAreaOfEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), new Circle(usingPlayer.getXPos() + 25,usingPlayer.getYPos() + 25, 10) , TextureHandler.getInstance().getImageByName("fireball.png"), duration, true);
+		spell.setVectorByDegree(80, angle);
 		
 		Model.model.addActiveSpell(spell);
 		
+	}
+
+
+
+	@Override
+	public int getID() {
+		return 0;
 	}
 
 }

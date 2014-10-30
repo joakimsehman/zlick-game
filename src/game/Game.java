@@ -231,6 +231,8 @@ public class Game implements GameState {
 			Model.model.getActiveSpells().get(i).draw(g, cameraX, cameraY);
 		}
 		
+		Model.model.checkForExpiredSpells();
+		
 		
 	}
 

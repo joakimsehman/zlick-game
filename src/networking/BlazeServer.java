@@ -5,7 +5,9 @@ import game.Model;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import networking.Packet.*;
+import abilities.Ability;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -120,6 +122,19 @@ public class BlazeServer extends Network implements Runnable{
 	
 	public void removeClient(Connection connection){
 		clients.remove(connection);
+	}
+
+	@Override
+	public void sendAbility(int id, Ability ability, float mouseGameX,
+			float mouseGameY) {
+		
+		Packet6AddAbility abilitySender = new Packet6AddAbility();
+		abilitySender.abilityID = ability.getID();
+		abilitySender.playerID = id;
+		abilitySender.mouseGameX = mouseGameX;
+		abilitySender.mouseGameY = mouseGameY;
+		sendTCPToAll(abilitySender);
+		
 	}
 
 	
