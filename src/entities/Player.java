@@ -43,15 +43,7 @@ public class Player extends Minion{
 	}
 	
 	public Player(float xPos, float yPos, String name, int id){
-		super(xPos, yPos, new Vector2f(0, 0), new Rectangle(50f, 50f, 50, 50), TextureHandler.getInstance().getImageByName("playerRight.png"), 100);
-		this.id = id;
-		leftImage = TextureHandler.getInstance().getImageByName("playerLeft.png");
-		rightImage = TextureHandler.getInstance().getImageByName("playerRight.png");
-		currentImage = rightImage;
-		this.name = name;
-		energy = 100f;
-		abilities = new Ability[4];
-		team = Model.Team.GREEN;
+		this(xPos, yPos, new Vector2f(0, 0), new Rectangle(50f, 50f, 50, 50), 100, name, id);
 	}
 
 	public int getID() {
