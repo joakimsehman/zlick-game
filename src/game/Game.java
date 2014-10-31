@@ -276,7 +276,7 @@ public class Game implements GameState {
 			Model.model.getOtherPlayers().get(i).update(delta, null);
 		}
 		
-		Model.model.updateAbilities(delta);
+		Model.model.updateSpells(delta);
 
 	}
 

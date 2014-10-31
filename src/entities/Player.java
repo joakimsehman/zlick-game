@@ -1,5 +1,7 @@
 package entities;
 
+import game.Model;
+
 import java.awt.Font;
 import java.util.ArrayList;
 
@@ -66,7 +68,9 @@ public class Player extends Minion{
 		if(name != null){
 			
 			g.drawString(name, getXPos() - cameraX, getYPos() - cameraY - 20);
-			g.drawString("Energy: " + (int)energy, 800, 50);
+			if(Model.model.getID() == id){
+				g.drawString("Energy: " + (int)energy, 800, 50);
+			}
 		}
 	}
 	

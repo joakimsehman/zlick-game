@@ -146,6 +146,7 @@ public class Model {
 		this.id = id;
 		myself = new Player(50f, 50f, new Vector2f(0, 0), new Rectangle(50f,
 				50f, 50, 50), 100, name, id);
+		myself.setAbility(AbilityCreator.getNewAbility(0), 1);
 	}
 
 	public int getID() {
@@ -216,6 +217,18 @@ public class Model {
 	public void startGame() {
 		network.startNetworkThread();
 		isGaming = true;
+		sendAbilities();
+	}
+
+	private void sendAbilities() {
+		for (int i = 0; i < 4; i++) {
+			if (getMyself().getAbility(i + 1) != null) {
+				network.sendAddAbility(getMyself().getID(), getMyself()
+						.getAbility(i + 1).getID(), i + 1);
+			}
+
+		}
+
 	}
 
 	public ArrayList<Player> getOtherPlayers() {
@@ -240,13 +253,16 @@ public class Model {
 
 		if (abilityNumber > 0 && abilityNumber < 5) {
 
-			if (getMyself().reduceEnergy(10)) {
-				Ability ability = getMyself().getAbility(abilityNumber);
-				if (ability != null) {
-					network.sendAbility(getMyself().getID(), ability,
-							mouseGameX, mouseGameY);
-					executeAbility(getMyself().getID(), ability, mouseGameX,
-							mouseGameY);
+			if (getMyself().getAbility(abilityNumber) != null) {
+				if (getMyself().reduceEnergy(
+						getMyself().getAbility(abilityNumber).getCost())) {
+					Ability ability = getMyself().getAbility(abilityNumber);
+					if (ability != null) {
+						network.sendAbility(getMyself().getID(), abilityNumber,
+								mouseGameX, mouseGameY);
+						executeAbility(getMyself().getID(), abilityNumber,
+								mouseGameX, mouseGameY);
+					}
 				}
 			}
 		} else if (abilityNumber == 5) {
@@ -264,9 +280,10 @@ public class Model {
 
 	}
 
-	public void executeAbility(int id, Ability ability, float mouseGameX,
+	public void executeAbility(int id, int abilityNumber, float mouseGameX,
 			float mouseGameY) {
-		ability.useAbility(id, mouseGameX, mouseGameY);
+		getPlayer(id).getAbility(abilityNumber).useAbility(id, mouseGameX,
+				mouseGameY);
 
 	}
 
@@ -283,7 +300,7 @@ public class Model {
 		this.cameraY = cameraY;
 	}
 
-	public void updateAbilities(int delta) {
+	public void updateSpells(int delta) {
 		for (int i = 0; i < activeSpells.size(); i++) {
 			activeSpells.get(i).update(delta, null);
 		}
@@ -302,6 +319,11 @@ public class Model {
 			}
 		}
 
+	}
+
+	public void setPlayerAbility(int playerID, int abilityID, int abilityNumber) {
+		getPlayer(playerID).setAbility(AbilityCreator.getNewAbility(abilityID),
+				abilityNumber);
 	}
 
 }

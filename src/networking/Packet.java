@@ -23,11 +23,17 @@ public class Packet {
 		String name;
 	}
 	public static class Packet5StartThread{}
-	public static class Packet6AddAbility{
+	public static class Packet6UseAbility{
 		int playerID;
-		int abilityID;
+		int abilityNumber;
 		float mouseGameX;
 		float mouseGameY;
+	}
+	
+	public static class Packet7AddAbility{
+		int playerID;
+		int abilityID;
+		int abilityNumber;
 	}
 	
 	public static void registerPackets(){

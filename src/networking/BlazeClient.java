@@ -10,7 +10,8 @@ import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
 import networking.Packet.Packet4AddPlayer;
 import networking.Packet.Packet5StartThread;
-import networking.Packet.Packet6AddAbility;
+import networking.Packet.Packet6UseAbility;
+import networking.Packet.Packet7AddAbility;
 import abilities.Ability;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -48,6 +49,8 @@ public class BlazeClient extends Network implements Runnable{
 		kryo.register(Packet3PlayerSender.class);
 		kryo.register(Packet4AddPlayer.class);
 		kryo.register(Packet5StartThread.class);
+		kryo.register(Packet6UseAbility.class);
+		kryo.register(Packet7AddAbility.class);
 	}
 
 	public void startNetworkThread() {
@@ -96,15 +99,25 @@ public class BlazeClient extends Network implements Runnable{
 	}
 
 	@Override
-	public void sendAbility(int id, Ability ability, float mouseGameX,
+	public void sendAbility(int id, int abilityNumber, float mouseGameX,
 			float mouseGameY) {
 		
-		Packet6AddAbility abilitySender = new Packet6AddAbility();
-		abilitySender.abilityID = ability.getID();
+		Packet6UseAbility abilitySender = new Packet6UseAbility();
+		abilitySender.abilityNumber = abilityNumber;
 		abilitySender.playerID = id;
 		abilitySender.mouseGameX = mouseGameX;
 		abilitySender.mouseGameY = mouseGameY;
 		client.sendTCP(abilitySender);
+	}
+
+	@Override
+	public void sendAddAbility(int playerID, int abilityID, int abilityNumber) {
+		Packet7AddAbility abilitySender = new Packet7AddAbility();
+		abilitySender.playerID = playerID;
+		abilitySender.abilityID = abilityID;
+		abilitySender.abilityNumber = abilityNumber;
+		client.sendTCP(abilitySender);
+		
 	}
 	
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+
 import networking.Packet.*;
 import abilities.Ability;
 
@@ -49,6 +50,8 @@ public class BlazeServer extends Network implements Runnable{
 		kryo.register(Packet3PlayerSender.class);
 		kryo.register(Packet4AddPlayer.class);
 		kryo.register(Packet5StartThread.class);
+		kryo.register(Packet6UseAbility.class);
+		kryo.register(Packet7AddAbility.class);
 		
 	}
 
@@ -115,6 +118,22 @@ public class BlazeServer extends Network implements Runnable{
 			clients.get(i).sendTCP(obj);
 		}
 	}
+	
+	public void forwardTCPToAll(Object obj, Connection connection){
+		for(int i = 0; i < clients.size(); i++){
+			if(connection != clients.get(i)){
+				clients.get(i).sendTCP(obj);
+			}
+		}
+	}
+	
+	public void forwardUDPToAll(Object obj, Connection connection){
+		for(int i = 0; i < clients.size(); i++){
+			if(connection != clients.get(i)){
+				clients.get(i).sendUDP(obj);
+			}
+		}
+	}
 
 	public void addClient(Connection connection) {
 		clients.add(connection);
@@ -125,14 +144,23 @@ public class BlazeServer extends Network implements Runnable{
 	}
 
 	@Override
-	public void sendAbility(int id, Ability ability, float mouseGameX,
+	public void sendAbility(int id, int abilityNumber, float mouseGameX,
 			float mouseGameY) {
-		
-		Packet6AddAbility abilitySender = new Packet6AddAbility();
-		abilitySender.abilityID = ability.getID();
+		Packet6UseAbility abilitySender = new Packet6UseAbility();
+		abilitySender.abilityNumber = abilityNumber;
 		abilitySender.playerID = id;
 		abilitySender.mouseGameX = mouseGameX;
 		abilitySender.mouseGameY = mouseGameY;
+		sendTCPToAll(abilitySender);
+		
+	}
+
+	@Override
+	public void sendAddAbility(int playerID, int abilityID, int abilityNumber) {
+		Packet7AddAbility abilitySender = new Packet7AddAbility();
+		abilitySender.playerID = playerID;
+		abilitySender.abilityID = abilityID;
+		abilitySender.abilityNumber = abilityNumber;
 		sendTCPToAll(abilitySender);
 		
 	}

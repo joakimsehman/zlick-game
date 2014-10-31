@@ -5,22 +5,32 @@ import org.newdawn.slick.geom.Vector2f;
 public abstract class Ability{
 
 	private String name;
-	private static int abilityID = 0;
+	private int playerCreatedId;
+	private int id;
 	
-	public Ability(String name){
+	public Ability(String name, int id){
 		this.name = name;
+		this.id = id;
 	}
+	
+	
 	
 	//should contain mouse coordinates, and probobly alot else..
 	public abstract void useAbility(int id, float mouseGameX, float mouseGameY);
 	
-	public String getName(){
+	public final String getName(){
 		return name;
 	}
 	
-	public abstract int getID();
-	
-	public static int getNextAbilityID(){
-		return abilityID++;
+	public final int getID(){
+		return id;
 	}
+	
+	public int getPlayerCreatedId(){
+		return playerCreatedId;
+	}
+	
+	public abstract int getCost();
+	
+	
 }

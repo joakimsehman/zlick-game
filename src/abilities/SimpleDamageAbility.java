@@ -18,10 +18,12 @@ public class SimpleDamageAbility extends Ability{
 	
 	
 	public SimpleDamageAbility(String name, int duration) {
-		super(name);
+		super(name, 0);
 		this.duration = duration;
 		
 	}
+	
+	
 
 	
 
@@ -38,11 +40,9 @@ public class SimpleDamageAbility extends Ability{
 		
 	}
 
-
-
 	@Override
-	public int getID() {
-		return 0;
+	public int getCost() {
+		return 10;
 	}
 
 }

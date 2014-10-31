@@ -26,7 +26,9 @@ public abstract class Network {
 	
 	public abstract void sendTCPToAll(Object obj);
 
-	public abstract void sendAbility(int id, Ability ability, float mouseGameX, float mouseGameY) ;
+	public abstract void sendAbility(int id, int abilityNumber, float mouseGameX, float mouseGameY) ;
+
+	public abstract void sendAddAbility(int playerID, int abilityID, int abilityNumber) ;
 	
 	
 	

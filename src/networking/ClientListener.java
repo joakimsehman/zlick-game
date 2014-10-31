@@ -9,7 +9,8 @@ import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
 import networking.Packet.Packet4AddPlayer;
 import networking.Packet.Packet5StartThread;
-import networking.Packet.Packet6AddAbility;
+import networking.Packet.Packet6UseAbility;
+import networking.Packet.Packet7AddAbility;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -73,10 +74,13 @@ public class ClientListener extends Listener{
 			Model.model.addPlayer(new Player(addPlayer.xPos, addPlayer.yPos, addPlayer.name, addPlayer.ID));
 		}else if(obj instanceof Packet5StartThread){
 			Model.model.startGame();
-		}else if(obj instanceof Packet6AddAbility){
-			Packet6AddAbility addAbility = (Packet6AddAbility)obj;
+		}else if(obj instanceof Packet6UseAbility){
+			Packet6UseAbility addAbility = (Packet6UseAbility)obj;
 			
-			Model.model.executeAbility(addAbility.playerID, AbilityCreator.getNewAbility(addAbility.abilityID), addAbility.mouseGameX, addAbility.mouseGameY);
+			Model.model.executeAbility(addAbility.playerID, addAbility.abilityNumber, addAbility.mouseGameX, addAbility.mouseGameY);
+		}else if(obj instanceof Packet7AddAbility){
+			Packet7AddAbility addAbility = (Packet7AddAbility)obj;
+			Model.model.setPlayerAbility(addAbility.playerID, addAbility.abilityID, addAbility.abilityNumber);
 		}
 	}
 	
