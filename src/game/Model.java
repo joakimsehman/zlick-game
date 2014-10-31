@@ -20,6 +20,7 @@ import entities.Entity;
 import entities.Player;
 import entities.SpellAreaOfEffect;
 import entities.Terrain;
+import game.Model.Team;
 
 public class Model {
 
@@ -31,11 +32,15 @@ public class Model {
 
 	private Network network;
 
-	public enum netState {
+	public enum NetState {
 		SERVER, CLIENT
 	};
+	
+	public enum Team{
+		GREEN, BROWN
+	};
 
-	private netState modelNetState;
+	private NetState modelNetState;
 
 	private ArrayList<Entity> terrain;
 	private ArrayList<SpellAreaOfEffect> activeSpells;
@@ -122,7 +127,7 @@ public class Model {
 		try {
 			network = new BlazeServer(name);
 			id = 1;
-			modelNetState = netState.SERVER;
+			modelNetState = NetState.SERVER;
 			myself = new Player(50f, 50f, new Vector2f(0, 0), new Rectangle(
 					50f, 50f, 50, 50), 100, name, id);
 			myself.setAbility(AbilityCreator.getNewAbility(0), 1);
@@ -135,7 +140,7 @@ public class Model {
 	public void createClient(String ip) {
 		try {
 			network = new BlazeClient(name, ip);
-			modelNetState = netState.CLIENT;
+			modelNetState = NetState.CLIENT;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -207,7 +212,7 @@ public class Model {
 	}
 
 	public boolean isServer() {
-		if (modelNetState == netState.SERVER) {
+		if (modelNetState == NetState.SERVER) {
 			return true;
 		} else {
 			return false;
@@ -324,6 +329,15 @@ public class Model {
 	public void setPlayerAbility(int playerID, int abilityID, int abilityNumber) {
 		getPlayer(playerID).setAbility(AbilityCreator.getNewAbility(abilityID),
 				abilityNumber);
+	}
+	
+	public void setAndSendTeam(Team team){
+		network.sendSetTeam(getMyself().getID(), team);
+		setPlayerTeam(getMyself().getID(), team);
+	}
+
+	public void setPlayerTeam(int playerId, Team team) {
+		this.getPlayer(playerId).setTeam(team);
 	}
 
 }

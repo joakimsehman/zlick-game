@@ -11,6 +11,7 @@ import networking.Packet.Packet4AddPlayer;
 import networking.Packet.Packet5StartThread;
 import networking.Packet.Packet6UseAbility;
 import networking.Packet.Packet7AddAbility;
+import networking.Packet.Packet8SetTeam;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -81,6 +82,14 @@ public class ClientListener extends Listener{
 		}else if(obj instanceof Packet7AddAbility){
 			Packet7AddAbility addAbility = (Packet7AddAbility)obj;
 			Model.model.setPlayerAbility(addAbility.playerID, addAbility.abilityID, addAbility.abilityNumber);
+		}else if(obj instanceof Packet8SetTeam){
+			Packet8SetTeam teamSetter = (Packet8SetTeam)obj;
+			
+			if(teamSetter.teamNumber == 1){
+				Model.model.setPlayerTeam(teamSetter.playerID, Model.Team.GREEN);
+			}else if(teamSetter.teamNumber == 2){
+				Model.model.setPlayerTeam(teamSetter.playerID, Model.Team.BROWN);
+			}
 		}
 	}
 	

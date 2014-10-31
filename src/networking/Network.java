@@ -1,5 +1,6 @@
 package networking;
 
+import game.Model.Team;
 import networking.Packet.Packet0LoginRequest;
 import networking.Packet.Packet1LoginAnswer;
 import networking.Packet.Packet2Message;
@@ -29,8 +30,7 @@ public abstract class Network {
 	public abstract void sendAbility(int id, int abilityNumber, float mouseGameX, float mouseGameY) ;
 
 	public abstract void sendAddAbility(int playerID, int abilityID, int abilityNumber) ;
-	
-	
-	
+
+	public abstract void sendSetTeam(int id, Team team);
 	
 }

@@ -45,6 +45,10 @@ public class TextureHandler {
 			addImage("playerRight.png");
 			addImage("playerLeft.png");
 			addImage("fireball.png");
+			addImage("questionmarkIcon.png");
+			addImage("fireballIcon.png");
+			addImage("joinGreenTeam.png");
+			addImage("joinBrownTeam.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

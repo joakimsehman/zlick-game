@@ -18,7 +18,7 @@ public class SimpleDamageAbility extends Ability{
 	
 	
 	public SimpleDamageAbility(String name, int duration) {
-		super(name, 0);
+		super(name, 0, TextureHandler.getInstance().getImageByName("fireballIcon.png"));
 		this.duration = duration;
 		
 	}

@@ -1,9 +1,13 @@
 package networking;
 
 import game.Model;
+import game.Model.Team;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+
+
 
 
 
@@ -52,6 +56,7 @@ public class BlazeServer extends Network implements Runnable{
 		kryo.register(Packet5StartThread.class);
 		kryo.register(Packet6UseAbility.class);
 		kryo.register(Packet7AddAbility.class);
+		kryo.register(Packet8SetTeam.class);
 		
 	}
 
@@ -163,6 +168,18 @@ public class BlazeServer extends Network implements Runnable{
 		abilitySender.abilityNumber = abilityNumber;
 		sendTCPToAll(abilitySender);
 		
+	}
+
+	@Override
+	public void sendSetTeam(int id, Team team) {
+		Packet8SetTeam teamSetter = new Packet8SetTeam();
+		teamSetter.playerID = id;
+		if(Model.Team.GREEN == team){
+			teamSetter.teamNumber = 1;
+		}else if(Model.Team.BROWN == team){
+			teamSetter.teamNumber = 2;
+		}
+		sendTCPToAll(teamSetter);
 	}
 
 	

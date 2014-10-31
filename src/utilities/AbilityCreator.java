@@ -13,4 +13,8 @@ public class AbilityCreator {
 		return null;
 		
 	}
+	
+	public static int getNumberOfAbilities(){
+		return 1;
+	}
 }

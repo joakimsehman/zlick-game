@@ -1,6 +1,7 @@
 package entities;
 
 import game.Model;
+import game.Model.Team;
 
 import java.awt.Font;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Player extends Minion{
 	private Image currentImage;
 	private float energy;
 	private Ability[] abilities;
+	private Team team;
 	
 	
 	public Player(float xPos, float yPos, Vector2f vector, Shape boundingBox, int healthPoints, String name, int id) {
@@ -36,6 +38,7 @@ public class Player extends Minion{
 		this.name = name;
 		energy = 100f;
 		abilities = new Ability[4];
+		team = Model.Team.GREEN;
 		
 	}
 	
@@ -48,6 +51,7 @@ public class Player extends Minion{
 		this.name = name;
 		energy = 100f;
 		abilities = new Ability[4];
+		team = Model.Team.GREEN;
 	}
 
 	public int getID() {
@@ -109,6 +113,14 @@ public class Player extends Minion{
 			abilities[i-1] = ability;
 		}
 		
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+	
+	public Team getTeam(){
+		return team;
 	}
 	
 }

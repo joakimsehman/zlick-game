@@ -1,6 +1,7 @@
 package networking;
 
 import game.Model;
+import game.Model.Team;
 
 import java.io.IOException;
 
@@ -12,6 +13,7 @@ import networking.Packet.Packet4AddPlayer;
 import networking.Packet.Packet5StartThread;
 import networking.Packet.Packet6UseAbility;
 import networking.Packet.Packet7AddAbility;
+import networking.Packet.Packet8SetTeam;
 import abilities.Ability;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -51,6 +53,7 @@ public class BlazeClient extends Network implements Runnable{
 		kryo.register(Packet5StartThread.class);
 		kryo.register(Packet6UseAbility.class);
 		kryo.register(Packet7AddAbility.class);
+		kryo.register(Packet8SetTeam.class);
 	}
 
 	public void startNetworkThread() {
@@ -117,6 +120,19 @@ public class BlazeClient extends Network implements Runnable{
 		abilitySender.abilityID = abilityID;
 		abilitySender.abilityNumber = abilityNumber;
 		client.sendTCP(abilitySender);
+		
+	}
+
+	@Override
+	public void sendSetTeam(int id, Team team) {
+		Packet8SetTeam teamSetter = new Packet8SetTeam();
+		teamSetter.playerID = id;
+		if(Model.Team.GREEN == team){
+			teamSetter.teamNumber = 1;
+		}else if(Model.Team.BROWN == team){
+			teamSetter.teamNumber = 2;
+		}
+		client.sendTCP(teamSetter);
 		
 	}
 	

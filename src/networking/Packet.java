@@ -1,5 +1,7 @@
 package networking;
 
+import game.Model.Team;
+
 public class Packet {
 
 	
@@ -34,6 +36,11 @@ public class Packet {
 		int playerID;
 		int abilityID;
 		int abilityNumber;
+	}
+	
+	public static class Packet8SetTeam{
+		int playerID;
+		int teamNumber;
 	}
 	
 	//hej
