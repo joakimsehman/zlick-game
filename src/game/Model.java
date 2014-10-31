@@ -51,6 +51,7 @@ public class Model {
 	public Model() {
 		playerSpeed = 30;
 		id = -1;
+		id = -1;
 		otherPlayers = new ArrayList<Player>();
 		isGaming = false;
 		activeSpells = new ArrayList<SpellAreaOfEffect>();
