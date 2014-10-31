@@ -36,8 +36,4 @@ public class Packet {
 		int abilityNumber;
 	}
 	
-	public static void registerPackets(){
-		
-	}
-	
 }
