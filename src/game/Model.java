@@ -7,13 +7,14 @@ import networking.BlazeClient;
 import networking.BlazeServer;
 import networking.Network;
 import networking.Packet.Packet5StartThread;
+import networking.Packet.Packet9SpellHit;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import abilities.Ability;
-import abilities.SimpleDamageAbility;
+import abilities.Fireball;
 import utilities.AbilityCreator;
 import utilities.TextureHandler;
 import entities.Entity;
@@ -28,6 +29,8 @@ public class Model {
 	private String name;
 	private float playerSpeed;
 
+	private int spellEffectIdCounter;
+
 	private boolean isGaming;
 
 	private Network network;
@@ -35,8 +38,8 @@ public class Model {
 	public enum NetState {
 		SERVER, CLIENT
 	};
-	
-	public enum Team{
+
+	public enum Team {
 		GREEN, BROWN
 	};
 
@@ -59,6 +62,7 @@ public class Model {
 		otherPlayers = new ArrayList<Player>();
 		isGaming = false;
 		activeSpells = new ArrayList<SpellAreaOfEffect>();
+		spellEffectIdCounter = 0;
 	}
 
 	public static Model getModel() {
@@ -262,12 +266,16 @@ public class Model {
 				if (getMyself().reduceEnergy(
 						getMyself().getAbility(abilityNumber).getCost())) {
 					Ability ability = getMyself().getAbility(abilityNumber);
-					if (ability != null) {
-						network.sendAbility(getMyself().getID(), abilityNumber,
-								mouseGameX, mouseGameY);
-						executeAbility(getMyself().getID(), abilityNumber,
-								mouseGameX, mouseGameY);
+					int spellEffectId[] = new int[ability
+							.getSpellEffectAmount()];
+					for (int i = 0; i < ability.getSpellEffectAmount(); i++) {
+						spellEffectId[i] = getNextSpellEffectId();
 					}
+
+					network.sendAbility(getMyself().getID(), abilityNumber,
+							mouseGameX, mouseGameY, spellEffectId);
+					executeAbility(getMyself().getID(), abilityNumber,
+							mouseGameX, mouseGameY, spellEffectId);
 				}
 			}
 		} else if (abilityNumber == 5) {
@@ -286,9 +294,9 @@ public class Model {
 	}
 
 	public void executeAbility(int id, int abilityNumber, float mouseGameX,
-			float mouseGameY) {
+			float mouseGameY, int spellEffectId[]) {
 		getPlayer(id).getAbility(abilityNumber).useAbility(id, mouseGameX,
-				mouseGameY);
+				mouseGameY, spellEffectId);
 
 	}
 
@@ -330,14 +338,37 @@ public class Model {
 		getPlayer(playerID).setAbility(AbilityCreator.getNewAbility(abilityID),
 				abilityNumber);
 	}
-	
-	public void setAndSendTeam(Team team){
+
+	public void setAndSendTeam(Team team) {
 		network.sendSetTeam(getMyself().getID(), team);
 		setPlayerTeam(getMyself().getID(), team);
 	}
 
 	public void setPlayerTeam(int playerId, Team team) {
 		this.getPlayer(playerId).setTeam(team);
+	}
+
+	private int getNextSpellEffectId() {
+		return spellEffectIdCounter++;
+	}
+
+	public void sendSpellHitReport(int spellCombinedId, int playerHitId) {
+		network.sendSpellHitReport(spellCombinedId, playerHitId);
+
+	}
+
+	public void recieveSpellHitReport(int combinedId, int playerHitId) {
+		getSpellByCombinedId(combinedId).applyEffect(
+				Model.model.getPlayer(playerHitId));
+	}
+
+	public SpellAreaOfEffect getSpellByCombinedId(int combinedId) {
+		for (int i = 0; i < activeSpells.size(); i++) {
+			if (activeSpells.get(i).getCombinedId() == combinedId) {
+				return activeSpells.get(i);
+			}
+		}
+		return null;
 	}
 
 }
