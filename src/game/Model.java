@@ -307,7 +307,7 @@ public class Model {
 
 	public void updateSpells(int delta) {
 		for (int i = 0; i < activeSpells.size(); i++) {
-			activeSpells.get(i).update(delta, null);
+			activeSpells.get(i).update(delta, getOtherPlayers(), getMyself());
 		}
 
 	}

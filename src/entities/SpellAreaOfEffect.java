@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
+import game.Model;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
@@ -22,18 +23,28 @@ public class SpellAreaOfEffect extends Entity{
 		super(xPos, yPos, vector, boundingBox, image);
 		this.disappearsIfTouched = disappearsIfTouched;
 		this.durationLeft = duration;
+        damage = 10;
 	}
 
 	
 	// if(dissappearsIfTouched == false) {damage is damage/sec}
-	public void update(int delta, ArrayList<Entity> entities){
+	public void update(int delta, ArrayList<Player> entities, Player myself){
 		super.update(delta, null);
 		durationLeft = durationLeft - delta;
 		if (entities != null) {
-			for (Entity e : entities) {
-				if (this.getBoundingBox().intersects(e.getBoundingBox())) {
-					applyEffect((Player)e);
-				}
+            if(disappearsIfTouched){
+
+                if(Model.model.isServer())
+                    if(this.getBoundingBox().intersects(myself.getBoundingBox())) {
+                        applyEffect(myself);
+                    }
+		           	for (Player p : entities) {
+                        if (this.getBoundingBox().intersects(p.getBoundingBox())) {
+                            applyEffect(p);
+
+                        }
+                }
+
 			}
 		}
 	}
@@ -43,7 +54,7 @@ public class SpellAreaOfEffect extends Entity{
 	}
 	
 	public void applyEffect(Player player){
-		
+		player.applyDamageModifyer(damage);
 	}
 	
 	public void onExpire(){

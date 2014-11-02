@@ -278,6 +278,7 @@ public class Game implements GameState {
 		
 		Model.model.updateSpells(delta);
 
+
 	}
 
 }
