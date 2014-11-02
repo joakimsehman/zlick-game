@@ -15,13 +15,13 @@ import buffs.Buff;
 public abstract class Minion extends Entity {
 
 	
-	private int maxHealthPoints;
-	private int hp;
+	private float maxHealthPoints;
+	private float hp;
 	private int speedDurationLeft;
 	private ArrayList<Buff> activeBuffs;
 
 	public Minion(float xPos, float yPos, Vector2f vector,
-			Shape boundingBox, Image image, int maxHealthPoints) {
+			Shape boundingBox, Image image, float maxHealthPoints) {
 		super(xPos, yPos, vector, boundingBox, image);
 		this.maxHealthPoints = maxHealthPoints;
 		hp = maxHealthPoints;
@@ -59,6 +59,10 @@ public abstract class Minion extends Entity {
 	public void addBuff(Buff buff){
 		buff.onApply(this);
 		activeBuffs.add(buff);
+	}
+	
+	public float getHealthPoints(){
+		return hp;
 	}
 	
 	public void update(int delta, ArrayList<Entity> entities){

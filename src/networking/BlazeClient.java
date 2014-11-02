@@ -14,6 +14,7 @@ import networking.Packet.Packet5StartThread;
 import networking.Packet.Packet6UseAbility;
 import networking.Packet.Packet7AddAbility;
 import networking.Packet.Packet8SetTeam;
+import networking.Packet.Packet9SpellHit;
 import abilities.Ability;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -54,6 +55,8 @@ public class BlazeClient extends Network implements Runnable{
 		kryo.register(Packet6UseAbility.class);
 		kryo.register(Packet7AddAbility.class);
 		kryo.register(Packet8SetTeam.class);
+		kryo.register(Packet9SpellHit.class);
+		kryo.register(int[].class);
 	}
 
 	public void startNetworkThread() {
@@ -92,24 +95,25 @@ public class BlazeClient extends Network implements Runnable{
 	@Override
 	public void sendUDPToAll(Object obj) {
 		// TODO Auto-generated method stub
-		
+		//never used, always used as server, i guess not good programming... anyone has any ideas?
 	}
 
 	@Override
 	public void sendTCPToAll(Object obj) {
 		// TODO Auto-generated method stub
-		
+		//never used, always used as server, i guess not good programming... anyone has any ideas?
 	}
 
 	@Override
 	public void sendAbility(int id, int abilityNumber, float mouseGameX,
-			float mouseGameY) {
+			float mouseGameY, int spellEffectId[]) {
 		
 		Packet6UseAbility abilitySender = new Packet6UseAbility();
 		abilitySender.abilityNumber = abilityNumber;
 		abilitySender.playerID = id;
 		abilitySender.mouseGameX = mouseGameX;
 		abilitySender.mouseGameY = mouseGameY;
+		abilitySender.spellEffectId = spellEffectId;
 		client.sendTCP(abilitySender);
 	}
 
@@ -134,6 +138,12 @@ public class BlazeClient extends Network implements Runnable{
 		}
 		client.sendTCP(teamSetter);
 		
+	}
+
+	@Override
+	public void sendSpellHitReport(int spellCombinedId, int playerHitId) {
+		// TODO Auto-generated method stub
+		//never used, always used as server, i guess not good programming... anyone has any ideas?
 	}
 	
 }

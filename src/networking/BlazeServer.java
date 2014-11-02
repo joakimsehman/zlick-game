@@ -57,6 +57,8 @@ public class BlazeServer extends Network implements Runnable{
 		kryo.register(Packet6UseAbility.class);
 		kryo.register(Packet7AddAbility.class);
 		kryo.register(Packet8SetTeam.class);
+		kryo.register(Packet9SpellHit.class);
+		kryo.register(int[].class);
 		
 	}
 
@@ -150,12 +152,13 @@ public class BlazeServer extends Network implements Runnable{
 
 	@Override
 	public void sendAbility(int id, int abilityNumber, float mouseGameX,
-			float mouseGameY) {
+			float mouseGameY, int spellEffectId[]) {
 		Packet6UseAbility abilitySender = new Packet6UseAbility();
 		abilitySender.abilityNumber = abilityNumber;
 		abilitySender.playerID = id;
 		abilitySender.mouseGameX = mouseGameX;
 		abilitySender.mouseGameY = mouseGameY;
+		abilitySender.spellEffectId = spellEffectId;
 		sendTCPToAll(abilitySender);
 		
 	}
@@ -180,6 +183,14 @@ public class BlazeServer extends Network implements Runnable{
 			teamSetter.teamNumber = 2;
 		}
 		sendTCPToAll(teamSetter);
+	}
+
+	@Override
+	public void sendSpellHitReport(int spellCombinedId, int playerHitId) {
+		Packet9SpellHit spellHit = new Packet9SpellHit();
+		spellHit.combinedId = spellCombinedId;
+		spellHit.playerHitId = playerHitId;
+		sendTCPToAll(spellHit);
 	}
 
 	

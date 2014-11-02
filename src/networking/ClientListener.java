@@ -12,6 +12,7 @@ import networking.Packet.Packet5StartThread;
 import networking.Packet.Packet6UseAbility;
 import networking.Packet.Packet7AddAbility;
 import networking.Packet.Packet8SetTeam;
+import networking.Packet.Packet9SpellHit;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -78,7 +79,7 @@ public class ClientListener extends Listener{
 		}else if(obj instanceof Packet6UseAbility){
 			Packet6UseAbility addAbility = (Packet6UseAbility)obj;
 			
-			Model.model.executeAbility(addAbility.playerID, addAbility.abilityNumber, addAbility.mouseGameX, addAbility.mouseGameY);
+			Model.model.executeAbility(addAbility.playerID, addAbility.abilityNumber, addAbility.mouseGameX, addAbility.mouseGameY, addAbility.spellEffectId);
 		}else if(obj instanceof Packet7AddAbility){
 			Packet7AddAbility addAbility = (Packet7AddAbility)obj;
 			Model.model.setPlayerAbility(addAbility.playerID, addAbility.abilityID, addAbility.abilityNumber);
@@ -90,6 +91,9 @@ public class ClientListener extends Listener{
 			}else if(teamSetter.teamNumber == 2){
 				Model.model.setPlayerTeam(teamSetter.playerID, Model.Team.BROWN);
 			}
+		}else if(obj instanceof Packet9SpellHit){
+			Packet9SpellHit spellHit = (Packet9SpellHit)obj;
+			Model.model.recieveSpellHitReport(spellHit.combinedId, spellHit.playerHitId);
 		}
 	}
 	

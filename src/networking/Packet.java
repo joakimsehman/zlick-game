@@ -30,6 +30,7 @@ public class Packet {
 		int abilityNumber;
 		float mouseGameX;
 		float mouseGameY;
+		int[] spellEffectId;
 	}
 	
 	public static class Packet7AddAbility{
@@ -41,6 +42,11 @@ public class Packet {
 	public static class Packet8SetTeam{
 		int playerID;
 		int teamNumber;
+	}
+	
+	public static class Packet9SpellHit{
+		int combinedId;
+		int playerHitId;
 	}
 	
 	//hej

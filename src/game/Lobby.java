@@ -6,6 +6,7 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
@@ -20,6 +21,7 @@ public class Lobby implements GameState {
 	private final int stateID;
 	private int selectedAbility;
 	private ArrayList<Ability> abilities;
+	private Image background;
 
 	public Lobby(int GameState) {
 
@@ -179,6 +181,7 @@ public class Lobby implements GameState {
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		abilities = new ArrayList<Ability>();
+		background = TextureHandler.getInstance().getImageByName("420-background.png");
 	}
 
 	@Override
@@ -193,7 +196,7 @@ public class Lobby implements GameState {
 			throws SlickException {
 
 		// background
-		// brown g.setColor(new Color(150, 75, 0));
+		g.drawImage(background, 0, 0);
 
 		// draw player name
 		if (Model.model.getMyself() != null) {

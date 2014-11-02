@@ -1,14 +1,14 @@
 package utilities;
 
 import abilities.Ability;
-import abilities.SimpleDamageAbility;
+import abilities.Fireball;
 
 public class AbilityCreator {
 	
 	public static Ability getNewAbility(int abilityID){
 		
 		if(abilityID == 0){
-			return new SimpleDamageAbility("fireball",1000);
+			return new Fireball("fireball",1000);
 		}
 		return null;
 		

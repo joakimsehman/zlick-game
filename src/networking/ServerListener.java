@@ -94,7 +94,7 @@ public class ServerListener extends Listener{
 		}else if(obj instanceof Packet6UseAbility){
 			Packet6UseAbility useAbility = (Packet6UseAbility)obj;
 			server.forwardTCPToAll(useAbility, connection);
-			Model.model.executeAbility(useAbility.playerID, useAbility.abilityNumber, useAbility.mouseGameX, useAbility.mouseGameY);
+			Model.model.executeAbility(useAbility.playerID, useAbility.abilityNumber, useAbility.mouseGameX, useAbility.mouseGameY, useAbility.spellEffectId);
 		}else if(obj instanceof Packet7AddAbility){
 			Packet7AddAbility addAbility = (Packet7AddAbility)obj;
 			server.forwardTCPToAll(addAbility, connection);

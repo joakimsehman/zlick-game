@@ -14,7 +14,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 import abilities.Ability;
-import abilities.SimpleDamageAbility;
+import abilities.Fireball;
 import utilities.TextureHandler;
 
 public class Player extends Minion{
@@ -66,6 +66,7 @@ public class Player extends Minion{
 			g.drawString(name, getXPos() - cameraX, getYPos() - cameraY - 20);
 			if(Model.model.getID() == id){
 				g.drawString("Energy: " + (int)energy, 800, 50);
+				g.drawString("Health: " + getHealthPoints(), 800, 70);
 			}
 		}
 	}
