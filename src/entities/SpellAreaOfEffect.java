@@ -9,6 +9,8 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class SpellAreaOfEffect extends Entity {
 
+	
+	//some of these are never initialized and used, remember if using something new
 	private int movementSpeedModifier;
 	private int damage;
 	private int shield;
@@ -27,7 +29,6 @@ public class SpellAreaOfEffect extends Entity {
 		this.durationLeft = duration;
 		damage = 10;
 		combinedId = playerId * 1000000 + spellEffectId;
-		System.out.println("fireball created");
 	}
 
 	// if(dissappearsIfTouched == false) {damage is damage/sec}
