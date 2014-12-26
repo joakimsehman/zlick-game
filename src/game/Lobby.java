@@ -21,7 +21,7 @@ public class Lobby implements GameState {
 	private final int stateID;
 	private int selectedAbility;
 	private ArrayList<Ability> abilities;
-	private Image background;
+	
 
 	public Lobby(int GameState) {
 
@@ -181,7 +181,6 @@ public class Lobby implements GameState {
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		abilities = new ArrayList<Ability>();
-		background = TextureHandler.getInstance().getImageByName("420-background.png");
 	}
 
 	@Override
@@ -196,7 +195,7 @@ public class Lobby implements GameState {
 			throws SlickException {
 
 		// background
-		g.drawImage(background, 0, 0);
+		//g.drawImage(background, 0, 0);
 
 		// draw player name
 		if (Model.model.getMyself() != null) {

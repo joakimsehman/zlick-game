@@ -21,7 +21,6 @@ public class MainMenu implements GameState {
 	private final int stateID;
 	private String nameStr;
 	private String ipStr;
-	private Image background;
 
 	private enum STRINGS {
 		ipStr, nameStr
@@ -43,7 +42,6 @@ public class MainMenu implements GameState {
 		activeStr = STRINGS.ipStr;
 
 		gc.getInput().addKeyListener(this);
-		background = TextureHandler.getInstance().getImageByName("420-background.png");
 		
 	}
 
@@ -217,7 +215,7 @@ public class MainMenu implements GameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.drawImage(background, 0, 0);
+		//g.drawImage(background, 0, 0);
 		
 		g.drawString("Welcome to The BlazePlaze Game", 200, 100);
 		TextureHandler.getInstance().getImageByName("hostGame.png")
