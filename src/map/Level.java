@@ -36,6 +36,8 @@ public class Level {
             }
         }
 
+
+
         addTiles();
     }
 
@@ -43,14 +45,18 @@ public class Level {
         for(int x = 0; x < tileProperties.length; x++){
             for(int y = 0; y < tileProperties[0].length; y++){
                 int tileId = map.getTileId(x, y, background);
+
+                //check first map layer for some stuff(ex. grass, water)
                 if(tileId == 1 || tileId == 2){
                     tileProperties[x][y] = Tile.grass;
 
                 }else if(tileId == 86){
                     tileProperties[x][y] = Tile.water;
                 }
+
+                //check second map layer for some stuff(ex. rocks)
                 tileId = map.getTileId(x, y, stuff);
-                if(tileId == 55){
+                if(tileId == 55 || tileId == 56){
                     tileProperties[x][y] = Tile.rock;
                 }
             }
@@ -60,8 +66,12 @@ public class Level {
 
     //seems to work.. for once something works....
     public Tile getTileAtPos(float x, float y){
+        x = x - 25;
+
+
         int mapX = (int)(x / 64 + y / 32);
         int mapY = (int)(y / 32 - x / 64);
+
 
         return tileProperties[mapX][mapY];
 
