@@ -15,7 +15,7 @@ public class Main {
 		{
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new Application("Za Bleyzpleyz"));
-			appgc.setDisplayMode(appgc.getScreenWidth(), appgc.getScreenHeight(), true);
+			appgc.setDisplayMode(appgc.getScreenWidth(), appgc.getScreenHeight(), false);
 			appgc.start();
 		}
 		catch(SlickException ex)

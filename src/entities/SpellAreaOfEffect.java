@@ -33,7 +33,7 @@ public class SpellAreaOfEffect extends Entity {
 
 	// if(dissappearsIfTouched == false) {damage is damage/sec}
 	public void update(int delta, ArrayList<Player> entities, Player myself) {
-		super.update(delta, null);
+		super.update(delta, null, false);
 		durationLeft = durationLeft - delta;
 		if (entities != null) {
 			if (disappearsIfTouched) {

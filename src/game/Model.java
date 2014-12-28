@@ -3,6 +3,7 @@ package game;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import map.Level;
 import networking.BlazeClient;
 import networking.BlazeServer;
 import networking.Network;
@@ -53,6 +54,8 @@ public class Model {
 	private int id;
 	private float cameraX;
 	private float cameraY;
+
+    private Level level;
 
 	public static Model model;
 
@@ -224,6 +227,12 @@ public class Model {
 	}
 
 	public void startGame() {
+        level = new Level();
+        if(getMyself().getTeam() == Team.GREEN){
+            getMyself().setPos(-4400, 2350);
+        }else if(getMyself().getTeam() == Team.BROWN){
+            getMyself().setPos(4400, 2350);
+        }
 		network.startNetworkThread();
 		isGaming = true;
 		sendAbilities();
@@ -370,5 +379,9 @@ public class Model {
 		}
 		return null;
 	}
+
+    public Level getLevel(){
+        return level;
+    }
 
 }

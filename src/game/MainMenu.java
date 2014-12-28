@@ -217,7 +217,7 @@ public class MainMenu implements GameState {
 			throws SlickException {
 		//g.drawImage(background, 0, 0);
 		
-		g.drawString("Welcome to The BlazePlaze Game", 200, 100);
+		g.drawString("Welcome to The Game", 200, 100);
 		TextureHandler.getInstance().getImageByName("hostGame.png")
 				.draw(200, 200);
 		TextureHandler.getInstance().getImageByName("joinGame.png")

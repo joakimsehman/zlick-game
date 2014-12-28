@@ -89,8 +89,9 @@ public class Player extends Minion{
 	
 	
 	public void update(int delta, ArrayList<Entity> entities){
-		super.update(delta, entities);
-		if(energy < 100){
+		super.update(delta, entities, true);
+
+        if(energy < 100){
 			energy = energy + ((float)delta)/100;
 		}
 	}

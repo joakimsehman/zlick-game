@@ -65,8 +65,8 @@ public abstract class Minion extends Entity {
 		return hp;
 	}
 	
-	public void update(int delta, ArrayList<Entity> entities){
-		super.update(delta, entities);
+	public void update(int delta, ArrayList<Entity> entities, boolean collidesWithTerrain){
+		super.update(delta, entities, collidesWithTerrain);
 		if(speedDurationLeft > 0){
 			speedDurationLeft = speedDurationLeft - delta;
 		}else{
