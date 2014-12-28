@@ -69,6 +69,8 @@ public class Player extends Minion{
 				g.drawString("Health: " + getHealthPoints(), 800, 70);
 			}
 		}
+
+        g.drawRect(getXPos() - cameraX, getYPos() - cameraY, getBoundingBox().getWidth(), getBoundingBox().getHeight());
 	}
 	
 	public String getName(){

@@ -79,25 +79,25 @@ public abstract class Entity {
             if(collidesWithTerrain){
                 if(vector.getX() < 0){
                     if(vector.getY() < 0){
-                        moveForbidden = checkNeededCollisionPoints(true, true, true, false, boundingBox.getMinX(), boundingBox.getMinY());
+                        moveForbidden = checkNeededCollisionPoints(true, true, true, false, newXPos, newYPos);
                     }else if(vector.getY() > 0){
-                        moveForbidden = checkNeededCollisionPoints(true, false, true, true, boundingBox.getMinX(), boundingBox.getMinY());
+                        moveForbidden = checkNeededCollisionPoints(true, false, true, true, newXPos, newYPos);
                     }else{
-                        moveForbidden = checkNeededCollisionPoints(true, false, true, false, boundingBox.getMinX(), boundingBox.getMinY());
+                        moveForbidden = checkNeededCollisionPoints(true, false, true, false, newXPos, newYPos);
                     }
                 }else if(vector.getX() > 0){
                     if(vector.getY() < 0){
-                        moveForbidden = checkNeededCollisionPoints(true, true, false, true, boundingBox.getMinX(), boundingBox.getMinY());
+                        moveForbidden = checkNeededCollisionPoints(true, true, false, true, newXPos, newYPos);
                     }else if(vector.getY() > 0){
-                        moveForbidden = checkNeededCollisionPoints(false, true, true, true, boundingBox.getMinX(), boundingBox.getMinY());
+                        moveForbidden = checkNeededCollisionPoints(false, true, true, true, newXPos, newYPos);
                     }else{
-                        moveForbidden = checkNeededCollisionPoints(false, true, false, true, boundingBox.getMinX(), boundingBox.getMinY());
+                        moveForbidden = checkNeededCollisionPoints(false, true, false, true, newXPos, newYPos);
                     }
 
                 }else if(vector.getY() > 0){
-                    moveForbidden = checkNeededCollisionPoints(false, false, true, true, boundingBox.getMinX(), boundingBox.getMinY());
+                    moveForbidden = checkNeededCollisionPoints(false, false, true, true, newXPos, newYPos);
                 }else if(vector.getY() < 0){
-                    moveForbidden = checkNeededCollisionPoints(true, true, false, false, boundingBox.getMinX(), boundingBox.getMinY());
+                    moveForbidden = checkNeededCollisionPoints(true, true, false, false, newXPos, newYPos);
                 }
             }
 
@@ -154,7 +154,7 @@ public abstract class Entity {
             }
         }
         if(upperRight){
-            if(Model.model.getLevel().getTileAtPos(newXPos + boundingBox.getWidth()/2, newYPos).isSolid()){
+            if(Model.model.getLevel().getTileAtPos(newXPos + boundingBox.getWidth(), newYPos).isSolid()){
                 return true;
             }
         }
@@ -164,7 +164,7 @@ public abstract class Entity {
             }
         }
         if(lowerRight){
-            if(Model.model.getLevel().getTileAtPos(newXPos + boundingBox.getWidth()/2, newYPos + boundingBox.getHeight()).isSolid()){
+            if(Model.model.getLevel().getTileAtPos(newXPos + boundingBox.getWidth(), newYPos + boundingBox.getHeight()).isSolid()){
                 return true;
             }
         }
