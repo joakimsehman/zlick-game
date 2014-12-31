@@ -2,7 +2,6 @@ package entities;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
@@ -34,7 +33,7 @@ public abstract class Minion extends Entity {
 	
 	public void applyMovementModifyer(float amount, int duration){
 		speedDurationLeft = duration;
-		this.setSpeedModifyer(amount);
+		this.setSpeedModifier(amount);
 	}
 	
 	public void applyDamageModifyer(int amount){
@@ -70,7 +69,7 @@ public abstract class Minion extends Entity {
 		if(speedDurationLeft > 0){
 			speedDurationLeft = speedDurationLeft - delta;
 		}else{
-			this.setSpeedModifyer(1);
+			this.setSpeedModifier(1);
 		}
 	}
 

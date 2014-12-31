@@ -9,16 +9,19 @@ import javax.imageio.ImageIO;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.util.BufferedImageUtil;
 
 public class TextureHandler {
 
-	private ArrayList<Image> images;
+    private ArrayList<Image> images;
+    private ArrayList<SpriteSheet> spriteSheets;
 	private static TextureHandler textureHandler;
 
 	private TextureHandler() {
 		images = new ArrayList<Image>();
+        spriteSheets = new ArrayList<SpriteSheet>();
 	}
 
 	public static TextureHandler getInstance() {
@@ -52,6 +55,9 @@ public class TextureHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+        addSpriteSheet("steel_armor.png", 64, 64);
+
 	}
 
 	private void addImage(String str) throws SlickException, IOException {
@@ -63,5 +69,31 @@ public class TextureHandler {
 		image.setName(str);
 		images.add(image);
 	}
+
+    private void addSpriteSheet(String filename, int tileWidth, int tileHeight) throws SlickException {
+        SpriteSheet sheet = new SpriteSheet("assets/spritesheets/" + filename, tileWidth, tileHeight);
+        sheet.setName(filename);
+        spriteSheets.add(sheet);
+
+    }
+
+    public SpriteSheet getSpriteSheetByName(String sheetName){
+        for(int i = 0; i < spriteSheets.size(); i++){
+            if(spriteSheets.get(i).getName() == sheetName){
+                return spriteSheets.get(i);
+            }
+        }
+        return null;
+    }
+
+
+    public Image getImageFromSpriteSheet(int tileX, int tileY, String sheetName){
+        return getSpriteSheetByName(sheetName).getSprite(tileX, tileY);
+    }
+
+
+    //the getSprite method has really bad performance when you are rendering a tiled map. you should use renderInUSe
+    //cant :(, you can only use renderInUse if you use one spritesheet at a time it seems
+
 
 }

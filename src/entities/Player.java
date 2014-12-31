@@ -18,15 +18,22 @@ import abilities.Fireball;
 import utilities.TextureHandler;
 
 public class Player extends Minion{
-	
-	private int id;
-	private String name;
-	private Image leftImage; 
-	private Image rightImage;
-	private Image currentImage;
-	private float energy;
-	private Ability[] abilities;
-	private Team team;
+
+    private int id;
+    private String name;
+    private Image leftImage;
+    private Image rightImage;
+    private Image currentImage;
+    private float energy;
+    private Ability[] abilities;
+    private Team team;
+    private boolean isMoving;
+
+
+
+    private enum Gender{MALE, FEMALE};
+    private enum Clothes{CLOTHES, LETHER, STEEL};
+    private enum Weapon{BOW, STAFF, SWORD};
 	
 	
 	public Player(float xPos, float yPos, Vector2f vector, Shape boundingBox, int healthPoints, String name, int id) {
@@ -118,5 +125,4 @@ public class Player extends Minion{
 	public Team getTeam(){
 		return team;
 	}
-	
 }

@@ -10,21 +10,28 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Entity {
 
+    public enum Direction{NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST};
+
 	private float xPos;
 	private float yPos;
 	private Vector2f vector;
 	private Shape boundingBox;
 	private Image image;
-	private float speedModifyer;
+	private float speedModifier;
+    private boolean isMoving;
+    private Direction direction;
+
+
 
 	public Entity(float xPos, float yPos, Vector2f vector, Shape boundingBox,
 			Image image) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+        direction = Direction.EAST;
 		this.vector = vector;
 		this.boundingBox = boundingBox;
 		this.image = image;
-		speedModifyer = 1;
+		speedModifier = 1;
 	}
 
 	public float getXPos() {
@@ -47,24 +54,59 @@ public abstract class Entity {
 		return vector.getY();
 	}
 	
-	public void setVectorWithoutSpeedModifyer(float x, float y){
-		vector.set(x, y);
+	public void setVectorWithoutSpeedModifier(float x, float y){
+        vector.set(x, y);
+        if(x == 0 && y == 0){
+            isMoving = false;
+        }else{
+            isMoving = true;
+            checkAndSetDirection();
+        }
 	}
 
 	public void setVectorByDegree(float length, float degree) {
-		length = length*speedModifyer;
+		length = length* speedModifier;
 		float dx = (float) (length * Math.cos(Math.toRadians(degree)));
 		float dy = (float) (length * Math.sin(Math.toRadians(degree)));
 		vector.set(dx, dy);
+        if(length == 0){
+            isMoving = false;
+        }else{
+            isMoving = true;
+            checkAndSetDirection();
+        }
+	}
+
+    //implement this shit yooo
+    private void checkAndSetDirection(){
+        if(vector.getX() == 0){
+            if(vector.getY() == 0){
+
+            }else if(vector.getY() > 0){
+
+            }else{
+
+            }
+        }else if(vector.getX() > 0){
+
+        }else{
+            if(vector.getY() == 0){
+
+            }else if(vector.getY() > 0){
+
+            }else{
+
+            }
+        }
+    }
+	
+	public float getSpeedModifier(){
+		return speedModifier;
 	}
 	
-	public float getSpeedModifyer(){
-		return speedModifyer;
-	}
-	
-	//enter float value, speed = speedModifyer x speed
-	public void setSpeedModifyer(float speedModifyer){
-		this.speedModifyer = speedModifyer;
+	//enter float value, speed = speedModifier x speed
+	public void setSpeedModifier(float speedModifier){
+		this.speedModifier = speedModifier;
 	}
 
 	public void update(int delta, ArrayList<Entity> entities, boolean collidesWithTerrain) {
@@ -170,6 +212,10 @@ public abstract class Entity {
         }
 
         return false;
-    };
+    }
+
+    public boolean isMoving(){
+        return isMoving;
+    }
 
 }

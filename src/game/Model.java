@@ -8,21 +8,17 @@ import networking.BlazeClient;
 import networking.BlazeServer;
 import networking.Network;
 import networking.Packet.Packet5StartThread;
-import networking.Packet.Packet9SpellHit;
 
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import abilities.Ability;
-import abilities.Fireball;
 import utilities.AbilityCreator;
 import utilities.TextureHandler;
 import entities.Entity;
 import entities.Player;
 import entities.SpellAreaOfEffect;
 import entities.Terrain;
-import game.Model.Team;
 
 public class Model {
 
@@ -211,8 +207,8 @@ public class Model {
 			for (int i = 0; i < otherPlayers.size(); i++) {
 				if (id == otherPlayers.get(i).getID()) {
 					otherPlayers.get(i).setPos(xPos, yPos);
-					otherPlayers.get(i).setVectorWithoutSpeedModifyer(vectorX,
-							vectorY);
+					otherPlayers.get(i).setVectorWithoutSpeedModifier(vectorX,
+                            vectorY);
 				}
 			}
 		}
