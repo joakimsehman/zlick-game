@@ -18,7 +18,7 @@ public abstract class Ability{
 	
 	
 	
-	//should contain mouse coordinates, and probobly alot else..
+	
 	public abstract void useAbility(int id, float mouseGameX, float mouseGameY, int[] spellEffectId);
 	
 	public final String getName(){

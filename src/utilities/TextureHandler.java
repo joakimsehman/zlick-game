@@ -56,7 +56,9 @@ public class TextureHandler {
 			e.printStackTrace();
 		}
 
-        addSpriteSheet("steel_armor.png", 64, 64);
+        addSpriteSheet("steel_armor.png", 128, 128);
+        addSpriteSheet("male_head2.png", 128, 128);
+        addSpriteSheet("greatsword.png", 128, 128);
 
 	}
 

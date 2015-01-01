@@ -83,8 +83,6 @@ public class Game implements GameState {
 
 	@Override
 	public void keyPressed(int keyNr, char c) {
-		
-		System.out.println("" + keyNr);
 		switch (keyNr) {
 		case 2:
 			// 1 pressed

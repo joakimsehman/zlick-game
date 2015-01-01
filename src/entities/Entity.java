@@ -27,7 +27,7 @@ public abstract class Entity {
 			Image image) {
 		this.xPos = xPos;
 		this.yPos = yPos;
-        direction = Direction.EAST;
+        this.direction = Direction.EAST;
 		this.vector = vector;
 		this.boundingBox = boundingBox;
 		this.image = image;
@@ -77,25 +77,31 @@ public abstract class Entity {
         }
 	}
 
-    //implement this shit yooo
     private void checkAndSetDirection(){
-        if(vector.getX() == 0){
-            if(vector.getY() == 0){
-
-            }else if(vector.getY() > 0){
-
+        if((int)vector.getX() == 0){
+            if((int)vector.getY() == 0){
+            	//entity is still, direction unchanged
+            }else if((int)vector.getY() > 0){
+            	direction = Direction.SOUTH;
             }else{
-
+            	direction = Direction.NORTH;
+            	System.out.println("set to north");
             }
-        }else if(vector.getX() > 0){
-
+        }else if((int)vector.getX() > 0){
+        	if((int)vector.getY() == 0){
+        		direction = Direction.EAST;
+        	}else if((int)vector.getY() > 0){
+        		direction = Direction.SOUTHEAST;
+        	}else{
+        		direction = Direction.NORTHEAST;
+        	}
         }else{
-            if(vector.getY() == 0){
-
-            }else if(vector.getY() > 0){
-
+            if((int)vector.getY() == 0){
+            	direction = Direction.WEST;
+            }else if((int)vector.getY() > 0){
+            	direction = Direction.SOUTHWEST;
             }else{
-
+            	direction = Direction.NORTHWEST;
             }
         }
     }
@@ -216,6 +222,10 @@ public abstract class Entity {
 
     public boolean isMoving(){
         return isMoving;
+    }
+    
+    public Direction getDirection(){
+    	return direction;
     }
 
 }

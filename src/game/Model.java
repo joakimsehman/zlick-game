@@ -122,7 +122,6 @@ public class Model {
 	}
 
 	public void setName(String nameStr) {
-		System.out.println("name set to: " + nameStr);
 		name = nameStr;
 	}
 
