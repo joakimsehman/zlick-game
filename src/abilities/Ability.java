@@ -41,4 +41,8 @@ public abstract class Ability{
 	
 	public abstract int getSpellEffectAmount();
 	
+	public abstract int getCastTime();
+	
+	public abstract boolean isCastableWhileMoving();
+	
 }

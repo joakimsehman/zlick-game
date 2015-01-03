@@ -1,19 +1,43 @@
 package gui;
 
+import game.Model;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 
-public class castBar extends guiEntity{
+import utilities.TextureHandler;
 
-	public castBar(int xPos, int yPos) {
+public class CastBar extends GuiEntity {
+
+	private Image castbar;
+	private Rectangle castTime;
+
+	public CastBar(int xPos, int yPos) {
 		super(xPos, yPos);
-		
+		castbar = TextureHandler.getInstance().getImageByName("castbar.png");
+		castTime = new Rectangle(xPos + 2, yPos + 3, 45, 4);
 	}
+
+	// add check with player isCasting
 
 	@Override
 	public void draw(Graphics g) {
-		
+
+		if (Model.model.getMyself().isCasting()) {
+			g.drawImage(castbar, getxPos(), getyPos());
+
+			g.setColor(Color.yellow);
+			g.fillRect(castTime.getX(), castTime.getY(), castTime.getWidth(),
+					castTime.getHeight());
+		}
 	}
-	
-	
-	
+
+	@Override
+	public void update(int delta) {
+		castTime.setWidth(45.0f - 44.0f * (((float) Model.model.getMyself()
+				.getCastTimeLeft()) / Model.model.getMyself().getCastTime()));
+	}
+
 }

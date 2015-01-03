@@ -41,6 +41,16 @@ public class MassPolymorph extends Ability{
 		return 1;
 	}
 
+	@Override
+	public int getCastTime() {
+		return 1500;
+	}
+
+	@Override
+	public boolean isCastableWhileMoving() {
+		return false;
+	}
+
 	
 	
 }

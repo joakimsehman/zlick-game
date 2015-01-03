@@ -54,6 +54,7 @@ public class TextureHandler {
 			addImage("joinGreenTeam.png");
 			addImage("joinBrownTeam.png");
 			addImage("spell_circle.png");
+			addImage("castbar.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

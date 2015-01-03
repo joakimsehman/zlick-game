@@ -5,6 +5,7 @@ import game.Model.Team;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -21,6 +22,13 @@ public class Player extends Minion {
 	private float energy;
 	private Ability[] abilities;
 	private Team team;
+	private boolean isCasting;
+	private int castTime;
+	private int castTimeLeft;
+	private int castingSpellAbilityNumber;
+	private float castingSpellXPos;
+	private float castingSpellYPos;
+	private final Color brown;
 
 	private Gender gender;
 	private Clothes clothes;
@@ -123,6 +131,10 @@ public class Player extends Minion {
 		energy = 100f;
 		abilities = new Ability[4];
 		team = Model.Team.GREEN;
+		isCasting = false;
+		brown = new Color(150, 75, 0);
+		castTimeLeft = 0;
+		castingSpellAbilityNumber = -1;
 
 		loadImages();
 		tileCounter = 0;
@@ -191,8 +203,9 @@ public class Player extends Minion {
 		}
 
 		if (name != null) {
-
-			g.drawString(name, getXPos() - cameraX, getYPos() - cameraY - 20);
+			
+			g.setColor(getTeamColor());
+			g.drawString(name, getXPos() - cameraX, getYPos() - cameraY - 25);
 			if (Model.model.getID() == id) {
 				g.drawString("Energy: " + (int) energy, 800, 50);
 				g.drawString("Health: " + getHealthPoints(), 800, 70);
@@ -201,6 +214,14 @@ public class Player extends Minion {
 
 		// g.drawRect(getXPos() - cameraX, getYPos() - cameraY, getBoundingBox()
 		// .getWidth(), getBoundingBox().getHeight());
+	}
+
+	private Color getTeamColor() {
+		if(team == Team.GREEN){
+			return Color.green;
+		}else{
+			return brown;
+		}
 	}
 
 	public String getName() {
@@ -231,7 +252,18 @@ public class Player extends Minion {
 			tileCounter++;
 		}
 
-		if (!isPolymorphed()) {
+		
+		if(isPolymorphed()){
+			if(isMoving()){
+				currentBody = getMovingDirectionSheep()[tileCounter % 3];
+			}else{
+				currentBody = getMovingDirectionSheep()[1];
+			}
+		}else if(isCasting() && !isMoving()){
+			currentBody = getMovingDirectionBodySprites()[24+tileCounter % 4];
+			currentHead = getMovingDirectionHeadSprites()[24+tileCounter % 4];
+			currentWeapon = getMovingDirectionWeaponSprites()[24 + tileCounter % 4];
+		}else{
 			if (isMoving()) {
 				currentBody = getMovingDirectionBodySprites()[4 + tileCounter % 8];
 				currentHead = getMovingDirectionHeadSprites()[4 + tileCounter % 8];
@@ -241,14 +273,23 @@ public class Player extends Minion {
 				currentHead = getMovingDirectionHeadSprites()[tileCounter % 4];
 				currentWeapon = getMovingDirectionWeaponSprites()[tileCounter % 4];
 			}
-		}else{
-			if(isMoving()){
-				currentBody = getMovingDirectionSheep()[tileCounter % 3];
+		}
+		
+		if(isCasting()){
+			if(!isMoving() || getAbility(castingSpellAbilityNumber).isCastableWhileMoving()){
+				if(castTimeLeft > 0){
+					castTimeLeft = castTimeLeft - delta;
+				}else{
+					isCasting = false;
+					useCastedSpell();
+				}
 			}else{
-				currentBody = getMovingDirectionSheep()[1];
+				isCasting = false;
 			}
 		}
 	}
+
+	
 
 	private Image[] getMovingDirectionWeaponSprites() {
 		switch (getDirection()) {
@@ -358,6 +399,10 @@ public class Player extends Minion {
 	public Team getTeam() {
 		return team;
 	}
+	
+	public boolean isCasting(){
+		return isCasting;
+	}
 
 	private void loadImages() {
 
@@ -438,4 +483,31 @@ public class Player extends Minion {
 		}
 
 	}
+
+	public void startCastedAbility(int abilityNumber, float mouseGameX,
+			float mouseGameY) {
+		if((!isMoving() || getAbility(abilityNumber).isCastableWhileMoving()) && getAbility(abilityNumber).getCost() < this.energy){
+			
+			castTime = this.getAbility(abilityNumber).getCastTime();
+			castTimeLeft = castTime;
+			isCasting = true;
+			this.castingSpellAbilityNumber = abilityNumber;
+			this.castingSpellXPos = mouseGameX;
+			this.castingSpellYPos = mouseGameY;
+		}
+	}
+	
+	private void useCastedSpell() {
+		Model.model.finishCastingAbility(castingSpellAbilityNumber, castingSpellXPos, castingSpellYPos);
+	}
+	
+	public int getCastTimeLeft(){
+		return castTimeLeft;
+	}
+	
+	public int getCastTime(){
+		return castTime;
+	}
+	
+	
 }

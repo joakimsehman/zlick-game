@@ -54,4 +54,19 @@ public class Fireball extends Ability{
 		return 1;
 	}
 
+
+
+
+
+	@Override
+	public int getCastTime() {
+		return 500;
+	}
+
+
+
+	public boolean isCastableWhileMoving() {
+		return true;
+	}
+
 }

@@ -19,6 +19,7 @@ import entities.Entity;
 import entities.Player;
 import entities.SpellAreaOfEffect;
 import entities.Terrain;
+import gui.GuiEntity;
 
 public class Model {
 
@@ -44,6 +45,7 @@ public class Model {
 
 	private ArrayList<Entity> terrain;
 	private ArrayList<SpellAreaOfEffect> activeSpells;
+	private ArrayList<GuiEntity> activeGui;
 
 	private ArrayList<Player> otherPlayers;
 
@@ -61,6 +63,7 @@ public class Model {
 		otherPlayers = new ArrayList<Player>();
 		isGaming = false;
 		activeSpells = new ArrayList<SpellAreaOfEffect>();
+		activeGui = new ArrayList<GuiEntity>();
 		spellEffectIdCounter = 0;
 	}
 
@@ -258,6 +261,7 @@ public class Model {
 		return isGaming;
 	}
 
+	// implement castbar?=?????
 	public void useAbility(int abilityNumber, int mouseXPos, int mouseYPos) {
 		System.out.println("ability: " + abilityNumber + " used");
 
@@ -268,19 +272,27 @@ public class Model {
 
 			if (!getMyself().isPolymorphed()) {
 				if (getMyself().getAbility(abilityNumber) != null) {
-					if (getMyself().reduceEnergy(
-							getMyself().getAbility(abilityNumber).getCost())) {
-						Ability ability = getMyself().getAbility(abilityNumber);
-						int spellEffectId[] = new int[ability
-								.getSpellEffectAmount()];
-						for (int i = 0; i < ability.getSpellEffectAmount(); i++) {
-							spellEffectId[i] = getNextSpellEffectId();
-						}
+					if (getMyself().getAbility(abilityNumber).getCastTime() == 0) {
+						if (getMyself()
+								.reduceEnergy(
+										getMyself().getAbility(abilityNumber)
+												.getCost())) {
+							Ability ability = getMyself().getAbility(
+									abilityNumber);
+							int spellEffectId[] = new int[ability
+									.getSpellEffectAmount()];
+							for (int i = 0; i < ability.getSpellEffectAmount(); i++) {
+								spellEffectId[i] = getNextSpellEffectId();
+							}
 
-						network.sendAbility(getMyself().getID(), abilityNumber,
-								mouseGameX, mouseGameY, spellEffectId);
-						executeAbility(getMyself().getID(), abilityNumber,
-								mouseGameX, mouseGameY, spellEffectId);
+							network.sendAbility(getMyself().getID(),
+									abilityNumber, mouseGameX, mouseGameY,
+									spellEffectId);
+							executeAbility(getMyself().getID(), abilityNumber,
+									mouseGameX, mouseGameY, spellEffectId);
+						}
+					}else{
+						getMyself().startCastedAbility(abilityNumber, mouseGameX, mouseGameY);
 					}
 				}
 			}
@@ -297,6 +309,27 @@ public class Model {
 			}
 		}
 
+	}
+	
+	public void finishCastingAbility(int abilityNumber, float mouseGameX, float mouseGameY){
+		if (getMyself()
+				.reduceEnergy(
+						getMyself().getAbility(abilityNumber)
+								.getCost())) {
+			Ability ability = getMyself().getAbility(
+					abilityNumber);
+			int spellEffectId[] = new int[ability
+					.getSpellEffectAmount()];
+			for (int i = 0; i < ability.getSpellEffectAmount(); i++) {
+				spellEffectId[i] = getNextSpellEffectId();
+			}
+
+			network.sendAbility(getMyself().getID(),
+					abilityNumber, mouseGameX, mouseGameY,
+					spellEffectId);
+			executeAbility(getMyself().getID(), abilityNumber,
+					mouseGameX, mouseGameY, spellEffectId);
+		}
 	}
 
 	public void executeAbility(int id, int abilityNumber, float mouseGameX,
@@ -379,6 +412,25 @@ public class Model {
 
 	public Level getLevel() {
 		return level;
+	}
+
+	public ArrayList<GuiEntity> getActiveGui() {
+		return activeGui;
+	}
+
+	public void addActiveGui(GuiEntity guiEntity) {
+		activeGui.add(guiEntity);
+	}
+
+	public void clearGui() {
+		activeGui.clear();
+	}
+
+	public void updateGui(int delta) {
+		for (int i = 0; i < activeGui.size(); i++) {
+			activeGui.get(i).update(delta);
+		}
+
 	}
 
 }

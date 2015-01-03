@@ -1,6 +1,7 @@
 package game;
 
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,6 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import utilities.TextureHandler;
 import entities.Entity;
+import gui.CastBar;
 
 public class Game implements GameState {
 
@@ -184,6 +186,11 @@ public class Game implements GameState {
 		screenWidth = gc.getScreenWidth();
 		screenHeight = gc.getScreenHeight();
 		
+		gc.setFullscreen(true);
+		
+		
+		Model.model.addActiveGui(new CastBar(gc.getScreenWidth()/2, gc.getScreenHeight()/2-10));
+		
 		
 		gc.getInput().addKeyListener(this);
 	}
@@ -197,7 +204,7 @@ public class Game implements GameState {
 	public void init(GameContainer gc, StateBasedGame arg1)
 			throws SlickException {
 
-		gc.setFullscreen(true);
+		
 
 	}
 
@@ -235,11 +242,15 @@ public class Game implements GameState {
 		}
 
 		// shows coordinates and stuff
+		g.setColor(Color.blue);
 		g.drawString("cameraX:" + cameraX + "  cameraY:" + cameraY
 				+ "   playerX:" + Model.model.getMyself().getXPos()
 				+ "   playerY:" + Model.model.getMyself().getYPos(), 100, 100);
 
-		
+		//draw gui
+		for(int i = 0; i < Model.model.getActiveGui().size(); i++){
+			Model.model.getActiveGui().get(i).draw(g);
+		}
 		
 		
 		
@@ -291,6 +302,7 @@ public class Game implements GameState {
 		
 		Model.model.checkForExpiredSpells();
 
+		Model.model.updateGui(delta);
 
 	}
 
