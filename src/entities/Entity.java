@@ -85,7 +85,6 @@ public abstract class Entity {
             	direction = Direction.SOUTH;
             }else{
             	direction = Direction.NORTH;
-            	System.out.println("set to north");
             }
         }else if((int)vector.getX() > 0){
         	if((int)vector.getY() == 0){

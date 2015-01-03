@@ -14,6 +14,8 @@ import entities.Entity;
 public class Game implements GameState {
 
 	private final int stateID;
+	private int screenWidth;
+	private int screenHeight;
 	
 
 	public Game(int GAME) {
@@ -86,23 +88,23 @@ public class Game implements GameState {
 		switch (keyNr) {
 		case 2:
 			// 1 pressed
-			Model.model.useAbility(1, Mouse.getX(), Mouse.getY());
+			Model.model.useAbility(1, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		case 3:
 			// 2 pressed
-			Model.model.useAbility(2, Mouse.getX(), Mouse.getY());
+			Model.model.useAbility(2, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		case 4:
 			// 3 pressed
-			Model.model.useAbility(3, Mouse.getX(), Mouse.getY());
+			Model.model.useAbility(3, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		case 5:
 			// 4 pressed
-			Model.model.useAbility(4, Mouse.getX(), Mouse.getY());
+			Model.model.useAbility(4, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		case 57:
 			//Space pressed
-			Model.model.useAbility(5, Mouse.getX(), Mouse.getY());
+			Model.model.useAbility(5, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		}
 
@@ -179,6 +181,10 @@ public class Game implements GameState {
 			throws SlickException {
 		// TODO Auto-generated method stub
 
+		screenWidth = gc.getScreenWidth();
+		screenHeight = gc.getScreenHeight();
+		
+		
 		gc.getInput().addKeyListener(this);
 	}
 
@@ -215,6 +221,10 @@ public class Game implements GameState {
         Model.model.setCamera(cameraX, cameraY);
 
         Model.model.getLevel().render((int)-cameraX, (int)-cameraY);
+        
+        for(int i = 0; i < Model.model.getActiveSpells().size(); i++){
+			Model.model.getActiveSpells().get(i).draw(g, cameraX, cameraY);
+		}
 
 		Model.model.getMyself().draw(g, cameraX, cameraY);
 		for (Entity e : Model.model.getTerrain()) {
@@ -230,11 +240,9 @@ public class Game implements GameState {
 				+ "   playerY:" + Model.model.getMyself().getYPos(), 100, 100);
 
 		
-		for(int i = 0; i < Model.model.getActiveSpells().size(); i++){
-			Model.model.getActiveSpells().get(i).draw(g, cameraX, cameraY);
-		}
 		
-		Model.model.checkForExpiredSpells();
+		
+		
 		
 		
 	}
@@ -280,6 +288,8 @@ public class Game implements GameState {
 		}
 		
 		Model.model.updateSpells(delta);
+		
+		Model.model.checkForExpiredSpells();
 
 
 	}

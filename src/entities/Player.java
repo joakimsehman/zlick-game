@@ -3,18 +3,15 @@ package entities;
 import game.Model;
 import game.Model.Team;
 
-import java.awt.Font;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 import abilities.Ability;
-import abilities.Fireball;
 import utilities.TextureHandler;
 
 public class Player extends Minion {
@@ -37,7 +34,7 @@ public class Player extends Minion {
 	private Image[] southEastBody;
 	private Image[] southBody;
 	private Image[] southWestBody;
-	
+
 	private Image[] westHead;
 	private Image[] northWestHead;
 	private Image[] northHead;
@@ -46,8 +43,7 @@ public class Player extends Minion {
 	private Image[] southEastHead;
 	private Image[] southHead;
 	private Image[] southWestHead;
-	
-	
+
 	private Image[] westWeapon;
 	private Image[] northWestWeapon;
 	private Image[] northWeapon;
@@ -56,14 +52,18 @@ public class Player extends Minion {
 	private Image[] southEastWeapon;
 	private Image[] southWeapon;
 	private Image[] southWestWeapon;
-	
+
+	private Image[] northSheep;
+	private Image[] westSheep;
+	private Image[] eastSheep;
+	private Image[] southSheep;
+
 	private Image currentBody;
 	private Image currentHead;
 	private Image currentWeapon;
-	
+
 	private int tileTimeCounter;
 	private int tileCounter;
-	
 
 	private enum Gender {
 		MALE, FEMALE
@@ -95,7 +95,7 @@ public class Player extends Minion {
 		southEastBody = new Image[32];
 		southBody = new Image[32];
 		southWestBody = new Image[32];
-		
+
 		westHead = new Image[32];
 		northWestHead = new Image[32];
 		northHead = new Image[32];
@@ -103,8 +103,8 @@ public class Player extends Minion {
 		eastHead = new Image[32];
 		southEastHead = new Image[32];
 		southHead = new Image[32];
-		southWestHead= new Image[32];
-		
+		southWestHead = new Image[32];
+
 		westWeapon = new Image[32];
 		northWestWeapon = new Image[32];
 		northWeapon = new Image[32];
@@ -113,13 +113,17 @@ public class Player extends Minion {
 		southEastWeapon = new Image[32];
 		southWeapon = new Image[32];
 		southWestWeapon = new Image[32];
-		
+
+		northSheep = new Image[3];
+		westSheep = new Image[3];
+		eastSheep = new Image[3];
+		southSheep = new Image[3];
 
 		this.name = name;
 		energy = 100f;
 		abilities = new Ability[4];
 		team = Model.Team.GREEN;
-		
+
 		loadImages();
 		tileCounter = 0;
 
@@ -136,45 +140,56 @@ public class Player extends Minion {
 	}
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
-		
-//		switch(getDirection()){
-//		case WEST:
-//			g.drawImage(westBody[0], getXPos() - cameraX-40, getYPos() - cameraY-50);
-//			break;
-//		case NORTHWEST:
-//			g.drawImage(northWestBody[0], getXPos() - cameraX-40, getYPos() - cameraY-50);
-//			break;
-//		case NORTH:
-//			g.drawImage(northBody[0], getXPos() - cameraX-40, getYPos() - cameraY-50);
-//			break;
-//		case NORTHEAST:
-//			g.drawImage(northEastBody[0], getXPos() - cameraX-40, getYPos() - cameraY-50);
-//			break;
-//		case EAST:
-//			g.drawImage(eastBody[0], getXPos() - cameraX-40, getYPos() - cameraY-50);
-//			break;
-//		case SOUTHEAST:
-//			g.drawImage(southEastBody[0], getXPos() - cameraX-40, getYPos() - cameraY-50);
-//			break;
-//		case SOUTH:
-//			g.drawImage(southBody[0], getXPos() - cameraX-40, getYPos() - cameraY-50);
-//			break;
-//		case SOUTHWEST:
-//			g.drawImage(southWestBody[0], getXPos() - cameraX-40, getYPos() - cameraY-50);
-//			break;
-//		default:
-//			break;
-//			
-//		}
-		
-		
-		g.drawImage(currentBody, getXPos() - cameraX-40, getYPos()-cameraY-50);
-		g.drawImage(currentHead, getXPos() - cameraX-40, getYPos()-cameraY-50);
-		g.drawImage(currentWeapon, getXPos() - cameraX-40, getYPos()-cameraY-50);
-		
-		
-		
-		
+
+		// switch(getDirection()){
+		// case WEST:
+		// g.drawImage(westBody[0], getXPos() - cameraX-40, getYPos() -
+		// cameraY-50);
+		// break;
+		// case NORTHWEST:
+		// g.drawImage(northWestBody[0], getXPos() - cameraX-40, getYPos() -
+		// cameraY-50);
+		// break;
+		// case NORTH:
+		// g.drawImage(northBody[0], getXPos() - cameraX-40, getYPos() -
+		// cameraY-50);
+		// break;
+		// case NORTHEAST:
+		// g.drawImage(northEastBody[0], getXPos() - cameraX-40, getYPos() -
+		// cameraY-50);
+		// break;
+		// case EAST:
+		// g.drawImage(eastBody[0], getXPos() - cameraX-40, getYPos() -
+		// cameraY-50);
+		// break;
+		// case SOUTHEAST:
+		// g.drawImage(southEastBody[0], getXPos() - cameraX-40, getYPos() -
+		// cameraY-50);
+		// break;
+		// case SOUTH:
+		// g.drawImage(southBody[0], getXPos() - cameraX-40, getYPos() -
+		// cameraY-50);
+		// break;
+		// case SOUTHWEST:
+		// g.drawImage(southWestBody[0], getXPos() - cameraX-40, getYPos() -
+		// cameraY-50);
+		// break;
+		// default:
+		// break;
+		//
+		// }
+
+		if (!isPolymorphed()) {
+			g.drawImage(currentBody, getXPos() - cameraX - 40, getYPos()
+					- cameraY - 50);
+			g.drawImage(currentHead, getXPos() - cameraX - 40, getYPos()
+					- cameraY - 50);
+			g.drawImage(currentWeapon, getXPos() - cameraX - 40, getYPos()
+					- cameraY - 50);
+		} else {
+			g.drawImage(currentBody, getXPos() - cameraX, getYPos() - cameraY);
+		}
+
 		if (name != null) {
 
 			g.drawString(name, getXPos() - cameraX, getYPos() - cameraY - 20);
@@ -184,8 +199,8 @@ public class Player extends Minion {
 			}
 		}
 
-//		g.drawRect(getXPos() - cameraX, getYPos() - cameraY, getBoundingBox()
-//				.getWidth(), getBoundingBox().getHeight());
+		// g.drawRect(getXPos() - cameraX, getYPos() - cameraY, getBoundingBox()
+		// .getWidth(), getBoundingBox().getHeight());
 	}
 
 	public String getName() {
@@ -206,32 +221,37 @@ public class Player extends Minion {
 	public void update(int delta, ArrayList<Entity> entities) {
 		super.update(delta, entities, true);
 
-		
-		
-		
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
 		}
-		
+
 		tileTimeCounter = tileTimeCounter + delta;
-		if(tileTimeCounter > 100){
+		if (tileTimeCounter > 100) {
 			tileTimeCounter = 0;
 			tileCounter++;
 		}
-		
-		if(isMoving()){
-			currentBody = getMovingDirectionBodySprites()[4+tileCounter%8];
-			currentHead = getMovingDirectionHeadSprites()[4+tileCounter%8];
-			currentWeapon = getMovingDirectionWeaponSprites()[4+tileCounter%8];
+
+		if (!isPolymorphed()) {
+			if (isMoving()) {
+				currentBody = getMovingDirectionBodySprites()[4 + tileCounter % 8];
+				currentHead = getMovingDirectionHeadSprites()[4 + tileCounter % 8];
+				currentWeapon = getMovingDirectionWeaponSprites()[4 + tileCounter % 8];
+			} else {
+				currentBody = getMovingDirectionBodySprites()[tileCounter % 4];
+				currentHead = getMovingDirectionHeadSprites()[tileCounter % 4];
+				currentWeapon = getMovingDirectionWeaponSprites()[tileCounter % 4];
+			}
 		}else{
-			currentBody = getMovingDirectionBodySprites()[tileCounter%4];
-			currentHead = getMovingDirectionHeadSprites()[tileCounter%4];
-			currentWeapon = getMovingDirectionWeaponSprites()[tileCounter%4];
+			if(isMoving()){
+				currentBody = getMovingDirectionSheep()[tileCounter % 3];
+			}else{
+				currentBody = getMovingDirectionSheep()[1];
+			}
 		}
 	}
-	
+
 	private Image[] getMovingDirectionWeaponSprites() {
-		switch(getDirection()){
+		switch (getDirection()) {
 		case WEST:
 			return westWeapon;
 		case NORTHWEST:
@@ -253,8 +273,8 @@ public class Player extends Minion {
 		}
 	}
 
-	private Image[] getMovingDirectionBodySprites(){
-		switch(getDirection()){
+	private Image[] getMovingDirectionBodySprites() {
+		switch (getDirection()) {
 		case WEST:
 			return westBody;
 		case NORTHWEST:
@@ -275,9 +295,9 @@ public class Player extends Minion {
 			return null;
 		}
 	}
-	
-	private Image[] getMovingDirectionHeadSprites(){
-		switch(getDirection()){
+
+	private Image[] getMovingDirectionHeadSprites() {
+		switch (getDirection()) {
 		case WEST:
 			return westHead;
 		case NORTHWEST:
@@ -297,6 +317,26 @@ public class Player extends Minion {
 		default:
 			return null;
 		}
+	}
+	
+	private Image[] getMovingDirectionSheep(){
+		switch(getDirection()){
+		case WEST:
+		case NORTHWEST:
+			return westSheep;
+		case NORTH:
+		case NORTHEAST:
+			return northSheep;
+		case EAST:
+		case SOUTHEAST:
+			return eastSheep;
+		case SOUTH:
+		case SOUTHWEST:
+			return southSheep;
+		default:
+			return null;
+		}
+		
 	}
 
 	public Ability getAbility(int abilityNumber) {
@@ -321,39 +361,80 @@ public class Player extends Minion {
 
 	private void loadImages() {
 
-		for (int x = 0; x < 32; x++) {	
+		for (int x = 0; x < 32; x++) {
 			int y = 0;
-			westBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "steel_armor.png");
-			westHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "male_head2.png");
-			westWeapon[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "greatsword.png");
+			westBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(
+					x, y, "steel_armor.png");
+			westHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(
+					x, y, "male_head2.png");
+			westWeapon[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "greatsword.png");
 			y++;
-			northWestBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "steel_armor.png");
-			northWestHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "male_head2.png");
-			northWestWeapon[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "greatsword.png");
+			northWestBody[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "steel_armor.png");
+			northWestHead[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "male_head2.png");
+			northWestWeapon[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "greatsword.png");
 			y++;
-			northBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "steel_armor.png");
-			northHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "male_head2.png");
-			northWeapon[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "greatsword.png");
+			northBody[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "steel_armor.png");
+			northHead[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "male_head2.png");
+			northWeapon[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "greatsword.png");
 			y++;
-			northEastBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "steel_armor.png");
-			northEastHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "male_head2.png");
-			northEastWeapon[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "greatsword.png");
+			northEastBody[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "steel_armor.png");
+			northEastHead[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "male_head2.png");
+			northEastWeapon[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "greatsword.png");
 			y++;
-			eastBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "steel_armor.png");
-			eastHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "male_head2.png");
-			eastWeapon[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "greatsword.png");
+			eastBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(
+					x, y, "steel_armor.png");
+			eastHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(
+					x, y, "male_head2.png");
+			eastWeapon[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "greatsword.png");
 			y++;
-			southEastBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "steel_armor.png");
-			southEastHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "male_head2.png");
-			southEastWeapon[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "greatsword.png");
+			southEastBody[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "steel_armor.png");
+			southEastHead[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "male_head2.png");
+			southEastWeapon[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "greatsword.png");
 			y++;
-			southBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "steel_armor.png");
-			southHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "male_head2.png");
-			southWeapon[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "greatsword.png");
+			southBody[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "steel_armor.png");
+			southHead[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "male_head2.png");
+			southWeapon[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "greatsword.png");
 			y++;
-			southWestBody[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "steel_armor.png");
-			southWestHead[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "male_head2.png");
-			southWestWeapon[x] = TextureHandler.getInstance().getImageFromSpriteSheet(x, y, "greatsword.png");
+			southWestBody[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "steel_armor.png");
+			southWestHead[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "male_head2.png");
+			southWestWeapon[x] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(x, y, "greatsword.png");
+		}
+
+		for (int i = 0; i < southSheep.length; i++) {
+			southSheep[i] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(9 + i, 0, "animal.png");
+		}
+		for (int i = 0; i < westSheep.length; i++) {
+			westSheep[i] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(9 + i, 1, "animal.png");
+		}
+		for (int i = 0; i < eastSheep.length; i++) {
+			eastSheep[i] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(9 + i, 2, "animal.png");
+		}
+		for (int i = 0; i < northSheep.length; i++) {
+			northSheep[i] = TextureHandler.getInstance()
+					.getImageFromSpriteSheet(9 + i, 3, "animal.png");
 		}
 
 	}

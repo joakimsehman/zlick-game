@@ -50,8 +50,10 @@ public class TextureHandler {
 			addImage("fireball.png");
 			addImage("questionmarkIcon.png");
 			addImage("fireballIcon.png");
+			addImage("massPolymorphIcon.png");
 			addImage("joinGreenTeam.png");
 			addImage("joinBrownTeam.png");
+			addImage("spell_circle.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,6 +61,7 @@ public class TextureHandler {
         addSpriteSheet("steel_armor.png", 128, 128);
         addSpriteSheet("male_head2.png", 128, 128);
         addSpriteSheet("greatsword.png", 128, 128);
+        addSpriteSheet("animal.png", 32,  32);
 
 	}
 

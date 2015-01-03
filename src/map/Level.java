@@ -11,6 +11,7 @@ public class Level {
 
     private int background;
     private int stuff;
+    private int decorations;
 	
 	public TiledMap map = null;
 	
@@ -29,6 +30,7 @@ public class Level {
 
         background = map.getLayerIndex("background");
         stuff = map.getLayerIndex("solids");
+        decorations = map.getLayerIndex("decorations");
 
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
@@ -81,7 +83,13 @@ public class Level {
         //map.render(x, y,10, 10, 10, 20, background, false); //FUCKING SHITCUNT sx sy DONT DO FUCKING SHIT WTF??? 10 fucking hours for nothing.. TODO: RENDER ONLY MAP THATS ON SCREEN....
         //map.render(x, y, (-x)/64, (-y)/32, 50, 50);
         map.render(x, y, background);
+        map.render(x, y, decorations);
         map.render(x, y, stuff);
+        
+    }
+    
+    public void renderDecorations(int x, int y){
+    	
     }
 	
 }

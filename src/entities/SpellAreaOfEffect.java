@@ -1,3 +1,4 @@
+
 package entities;
 
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ public class SpellAreaOfEffect extends Entity {
 	private int damage;
 	private int shield;
 	private int damageReduction;
-	private int buffDuration;
 	private int spellDuration;
 	private boolean disappearsIfTouched;
 	private int durationLeft;
@@ -36,7 +36,9 @@ public class SpellAreaOfEffect extends Entity {
 		super.update(delta, null, false);
 		durationLeft = durationLeft - delta;
 		if (entities != null) {
+			
 			if (disappearsIfTouched) {
+				//server handles all collision for these kinds of spells it seems
 				if (Model.model.isServer()) {
 					if (this.getBoundingBox().intersects(
 							myself.getBoundingBox())) {
@@ -59,7 +61,12 @@ public class SpellAreaOfEffect extends Entity {
 					}
 				}
 			} else {
+				//here each client is responsible for applying the spell themself
+				if(this.getBoundingBox().intersects(myself.getBoundingBox())){
+					onTic(delta, myself);
+				}
 				for (Player p : entities) {
+					
 					if (this.getBoundingBox().intersects(p.getBoundingBox())) {
 						onTic(delta, p);
 					}
@@ -89,8 +96,7 @@ public class SpellAreaOfEffect extends Entity {
 		durationLeft = -1;
 	}
 
-	public void onTic(int delta, Player player) {
-
+	protected void onTic(int delta, Player player) {
 	}
 
 	public void onExpire() {

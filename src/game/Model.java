@@ -51,7 +51,7 @@ public class Model {
 	private float cameraX;
 	private float cameraY;
 
-    private Level level;
+	private Level level;
 
 	public static Model model;
 
@@ -207,7 +207,7 @@ public class Model {
 				if (id == otherPlayers.get(i).getID()) {
 					otherPlayers.get(i).setPos(xPos, yPos);
 					otherPlayers.get(i).setVectorWithoutSpeedModifier(vectorX,
-                            vectorY);
+							vectorY);
 				}
 			}
 		}
@@ -222,12 +222,12 @@ public class Model {
 	}
 
 	public void startGame() {
-        level = new Level();
-        if(getMyself().getTeam() == Team.GREEN){
-            getMyself().setPos(-4400, 2350);
-        }else if(getMyself().getTeam() == Team.BROWN){
-            getMyself().setPos(4400, 2350);
-        }
+		level = new Level();
+		if (getMyself().getTeam() == Team.GREEN) {
+			getMyself().setPos(-4400, 2350);
+		} else if (getMyself().getTeam() == Team.BROWN) {
+			getMyself().setPos(4400, 2350);
+		}
 		network.startNetworkThread();
 		isGaming = true;
 		sendAbilities();
@@ -266,31 +266,33 @@ public class Model {
 
 		if (abilityNumber > 0 && abilityNumber < 5) {
 
-			if (getMyself().getAbility(abilityNumber) != null) {
-				if (getMyself().reduceEnergy(
-						getMyself().getAbility(abilityNumber).getCost())) {
-					Ability ability = getMyself().getAbility(abilityNumber);
-					int spellEffectId[] = new int[ability
-							.getSpellEffectAmount()];
-					for (int i = 0; i < ability.getSpellEffectAmount(); i++) {
-						spellEffectId[i] = getNextSpellEffectId();
-					}
+			if (!getMyself().isPolymorphed()) {
+				if (getMyself().getAbility(abilityNumber) != null) {
+					if (getMyself().reduceEnergy(
+							getMyself().getAbility(abilityNumber).getCost())) {
+						Ability ability = getMyself().getAbility(abilityNumber);
+						int spellEffectId[] = new int[ability
+								.getSpellEffectAmount()];
+						for (int i = 0; i < ability.getSpellEffectAmount(); i++) {
+							spellEffectId[i] = getNextSpellEffectId();
+						}
 
-					network.sendAbility(getMyself().getID(), abilityNumber,
-							mouseGameX, mouseGameY, spellEffectId);
-					executeAbility(getMyself().getID(), abilityNumber,
-							mouseGameX, mouseGameY, spellEffectId);
+						network.sendAbility(getMyself().getID(), abilityNumber,
+								mouseGameX, mouseGameY, spellEffectId);
+						executeAbility(getMyself().getID(), abilityNumber,
+								mouseGameX, mouseGameY, spellEffectId);
+					}
 				}
 			}
 		} else if (abilityNumber == 5) {
 
 			if (getMyself().getSpeedDurationLeft() <= 0) {
 				if (getMyself().reduceEnergy(20)) {
-					getMyself().applyMovementModifyer(2.0f, 4000);
+					getMyself().applyMovementModifyer(1.5f, 4000);
 				}
 			} else {
-				if (getMyself().reduceEnergy(40)) {
-					getMyself().applyMovementModifyer(4.0f, 1000);
+				if (getMyself().reduceEnergy(60)) {
+					getMyself().applyMovementModifyer(2.5f, 1000);
 				}
 			}
 		}
@@ -375,8 +377,8 @@ public class Model {
 		return null;
 	}
 
-    public Level getLevel(){
-        return level;
-    }
+	public Level getLevel() {
+		return level;
+	}
 
 }
