@@ -5,7 +5,10 @@ import game.Model.Team;
 
 import java.io.IOException;
 
+import org.newdawn.slick.geom.Vector2f;
+
 import networking.Packet.Packet0LoginRequest;
+import networking.Packet.Packet10CustomSpellEffect;
 import networking.Packet.Packet1LoginAnswer;
 import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
@@ -19,7 +22,7 @@ import abilities.Ability;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.minlog.Log;
+
 
 public class BlazeClient extends Network implements Runnable{
 
@@ -56,6 +59,7 @@ public class BlazeClient extends Network implements Runnable{
 		kryo.register(Packet7AddAbility.class);
 		kryo.register(Packet8SetTeam.class);
 		kryo.register(Packet9SpellHit.class);
+		kryo.register(Packet10CustomSpellEffect.class);
 		kryo.register(int[].class);
 	}
 
@@ -88,6 +92,7 @@ public class BlazeClient extends Network implements Runnable{
 		playerSender.vectorX = Model.model.getMyself().getVectorX();
 		playerSender.vectorY = Model.model.getMyself().getVectorY();
 		playerSender.ID = Model.model.getID();
+		playerSender.isCasting = Model.model.getMyself().isCasting();
 		
 		client.sendUDP(playerSender);
 	}
@@ -144,6 +149,22 @@ public class BlazeClient extends Network implements Runnable{
 	public void sendSpellHitReport(int spellCombinedId, int playerHitId) {
 		// TODO Auto-generated method stub
 		//never used, always used as server, i guess not good programming... anyone has any ideas?
+	}
+
+	@Override
+	public void sendCustomSpellAreaOfEffect(int effectId, float xPos,
+			float yPos, float vectorX, float vectorY, int duration, int playerUsedId,
+			int spellEffectId) {
+		Packet10CustomSpellEffect customSpellEffect = new Packet10CustomSpellEffect();
+		customSpellEffect.effectId = effectId;
+		customSpellEffect.xPos = xPos;
+		customSpellEffect.yPos = yPos;
+		customSpellEffect.vectorX = vectorX;
+		customSpellEffect.vectorY = vectorY;
+		customSpellEffect.duration = duration;
+		customSpellEffect.playerUsedId = playerUsedId;
+		customSpellEffect.spellEffectId = spellEffectId;
+		client.sendTCP(customSpellEffect);
 	}
 	
 }

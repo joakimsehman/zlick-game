@@ -1,5 +1,7 @@
 package networking;
 
+import org.newdawn.slick.geom.Vector2f;
+
 import game.Model.Team;
 
 public class Packet {
@@ -17,6 +19,7 @@ public class Packet {
 		int ID;
 		float vectorX;
 		float vectorY;
+		boolean isCasting;
 	}
 	public static class Packet4AddPlayer{
 		float xPos;
@@ -47,6 +50,17 @@ public class Packet {
 	public static class Packet9SpellHit{
 		int combinedId;
 		int playerHitId;
+	}
+	
+	public static class Packet10CustomSpellEffect{
+		int effectId;
+		float xPos;
+		float yPos;
+		float vectorX;
+		float vectorY;
+		int duration;
+		int playerUsedId;
+		int spellEffectId;
 	}
 	
 	//hej

@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import abilities.Ability;
 import utilities.AbilityCreator;
+import utilities.SpellAreaOfEffectCreator;
 import utilities.TextureHandler;
 import entities.Entity;
 import entities.Player;
@@ -204,13 +205,14 @@ public class Model {
 	}
 
 	public void updatePlayer(float xPos, float yPos, float vectorX,
-			float vectorY, int id) {
+			float vectorY, int id, boolean isCasting) {
 		if (id != this.id) {
 			for (int i = 0; i < otherPlayers.size(); i++) {
 				if (id == otherPlayers.get(i).getID()) {
 					otherPlayers.get(i).setPos(xPos, yPos);
 					otherPlayers.get(i).setVectorWithoutSpeedModifier(vectorX,
 							vectorY);
+					otherPlayers.get(i).setIsCasting(isCasting);
 				}
 			}
 		}
@@ -225,7 +227,6 @@ public class Model {
 	}
 
 	public void startGame() {
-		level = new Level();
 		if (getMyself().getTeam() == Team.GREEN) {
 			getMyself().setPos(-4400, 2350);
 		} else if (getMyself().getTeam() == Team.BROWN) {
@@ -261,7 +262,6 @@ public class Model {
 		return isGaming;
 	}
 
-	// implement castbar?=?????
 	public void useAbility(int abilityNumber, int mouseXPos, int mouseYPos) {
 		System.out.println("ability: " + abilityNumber + " used");
 
@@ -291,8 +291,9 @@ public class Model {
 							executeAbility(getMyself().getID(), abilityNumber,
 									mouseGameX, mouseGameY, spellEffectId);
 						}
-					}else{
-						getMyself().startCastedAbility(abilityNumber, mouseGameX, mouseGameY);
+					} else {
+						getMyself().startCastedAbility(abilityNumber,
+								mouseGameX, mouseGameY);
 					}
 				}
 			}
@@ -310,27 +311,36 @@ public class Model {
 		}
 
 	}
-	
-	public void finishCastingAbility(int abilityNumber, float mouseGameX, float mouseGameY){
-		if (getMyself()
-				.reduceEnergy(
-						getMyself().getAbility(abilityNumber)
-								.getCost())) {
-			Ability ability = getMyself().getAbility(
-					abilityNumber);
-			int spellEffectId[] = new int[ability
-					.getSpellEffectAmount()];
+
+	public void finishCastingAbility(int abilityNumber, float mouseGameX,
+			float mouseGameY) {
+		if (getMyself().reduceEnergy(
+				getMyself().getAbility(abilityNumber).getCost())) {
+			Ability ability = getMyself().getAbility(abilityNumber);
+			int spellEffectId[] = new int[ability.getSpellEffectAmount()];
 			for (int i = 0; i < ability.getSpellEffectAmount(); i++) {
 				spellEffectId[i] = getNextSpellEffectId();
 			}
 
-			network.sendAbility(getMyself().getID(),
-					abilityNumber, mouseGameX, mouseGameY,
-					spellEffectId);
-			executeAbility(getMyself().getID(), abilityNumber,
-					mouseGameX, mouseGameY, spellEffectId);
+			network.sendAbility(getMyself().getID(), abilityNumber, mouseGameX,
+					mouseGameY, spellEffectId);
+			executeAbility(getMyself().getID(), abilityNumber, mouseGameX,
+					mouseGameY, spellEffectId);
 		}
 	}
+	
+	//if you let more than on client or host call this your fucked
+	public void launchCustomSpellAreaOfEffect(int effectId, float xPos, float yPos, float vectorX, float vectorY, int duration, int playerUsedId, int spellEffectId){
+		network.sendCustomSpellAreaOfEffect(effectId, xPos, yPos, vectorX, vectorY, duration, playerUsedId, spellEffectId);
+		recieveCustomSpellAreaOfEffect(effectId, xPos, yPos, vectorX, vectorY, duration, playerUsedId, spellEffectId);
+		
+	}
+	
+	public void recieveCustomSpellAreaOfEffect(int effectId, float xPos, float yPos, float vectorX, float vectorY, int duration, int playerUsedId, int spellEffectId){
+		SpellAreaOfEffect spell = SpellAreaOfEffectCreator.getNewEffect(effectId, xPos, yPos, new Vector2f(vectorX, vectorY), duration, playerUsedId, spellEffectId);
+		addActiveSpell(spell);
+	}
+	
 
 	public void executeAbility(int id, int abilityNumber, float mouseGameX,
 			float mouseGameY, int spellEffectId[]) {
@@ -387,7 +397,7 @@ public class Model {
 		this.getPlayer(playerId).setTeam(team);
 	}
 
-	private int getNextSpellEffectId() {
+	public int getNextSpellEffectId() {
 		return spellEffectIdCounter++;
 	}
 
@@ -397,8 +407,10 @@ public class Model {
 	}
 
 	public void recieveSpellHitReport(int combinedId, int playerHitId) {
-		getSpellByCombinedId(combinedId).applyEffect(
-				Model.model.getPlayer(playerHitId));
+		if (getSpellByCombinedId(combinedId) != null) {
+			getSpellByCombinedId(combinedId).applyEffect(
+					Model.model.getPlayer(playerHitId));
+		}
 	}
 
 	public SpellAreaOfEffect getSpellByCombinedId(int combinedId) {
@@ -431,6 +443,10 @@ public class Model {
 			activeGui.get(i).update(delta);
 		}
 
+	}
+
+	public void initLevel(Level level) {
+		this.level = level;
 	}
 
 }

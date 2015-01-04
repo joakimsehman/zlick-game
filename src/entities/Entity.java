@@ -20,9 +20,7 @@ public abstract class Entity {
 	private float speedModifier;
     private boolean isMoving;
     private Direction direction;
-
-
-
+    
 	public Entity(float xPos, float yPos, Vector2f vector, Shape boundingBox,
 			Image image) {
 		this.xPos = xPos;

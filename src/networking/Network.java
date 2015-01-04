@@ -1,5 +1,7 @@
 package networking;
 
+import org.newdawn.slick.geom.Vector2f;
+
 import game.Model.Team;
 import networking.Packet.Packet0LoginRequest;
 import networking.Packet.Packet1LoginAnswer;
@@ -34,5 +36,9 @@ public abstract class Network {
 	public abstract void sendSetTeam(int id, Team team);
 
 	public abstract void sendSpellHitReport(int spellCombinedId, int playerHitId);
+
+	public abstract void sendCustomSpellAreaOfEffect(int effectId, float xPos,
+			float yPos, float vectorX, float vectorY, int duration, int playerUsedId,
+			int spellEffectId);
 	
 }

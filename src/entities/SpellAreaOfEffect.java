@@ -8,15 +8,13 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+
+//dont forget to overwrite getEffectId() if you extend this class
 public class SpellAreaOfEffect extends Entity {
 
 	
 	//some of these are never initialized and used, remember if using something new
-	private int movementSpeedModifier;
 	private int damage;
-	private int shield;
-	private int damageReduction;
-	private int spellDuration;
 	private boolean disappearsIfTouched;
 	private int durationLeft;
 	private int combinedId;
@@ -32,6 +30,7 @@ public class SpellAreaOfEffect extends Entity {
 	}
 
 	// if(dissappearsIfTouched == false) {damage is damage/sec}
+	//either onHit will be called or onTic, never both
 	public void update(int delta, ArrayList<Player> entities, Player myself) {
 		super.update(delta, null, false);
 		durationLeft = durationLeft - delta;
@@ -43,9 +42,7 @@ public class SpellAreaOfEffect extends Entity {
 					if (this.getBoundingBox().intersects(
 							myself.getBoundingBox())) {
 						if(Model.model.getPlayer(getPlayerUsedId()).getTeam() != Model.model.getMyself().getTeam()){
-							applyEffect(myself);
-							Model.model.sendSpellHitReport(combinedId,
-									Model.model.getMyself().getID());
+							onHit(myself);
 						}
 					}
 					for (Player p : entities) {
@@ -53,21 +50,19 @@ public class SpellAreaOfEffect extends Entity {
 								.intersects(p.getBoundingBox())) {
 							if (Model.model.getPlayer(getPlayerUsedId())
 									.getTeam() != p.getTeam()) {
-								applyEffect(p);
-								Model.model.sendSpellHitReport(combinedId,
-										p.getID());
+								onHit(p);
 							}
 						}
 					}
 				}
 			} else {
 				//here each client is responsible for applying the spell themself
-				if(this.getBoundingBox().intersects(myself.getBoundingBox())){
+				if(Model.model.getPlayer(getPlayerUsedId()).getTeam() != myself.getTeam() && this.getBoundingBox().intersects(myself.getBoundingBox())){
 					onTic(delta, myself);
 				}
 				for (Player p : entities) {
 					
-					if (this.getBoundingBox().intersects(p.getBoundingBox())) {
+					if (Model.model.getPlayer(getPlayerUsedId()).getTeam() != p.getTeam() && this.getBoundingBox().intersects(p.getBoundingBox())) {
 						onTic(delta, p);
 					}
 				}
@@ -98,8 +93,22 @@ public class SpellAreaOfEffect extends Entity {
 
 	protected void onTic(int delta, Player player) {
 	}
+	
+	private void onHit(Player p){
+		applyEffect(p);
+		Model.model.sendSpellHitReport(combinedId,
+				p.getID());
+	}
+	
+	public void setDamage(int damage){
+		this.damage = damage;
+	}
 
 	public void onExpire() {
 
+	}
+	
+	public static int getEffectId(){
+		return 0;
 	}
 }

@@ -18,10 +18,12 @@ public class TextureHandler {
     private ArrayList<Image> images;
     private ArrayList<SpriteSheet> spriteSheets;
 	private static TextureHandler textureHandler;
+	private final Image[] bola;
 
 	private TextureHandler() {
 		images = new ArrayList<Image>();
         spriteSheets = new ArrayList<SpriteSheet>();
+        bola = new Image[4];
 	}
 
 	public static TextureHandler getInstance() {
@@ -55,6 +57,7 @@ public class TextureHandler {
 			addImage("joinBrownTeam.png");
 			addImage("spell_circle.png");
 			addImage("castbar.png");
+			addImage("bolaIcon.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -63,8 +66,15 @@ public class TextureHandler {
         addSpriteSheet("male_head2.png", 128, 128);
         addSpriteSheet("greatsword.png", 128, 128);
         addSpriteSheet("animal.png", 32,  32);
+        addSpriteSheet("projectiles.png", 64, 64);
 
+        
+        for(int i = 0; i < bola.length; i++){
+        	bola[i] = getImageFromSpriteSheet(i, 2, "projectiles.png");
+        }
 	}
+	
+	
 
 	private void addImage(String str) throws SlickException, IOException {
 		BufferedImage bufferedImage = ImageIO.read(new File("assets/" + str));
@@ -96,6 +106,12 @@ public class TextureHandler {
     public Image getImageFromSpriteSheet(int tileX, int tileY, String sheetName){
         return getSpriteSheetByName(sheetName).getSprite(tileX, tileY);
     }
+    
+    public Image getBola(int i){
+		return bola[i];
+    }
+    
+    
 
 
     //the getSprite method has really bad performance when you are rendering a tiled map. you should use renderInUSe

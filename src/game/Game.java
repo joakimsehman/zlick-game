@@ -1,5 +1,7 @@
 package game;
 
+import map.Level;
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -183,10 +185,12 @@ public class Game implements GameState {
 			throws SlickException {
 		// TODO Auto-generated method stub
 
+		Model.model.initLevel(new Level());
+		
 		screenWidth = gc.getScreenWidth();
 		screenHeight = gc.getScreenHeight();
 		
-		gc.setFullscreen(true);
+		gc.setFullscreen(false);
 		
 		
 		Model.model.addActiveGui(new CastBar(gc.getScreenWidth()/2, gc.getScreenHeight()/2-10));

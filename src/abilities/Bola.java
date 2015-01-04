@@ -4,35 +4,37 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Vector2f;
 
+import entities.BolaEffect;
 import entities.Player;
-import entities.PolymorphingEffect;
-import entities.SpellAreaOfEffect;
 import game.Model;
 import utilities.TextureHandler;
 
-public class MassPolymorph extends Ability{
+public class Bola extends Ability{
 
 	private int duration;
 	
-	public MassPolymorph(String name, int duration) {
-		super(name, 1, TextureHandler.getInstance().getImageByName("massPolymorphIcon.png"));
+	public Bola(String name, int duration) {
+		super(name, 2, TextureHandler.getInstance().getImageByName("bolaIcon.png"));
 		this.duration = duration;
 	}
 
 	@Override
 	public void useAbility(int id, float mouseGameX, float mouseGameY,
 			int[] spellEffectId) {
+		Player usingPlayer = Model.model.getPlayer(id);
 		
+		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
 		
-		PolymorphingEffect spell = new PolymorphingEffect(mouseGameX-100, mouseGameY-94, new Vector2f(0,0), duration, id, spellEffectId[0]);
-	
+		BolaEffect spell = new BolaEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, id, spellEffectId[0]);
+		spell.setVectorByDegree(100, angle);
+		
 		Model.model.addActiveSpell(spell);
 	}
 
 	@Override
 	public int getCost() {
 		// TODO Auto-generated method stub
-		return 40;
+		return 20;
 	}
 
 	@Override
@@ -43,14 +45,14 @@ public class MassPolymorph extends Ability{
 
 	@Override
 	public int getCastTime() {
-		return 1500;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public boolean isCastableWhileMoving() {
-		return false;
+		// TODO Auto-generated method stub
+		return true;
 	}
 
-	
-	
 }

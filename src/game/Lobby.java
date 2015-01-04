@@ -169,6 +169,7 @@ public class Lobby implements GameState {
 		// add all abilities that you should be able to choose from
 		abilities.add(AbilityCreator.getNewAbility(0));
 		abilities.add(AbilityCreator.getNewAbility(1));
+		abilities.add(AbilityCreator.getNewAbility(2));
 
 	}
 

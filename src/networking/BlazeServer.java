@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 
 
+
+
+import org.newdawn.slick.geom.Vector2f;
+
 import networking.Packet.*;
 import abilities.Ability;
 
@@ -58,6 +62,7 @@ public class BlazeServer extends Network implements Runnable{
 		kryo.register(Packet7AddAbility.class);
 		kryo.register(Packet8SetTeam.class);
 		kryo.register(Packet9SpellHit.class);
+		kryo.register(Packet10CustomSpellEffect.class);
 		kryo.register(int[].class);
 		
 	}
@@ -98,6 +103,7 @@ public class BlazeServer extends Network implements Runnable{
 			playerSender.ID = Model.model.getOtherPlayers().get(i).getID();
 			playerSender.vectorX = Model.model.getOtherPlayers().get(i).getVectorX();
 			playerSender.vectorY = Model.model.getOtherPlayers().get(i).getVectorY();
+			playerSender.isCasting = Model.model.getOtherPlayers().get(i).isCasting();
 			sendUDPToAll(playerSender);
 		}
 		
@@ -110,6 +116,7 @@ public class BlazeServer extends Network implements Runnable{
 		playerSender.ID = Model.model.getID();
 		playerSender.vectorX = Model.model.getMyself().getVectorX();
 		playerSender.vectorY = Model.model.getMyself().getVectorY();
+		playerSender.isCasting = Model.model.getMyself().isCasting();
 		sendUDPToAll(playerSender);
 		
 	}
@@ -191,6 +198,23 @@ public class BlazeServer extends Network implements Runnable{
 		spellHit.combinedId = spellCombinedId;
 		spellHit.playerHitId = playerHitId;
 		sendTCPToAll(spellHit);
+	}
+
+	@Override
+	public void sendCustomSpellAreaOfEffect(int effectId, float xPos,
+			float yPos, float vectorX, float vectorY, int duration, int playerUsedId,
+			int spellEffectId) {
+		Packet10CustomSpellEffect customSpellEffect = new Packet10CustomSpellEffect();
+		customSpellEffect.effectId = effectId;
+		customSpellEffect.xPos = xPos;
+		customSpellEffect.yPos = yPos;
+		customSpellEffect.vectorX = vectorX;
+		customSpellEffect.vectorY = vectorY;
+		customSpellEffect.duration = duration;
+		customSpellEffect.playerUsedId = playerUsedId;
+		customSpellEffect.spellEffectId = spellEffectId;
+		sendTCPToAll(customSpellEffect);
+		
 	}
 
 	

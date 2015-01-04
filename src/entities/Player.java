@@ -497,6 +497,11 @@ public class Player extends Minion {
 		}
 	}
 	
+	//for network 
+	public void setIsCasting(boolean isCasting){
+		this.isCasting = isCasting;
+	}
+	
 	private void useCastedSpell() {
 		Model.model.finishCastingAbility(castingSpellAbilityNumber, castingSpellXPos, castingSpellYPos);
 	}
@@ -507,6 +512,11 @@ public class Player extends Minion {
 	
 	public int getCastTime(){
 		return castTime;
+	}
+	
+	public int getTileCounter(){
+		return tileCounter;
+		
 	}
 	
 	
