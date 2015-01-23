@@ -3,6 +3,20 @@ package abilities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
+
+
+
+
+
+/*
+ * create a new class in abilities that extends Ability
+add a constructor and pass Ability lobbyicon to super constructor
+add your ability to AbilityCreator
+in lobby, in the enter method add your Ability
+
+implement useAbility, and decide cost and castTime for ability in getCost() and getCastTime
+ */
+
 public abstract class Ability{
 
 	private String name;
