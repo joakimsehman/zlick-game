@@ -10,11 +10,10 @@ import org.newdawn.slick.geom.Vector2f;
 
 
 //dont forget to overwrite getEffectId() if you extend this class
-public class SpellAreaOfEffect extends Entity {
+public abstract class SpellAreaOfEffect extends Entity {
 
 	
 	//some of these are never initialized and used, remember if using something new
-	private int damage;
 	private boolean disappearsIfTouched;
 	private int durationLeft;
 	private int combinedId;
@@ -25,7 +24,6 @@ public class SpellAreaOfEffect extends Entity {
 		super(xPos, yPos, vector, boundingBox, image);
 		this.disappearsIfTouched = disappearsIfTouched;
 		this.durationLeft = duration;
-		damage = 10;
 		combinedId = playerId * 1000000 + spellEffectId;
 	}
 
@@ -87,8 +85,6 @@ public class SpellAreaOfEffect extends Entity {
 	}
 
 	public void applyEffect(Player player) {
-		player.applyDamageModifyer(-damage);
-		durationLeft = -1;
 	}
 
 	protected void onTic(int delta, Player player) {
@@ -96,12 +92,9 @@ public class SpellAreaOfEffect extends Entity {
 	
 	private void onHit(Player p){
 		applyEffect(p);
+		durationLeft = -1;
 		Model.model.sendSpellHitReport(combinedId,
 				p.getID());
-	}
-	
-	public void setDamage(int damage){
-		this.damage = damage;
 	}
 
 	public void onExpire() {

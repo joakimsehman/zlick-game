@@ -17,6 +17,7 @@ public class BolaEffect extends SpellAreaOfEffect {
 
 	private Image currentImage;
 	private int playerId;
+	private int damage;
 
 	public BolaEffect(float xPos, float yPos, Vector2f vector, int duration,
 			int playerId, int spellEffectId) {
@@ -24,13 +25,14 @@ public class BolaEffect extends SpellAreaOfEffect {
 				duration, true, playerId, spellEffectId);
 		currentImage = TextureHandler.getInstance().getBola(0);
 		this.playerId = playerId;
-		setDamage(5);
+		damage = 5;
 	}
 
 	// make it multiply? Model.model.launchCustomSpellAreaOfEffect?
 	public void applyEffect(Player p) {
 		super.applyEffect(p);
 		p.applyMovementModifyer(0.1f, 2000);
+		p.applyDamageModifyer(-damage);
 		if (playerId == Model.model.getMyself().getID()) {
 			Model.model.launchCustomSpellAreaOfEffect(getEffectId(), this.getXPos() + this.getVectorX()/2, this.getYPos() + this.getVectorY()/2, getVectorX(), getVectorY(), 500, this.playerId, Model.model.getNextSpellEffectId());
 		}

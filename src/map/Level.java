@@ -50,6 +50,7 @@ public class Level {
 
                 //check first map layer for some stuff(ex. grass, water)
                 if(tileId == 1 || tileId == 2){
+                	
                     tileProperties[x][y] = Tile.grass;
 
                 }else if(tileId == 86){

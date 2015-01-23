@@ -1,5 +1,6 @@
 package abilities;
 
+import entities.FireballEffect;
 import entities.Player;
 import entities.SpellAreaOfEffect;
 import game.Model;
@@ -33,7 +34,7 @@ public class Fireball extends Ability{
 		
 		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
 		
-		SpellAreaOfEffect spell = new SpellAreaOfEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), new Circle(usingPlayer.getXPos() + 25,usingPlayer.getYPos() + 25, 10) , TextureHandler.getInstance().getImageByName("fireball.png"), duration, true, id, spellEffectId[0]);
+		FireballEffect spell = new FireballEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, id, spellEffectId[0]);
 		spell.setVectorByDegree(80, angle);
 		
 		Model.model.addActiveSpell(spell);
