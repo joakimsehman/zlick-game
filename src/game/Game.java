@@ -20,7 +20,6 @@ public class Game implements GameState {
 	private final int stateID;
 	private int screenWidth;
 	private int screenHeight;
-	
 
 	public Game(int GAME) {
 
@@ -92,23 +91,28 @@ public class Game implements GameState {
 		switch (keyNr) {
 		case 2:
 			// 1 pressed
-			Model.model.useAbility(1, Mouse.getX(), screenHeight - Mouse.getY());
+			Model.model
+					.useAbility(1, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		case 3:
 			// 2 pressed
-			Model.model.useAbility(2, Mouse.getX(), screenHeight - Mouse.getY());
+			Model.model
+					.useAbility(2, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		case 4:
 			// 3 pressed
-			Model.model.useAbility(3, Mouse.getX(), screenHeight - Mouse.getY());
+			Model.model
+					.useAbility(3, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		case 5:
 			// 4 pressed
-			Model.model.useAbility(4, Mouse.getX(), screenHeight - Mouse.getY());
+			Model.model
+					.useAbility(4, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		case 57:
-			//Space pressed
-			Model.model.useAbility(5, Mouse.getX(), screenHeight - Mouse.getY());
+			// Space pressed
+			Model.model
+					.useAbility(5, Mouse.getX(), screenHeight - Mouse.getY());
 			break;
 		}
 
@@ -186,16 +190,15 @@ public class Game implements GameState {
 		// TODO Auto-generated method stub
 
 		Model.model.initLevel(new Level());
-		
+
 		screenWidth = gc.getScreenWidth();
 		screenHeight = gc.getScreenHeight();
-		
+
 		gc.setFullscreen(false);
-		
-		
-		Model.model.addActiveGui(new CastBar(gc.getScreenWidth()/2, gc.getScreenHeight()/2-10));
-		
-		
+
+		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc
+				.getScreenHeight() / 2 - 10));
+
 		gc.getInput().addKeyListener(this);
 	}
 
@@ -207,8 +210,6 @@ public class Game implements GameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1)
 			throws SlickException {
-
-		
 
 	}
 
@@ -222,18 +223,13 @@ public class Game implements GameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame app, Graphics g)
 			throws SlickException {
+		
+		float cameraX = Model.model.getCameraX();
+		float cameraY = Model.model.getCameraY();
+		
+		Model.model.getLevel().render((int) -cameraX, (int) -cameraY);
 
-        //calculating camera position
-		float cameraX = Model.model.getMyself().getXPos() - gc.getScreenWidth()
-				/ 2;
-		float cameraY = Model.model.getMyself().getYPos()
-				- gc.getScreenHeight() / 2;
-
-        Model.model.setCamera(cameraX, cameraY);
-
-        Model.model.getLevel().render((int)-cameraX, (int)-cameraY);
-        
-        for(int i = 0; i < Model.model.getActiveSpells().size(); i++){
+		for (int i = 0; i < Model.model.getActiveSpells().size(); i++) {
 			Model.model.getActiveSpells().get(i).draw(g, cameraX, cameraY);
 		}
 
@@ -251,15 +247,11 @@ public class Game implements GameState {
 				+ "   playerX:" + Model.model.getMyself().getXPos()
 				+ "   playerY:" + Model.model.getMyself().getYPos(), 100, 100);
 
-		//draw gui
-		for(int i = 0; i < Model.model.getActiveGui().size(); i++){
+		// draw gui
+		for (int i = 0; i < Model.model.getActiveGui().size(); i++) {
 			Model.model.getActiveGui().get(i).draw(g);
 		}
-		
-		
-		
-		
-		
+
 	}
 
 	@Override
@@ -272,10 +264,7 @@ public class Game implements GameState {
 		boolean rightKeyPressed = false;
 		boolean upKeyPressed = false;
 		boolean downKeyPressed = false;
-		
-		
-		
-		
+
 		if (gc.getInput().isKeyDown(17)) {
 			upKeyPressed = true;
 		}
@@ -288,22 +277,28 @@ public class Game implements GameState {
 		if (gc.getInput().isKeyDown(32)) {
 			rightKeyPressed = true;
 		}
-		
-		
-		
-		
-		
+
 		Model.model.handlePlayerMovement(upKeyPressed, downKeyPressed,
 				leftKeyPressed, rightKeyPressed);
 
 		Model.model.getMyself().update(delta, Model.model.getTerrain());
-		
-		for(int i = 0; i < Model.model.getOtherPlayers().size(); i++){
+
+		for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
 			Model.model.getOtherPlayers().get(i).update(delta, null);
 		}
+
+		// calculating camera position
+		float cameraX = Model.model.getMyself().getXPos() - gc.getScreenWidth()
+				/ 2;
+		float cameraY = Model.model.getMyself().getYPos()
+				- gc.getScreenHeight() / 2;
+
+		Model.model.setCamera(cameraX, cameraY);
 		
+		Model.model.updateMouseGameXY(Mouse.getX(), gc.getScreenHeight() - Mouse.getY());
+
 		Model.model.updateSpells(delta);
-		
+
 		Model.model.checkForExpiredSpells();
 
 		Model.model.updateGui(delta);

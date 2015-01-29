@@ -55,6 +55,8 @@ public class Model {
 	private float cameraY;
 
 	private Level level;
+	private float mouseGameX;
+	private float mouseGameY;
 
 	public static Model model;
 
@@ -329,7 +331,11 @@ public class Model {
 		}
 	}
 	
-	//if you let more than on client or host call this your fucked
+	public void finishCastingAbility(int abilityNumber){
+		finishCastingAbility(abilityNumber, mouseGameX, mouseGameY);
+	}
+	
+	//if you let more than one client or host call this your fucked
 	public void launchCustomSpellAreaOfEffect(int effectId, float xPos, float yPos, float vectorX, float vectorY, int duration, int playerUsedId, int spellEffectId){
 		network.sendCustomSpellAreaOfEffect(effectId, xPos, yPos, vectorX, vectorY, duration, playerUsedId, spellEffectId);
 		recieveCustomSpellAreaOfEffect(effectId, xPos, yPos, vectorX, vectorY, duration, playerUsedId, spellEffectId);
@@ -360,6 +366,19 @@ public class Model {
 	public void setCamera(float cameraX, float cameraY) {
 		this.cameraX = cameraX;
 		this.cameraY = cameraY;
+	}
+	
+	public float getCameraX(){
+		return cameraX;
+	}
+	
+	public float getCameraY(){
+		return cameraY;
+	}
+	
+	public void updateMouseGameXY(int mouseXPos, int mouseYPos){
+		mouseGameX = cameraX + mouseXPos;
+		mouseGameY = cameraY + mouseYPos;
 	}
 
 	public void updateSpells(int delta) {
@@ -448,5 +467,7 @@ public class Model {
 	public void initLevel(Level level) {
 		this.level = level;
 	}
+	
+	
 
 }

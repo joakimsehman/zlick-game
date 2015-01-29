@@ -203,7 +203,7 @@ public class Player extends Minion {
 		}
 
 		if (name != null) {
-			
+
 			g.setColor(getTeamColor());
 			g.drawString(name, getXPos() - cameraX, getYPos() - cameraY - 25);
 			if (Model.model.getID() == id) {
@@ -217,9 +217,9 @@ public class Player extends Minion {
 	}
 
 	private Color getTeamColor() {
-		if(team == Team.GREEN){
+		if (team == Team.GREEN) {
 			return Color.green;
-		}else{
+		} else {
 			return brown;
 		}
 	}
@@ -252,18 +252,17 @@ public class Player extends Minion {
 			tileCounter++;
 		}
 
-		
-		if(isPolymorphed()){
-			if(isMoving()){
+		if (isPolymorphed()) {
+			if (isMoving()) {
 				currentBody = getMovingDirectionSheep()[tileCounter % 3];
-			}else{
+			} else {
 				currentBody = getMovingDirectionSheep()[1];
 			}
-		}else if(isCasting() && !isMoving()){
-			currentBody = getMovingDirectionBodySprites()[24+tileCounter % 4];
-			currentHead = getMovingDirectionHeadSprites()[24+tileCounter % 4];
+		} else if (isCasting() && !isMoving()) {
+			currentBody = getMovingDirectionBodySprites()[24 + tileCounter % 4];
+			currentHead = getMovingDirectionHeadSprites()[24 + tileCounter % 4];
 			currentWeapon = getMovingDirectionWeaponSprites()[24 + tileCounter % 4];
-		}else{
+		} else {
 			if (isMoving()) {
 				currentBody = getMovingDirectionBodySprites()[4 + tileCounter % 8];
 				currentHead = getMovingDirectionHeadSprites()[4 + tileCounter % 8];
@@ -274,22 +273,22 @@ public class Player extends Minion {
 				currentWeapon = getMovingDirectionWeaponSprites()[tileCounter % 4];
 			}
 		}
-		
-		if(isCasting()){
-			if(!isMoving() || getAbility(castingSpellAbilityNumber).isCastableWhileMoving()){
-				if(castTimeLeft > 0){
+
+		if (isCasting()) {
+			if (!isMoving()
+					|| getAbility(castingSpellAbilityNumber)
+							.isCastableWhileMoving()) {
+				if (castTimeLeft > 0) {
 					castTimeLeft = castTimeLeft - delta;
-				}else{
+				} else {
 					isCasting = false;
 					useCastedSpell();
 				}
-			}else{
+			} else {
 				isCasting = false;
 			}
 		}
 	}
-
-	
 
 	private Image[] getMovingDirectionWeaponSprites() {
 		switch (getDirection()) {
@@ -359,9 +358,9 @@ public class Player extends Minion {
 			return null;
 		}
 	}
-	
-	private Image[] getMovingDirectionSheep(){
-		switch(getDirection()){
+
+	private Image[] getMovingDirectionSheep() {
+		switch (getDirection()) {
 		case WEST:
 		case NORTHWEST:
 			return westSheep;
@@ -377,7 +376,7 @@ public class Player extends Minion {
 		default:
 			return null;
 		}
-		
+
 	}
 
 	public Ability getAbility(int abilityNumber) {
@@ -399,8 +398,8 @@ public class Player extends Minion {
 	public Team getTeam() {
 		return team;
 	}
-	
-	public boolean isCasting(){
+
+	public boolean isCasting() {
 		return isCasting;
 	}
 
@@ -486,8 +485,9 @@ public class Player extends Minion {
 
 	public void startCastedAbility(int abilityNumber, float mouseGameX,
 			float mouseGameY) {
-		if((!isMoving() || getAbility(abilityNumber).isCastableWhileMoving()) && getAbility(abilityNumber).getCost() < this.energy){
-			
+		if ((!isMoving() || getAbility(abilityNumber).isCastableWhileMoving())
+				&& getAbility(abilityNumber).getCost() < this.energy) {
+
 			castTime = this.getAbility(abilityNumber).getCastTime();
 			castTimeLeft = castTime;
 			isCasting = true;
@@ -496,28 +496,35 @@ public class Player extends Minion {
 			this.castingSpellYPos = mouseGameY;
 		}
 	}
-	
-	//for network 
-	public void setIsCasting(boolean isCasting){
+
+	// for network
+	public void setIsCasting(boolean isCasting) {
 		this.isCasting = isCasting;
 	}
-	
+
 	private void useCastedSpell() {
-		Model.model.finishCastingAbility(castingSpellAbilityNumber, castingSpellXPos, castingSpellYPos);
+		if (this == Model.model.getMyself()) {
+			if (this.getAbility(castingSpellAbilityNumber)
+					.isCastableWhileMoving()) {
+				Model.model.finishCastingAbility(castingSpellAbilityNumber);
+			}else{
+				Model.model.finishCastingAbility(castingSpellAbilityNumber,
+						castingSpellXPos, castingSpellYPos);
+			}
+		}
 	}
-	
-	public int getCastTimeLeft(){
+
+	public int getCastTimeLeft() {
 		return castTimeLeft;
 	}
-	
-	public int getCastTime(){
+
+	public int getCastTime() {
 		return castTime;
 	}
-	
-	public int getTileCounter(){
+
+	public int getTileCounter() {
 		return tileCounter;
-		
+
 	}
-	
-	
+
 }
