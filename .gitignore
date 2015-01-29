@@ -52,3 +52,5 @@ bin/gui/castBar.class
 *.class
 .classpath
 .classpath
+bin/gui/castBar.class
+bin/gui/guiEntity.class
