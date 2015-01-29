@@ -50,3 +50,5 @@ Temporary Items
 .classpath
 bin/gui/castBar.class
 *.class
+.classpath
+.classpath
