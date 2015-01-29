@@ -15,6 +15,7 @@ $RECYCLE.BIN/
 *.msp
 
 *.class
+*.classpath
 
 # Project files
 .project
