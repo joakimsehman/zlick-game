@@ -20,7 +20,7 @@ public class Lobby implements GameState {
 
 	private final int stateID;
 	private int selectedAbility;
-	private ArrayList<Ability> abilities;
+	private ArrayList<Image> abilityIcons;
 	
 
 	public Lobby(int GameState) {
@@ -164,12 +164,13 @@ public class Lobby implements GameState {
 	public void enter(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		selectedAbility = 1;
-		abilities.clear();
+		abilityIcons.clear();
 
-		// add all abilities that you should be able to choose from
-		abilities.add(AbilityCreator.getNewAbility(0));
-		abilities.add(AbilityCreator.getNewAbility(1));
-		abilities.add(AbilityCreator.getNewAbility(2));
+		// add all abilityIcon that you should be able to choose from
+        //right now they must be in order of id
+        abilityIcons.add(TextureHandler.getInstance().getImageByName("fireballIcon.png"));
+        abilityIcons.add(TextureHandler.getInstance().getImageByName("massPolymorphIcon.png"));
+        abilityIcons.add(TextureHandler.getInstance().getImageByName("bolaIcon.png"));
 
 	}
 
@@ -180,9 +181,8 @@ public class Lobby implements GameState {
 	}
 
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
-		abilities = new ArrayList<Ability>();
+	public void init(GameContainer arg0, StateBasedGame arg1)throws SlickException{
+		abilityIcons = new ArrayList<Image>();
 	}
 
 	@Override
@@ -268,11 +268,9 @@ public class Lobby implements GameState {
 						.getScreenWidth() / 2 + 50, 20);
 
 		// draw all ability choices
-		for (int i = 0; i < abilities.size(); i++) {
-			abilities
-					.get(i)
-					.getIcon()
-					.draw(gc.getScreenWidth() / 2 + (i % 10) * 40,
+		for (int i = 0; i < abilityIcons.size(); i++) {
+			abilityIcons
+					.get(i).draw(gc.getScreenWidth() / 2 + (i % 10) * 40,
 							90 + (i / 10) * 40);
 		}
 
@@ -306,13 +304,13 @@ public class Lobby implements GameState {
 			}
 
 			// check if ability selection clicked
-			for (int i = 0; i < abilities.size(); i++) {
+			for (int i = 0; i < abilityIcons.size(); i++) {
 				if (posX > (gc.getScreenWidth() / 2 + (i % 10) * 40)
 						&& posX < (gc.getScreenWidth() / 2 + (i % 10) * 40 + 30)) {
 					if (posY < (gc.getScreenHeight() - (90 + (i / 10) * 40))
 							&& posY > (gc.getScreenHeight() - (90 + (i / 10) * 40 + 30))) {
 						Model.model.getMyself().setAbility(
-								AbilityCreator.getNewAbility(i),
+								AbilityCreator.getNewAbility(i, Model.model.getMyself().getID()),
 								selectedAbility);
 					}
 				}

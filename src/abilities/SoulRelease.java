@@ -9,8 +9,8 @@ import org.newdawn.slick.Image;
  */
 public class SoulRelease extends Ability{
 
-    public SoulRelease(String name, int id, Image icon){
-       super(name, id, icon);
+    public SoulRelease(String name, int id, Image icon, int playerCreatedId){
+       super(name, id, icon, playerCreatedId);
 
 
     }
@@ -19,6 +19,8 @@ public class SoulRelease extends Ability{
         Player usingPlayer = Model.model.getPlayer(id);
     }
 
+
+    //du kan använda getPlayerCreatedId() för att komma åt usingPlayer
     public int getCost(){
 
     }
