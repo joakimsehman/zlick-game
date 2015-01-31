@@ -84,9 +84,11 @@ public abstract class SpellAreaOfEffect extends Entity {
 		return durationLeft;
 	}
 
+	//override this if your ability disappearsIfTouched
 	public void applyEffect(Player player) {
 	}
 
+	//override this if your ability does not disappearsIfTouched
 	protected void onTic(int delta, Player player) {
 	}
 	
@@ -97,6 +99,7 @@ public abstract class SpellAreaOfEffect extends Entity {
 				p.getID());
 	}
 
+	//override this to do stuff on expire
 	public void onExpire() {
 
 	}
