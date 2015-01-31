@@ -170,7 +170,10 @@ public class Player extends Minion {
 			energy = energy - amount;
 			return true;
 		}
-
+	}
+	
+	public float getEnergy(){
+		return energy;
 	}
 
 	public void update(int delta, ArrayList<Entity> entities) {
