@@ -1,33 +1,35 @@
-package utilities;
+package animation;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import utilities.TextureHandler;
+
 public class DirectedAnimation {
 
 	
+	
 	private Image currentImage;
 	private Image[][] images;
-	private String spriteSheetName;
 	
 	private int imageCounter;
 	private int imageSwitchSpeed;
 	private int imageDeltaSinceSwitch;
 
-	// remember to run an init method!
-	public DirectedAnimation(String spriteSheetName) {
-		this.spriteSheetName = spriteSheetName;
+	
+	public DirectedAnimation(Image[][] animImages) {
 		imageSwitchSpeed = 100;
 		imageDeltaSinceSwitch = 0;
+		images = animImages;
 	}
 
-	public void initSpritesAlongX(int x, int deltaX, int y, int deltaY) {
+	public static Image[][] initSpritesAlongX(String spriteSheetName, int x, int deltaX, int y, int deltaY) {
 		if (deltaY < 1 || deltaX < 1) {
 			throw new IllegalArgumentException(
 					"Animation length or directions cant be less than 1");
 		}
 
-		images = new Image[deltaY][deltaX];
+		Image[][] images = new Image[deltaY][deltaX];
 
 		for (int j = y; j < deltaY; j++) {
 			for (int i = x; i < deltaX; i++) {
@@ -35,15 +37,17 @@ public class DirectedAnimation {
 						x, y, spriteSheetName);
 			}
 		}
+		
+		return images;
 	}
 
-	public void initSpritesAlongY(int x, int deltaX, int y, int deltaY) {
+	public static Image[][] initSpritesAlongY(String spriteSheetName, int x, int deltaX, int y, int deltaY) {
 		if (deltaY < 1 || deltaX < 1) {
 			throw new IllegalArgumentException(
 					"Animation length or directions cant be less than 1");
 		}
 		
-		images = new Image[deltaX][deltaY];
+		Image[][] images = new Image[deltaX][deltaY];
 		
 		for(int j = x; j < deltaX; j++){
 			for(int i = y; i < deltaY; i++){
@@ -51,6 +55,8 @@ public class DirectedAnimation {
 						x, y, spriteSheetName);
 			}
 		}
+		
+		return images;
 	}
 	
 	public void setImageSwitchSpeed(int ms){
@@ -76,5 +82,8 @@ public class DirectedAnimation {
 		
 		currentImage = images[(int)percentOfArray*images.length][imageCounter];
 	}
+	
+	
+	
 
 }
