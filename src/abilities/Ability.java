@@ -12,7 +12,8 @@ import org.newdawn.slick.geom.Vector2f;
  * create a new class in abilities that extends Ability
 add a constructor and pass Ability lobbyicon to super constructor
 add your ability to AbilityCreator
-in lobby, in the enter method add your Ability
+
+in lobby, in the enter method add your Ability's Icon (this will be changed later but do as it says now)
 
 implement useAbility, and decide cost and castTime for ability in getCost() and getCastTime
  */
@@ -24,21 +25,22 @@ public abstract class Ability{
 	private int id;
 	private Image icon;
 	
-	public Ability(String name, int id, Image icon){
+	public Ability(String name, int id, Image icon, int playerCreatedId){
 		this.name = name;
 		this.id = id;
 		this.icon = icon;
+        this.playerCreatedId = playerCreatedId;
 	}
 	
 	
 	
-	
+	//TODO change id to be player used on if any instead of the player self, change in all abilities and all places where abilities are used
 	public abstract void useAbility(int id, float mouseGameX, float mouseGameY, int[] spellEffectId);
 	
 	public final String getName(){
 		return name;
 	}
-	
+
 	public final int getID(){
 		return id;
 	}

@@ -138,7 +138,6 @@ public class Model {
 			modelNetState = NetState.SERVER;
 			myself = new Player(50f, 50f, new Vector2f(0, 0), new Rectangle(
 					50f, 50f, 50, 50), 100, name, id);
-			myself.setAbility(AbilityCreator.getNewAbility(0), 1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -159,7 +158,6 @@ public class Model {
 		this.id = id;
 		myself = new Player(50f, 50f, new Vector2f(0, 0), new Rectangle(50f,
 				50f, 50, 50), 100, name, id);
-		myself.setAbility(AbilityCreator.getNewAbility(0), 1);
 	}
 
 	public int getID() {
@@ -403,7 +401,7 @@ public class Model {
 	}
 
 	public void setPlayerAbility(int playerID, int abilityID, int abilityNumber) {
-		getPlayer(playerID).setAbility(AbilityCreator.getNewAbility(abilityID),
+		getPlayer(playerID).setAbility(AbilityCreator.getNewAbility(abilityID, playerID),
 				abilityNumber);
 	}
 

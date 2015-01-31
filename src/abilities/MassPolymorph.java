@@ -14,8 +14,8 @@ public class MassPolymorph extends Ability{
 
 	private int duration;
 	
-	public MassPolymorph(String name, int duration) {
-		super(name, 1, TextureHandler.getInstance().getImageByName("massPolymorphIcon.png"));
+	public MassPolymorph(String name, int duration, int playerCreatedId) {
+		super(name, 1, TextureHandler.getInstance().getImageByName("massPolymorphIcon.png"), playerCreatedId);
 		this.duration = duration;
 	}
 

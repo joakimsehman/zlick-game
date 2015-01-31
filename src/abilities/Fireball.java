@@ -18,8 +18,8 @@ public class Fireball extends Ability{
 	private int duration;
 	
 	
-	public Fireball(String name, int duration) {
-		super(name, 0, TextureHandler.getInstance().getImageByName("fireballIcon.png"));
+	public Fireball(String name, int duration, int playerCreatedId) {
+		super(name, 0, TextureHandler.getInstance().getImageByName("fireballIcon.png"), playerCreatedId);
 		this.duration = duration;
 		
 	}
