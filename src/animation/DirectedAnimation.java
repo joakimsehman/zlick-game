@@ -68,10 +68,10 @@ public class DirectedAnimation {
 		}
 	}
 
-	protected void update(int delta, double directionInDegrees) {
-		double percentOfArray = directionInDegrees / 361.0f;
+	protected void update(int delta, double directionInPercentOfDirections) {
+		
 
-		currentImage = images[((int) (percentOfArray * images.length))][imageCounter];
+		currentImage = images[((int) (directionInPercentOfDirections * images.length))][imageCounter];
 	}
 
 }

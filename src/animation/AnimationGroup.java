@@ -36,6 +36,11 @@ public class AnimationGroup {
 	
 	public void update(int delta, double directionInDegrees){
 		directionInDegrees++; // to compensate for wierd angling
+		double directionInPercentOfDirections = directionInDegrees / 361.0f;
+		update1(delta, directionInPercentOfDirections);
+	}
+	
+	public void update1(int delta, double directionInPercentOfDirections){
 		imageDeltaSinceSwitch += delta;
 		if(imageDeltaSinceSwitch > imageSwitchSpeed){
 			imageDeltaSinceSwitch -= imageSwitchSpeed;
@@ -45,7 +50,7 @@ public class AnimationGroup {
 		}
 		
 		for(int i = 0; i < animations.size(); i++){
-			animations.get(i).update(delta, directionInDegrees);
+			animations.get(i).update(delta, directionInPercentOfDirections);
 		}
 	}
 }

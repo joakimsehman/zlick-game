@@ -3,6 +3,8 @@ package abilities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
+import utilities.AbilityCreator;
+
 
 
 
@@ -23,12 +25,10 @@ public abstract class Ability{
 	private String name;
 	private int playerCreatedId;
 	private int id;
-	private Image icon;
 	
-	public Ability(String name, int id, Image icon, int playerCreatedId){
+	public Ability(String name, int id, int playerCreatedId){
 		this.name = name;
 		this.id = id;
-		this.icon = icon;
         this.playerCreatedId = playerCreatedId;
 	}
 	
@@ -52,7 +52,7 @@ public abstract class Ability{
 	public abstract int getCost();
 	
 	public Image getIcon(){
-		return icon;
+		return AbilityCreator.getInstance().getSpellIconFromId(id);
 	}
 	
 	public abstract int getSpellEffectAmount();
