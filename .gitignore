@@ -56,3 +56,7 @@ bin/gui/castBar.class
 bin/gui/guiEntity.class
 .idea/workspace.xml
 .idea/workspace.xml
+.idea/libraries/kryonet_2_21_all.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/libraries/slick.xml
