@@ -14,7 +14,7 @@ public class Bola extends Ability{
 	private int duration;
 	
 	public Bola(String name, int duration, int playerCreatedId) {
-		super(name, 2, TextureHandler.getInstance().getImageByName("bolaIcon.png"), playerCreatedId);
+		super(name, 2, playerCreatedId);
 		this.duration = duration;
 	}
 

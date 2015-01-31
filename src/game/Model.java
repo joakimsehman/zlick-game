@@ -401,7 +401,7 @@ public class Model {
 	}
 
 	public void setPlayerAbility(int playerID, int abilityID, int abilityNumber) {
-		getPlayer(playerID).setAbility(AbilityCreator.getNewAbility(abilityID, playerID),
+		getPlayer(playerID).setAbility(AbilityCreator.getInstance().getNewAbility(abilityID, playerID),
 				abilityNumber);
 	}
 

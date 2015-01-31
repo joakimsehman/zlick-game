@@ -310,7 +310,7 @@ public class Lobby implements GameState {
 					if (posY < (gc.getScreenHeight() - (90 + (i / 10) * 40))
 							&& posY > (gc.getScreenHeight() - (90 + (i / 10) * 40 + 30))) {
 						Model.model.getMyself().setAbility(
-								AbilityCreator.getNewAbility(i, Model.model.getMyself().getID()),
+								AbilityCreator.getInstance().getNewAbility(i, Model.model.getMyself().getID()),
 								selectedAbility);
 					}
 				}
