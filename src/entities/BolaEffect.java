@@ -40,9 +40,9 @@ public class BolaEffect extends SpellAreaOfEffect {
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
 		g.setColor(new Color(150, 75, 0));
-		g.drawOval(getXPos() - cameraX, getYPos() - cameraY, this.getBoundingBox().getWidth(), this.getBoundingBox().getHeight());
-		g.drawImage(currentImage, getXPos() - cameraX -12, getYPos() - cameraY - 12);
-		g.fillOval(getXPos() - cameraX+getBoundingBox().getWidth()/3, getYPos() - cameraY+getBoundingBox().getWidth()/3, this.getBoundingBox().getWidth()/3, this.getBoundingBox().getHeight()/3);
+		g.drawOval(getImageXPos() - cameraX, getImageYPos() - cameraY, this.getBoundingBox().getWidth(), this.getBoundingBox().getHeight());
+		g.drawImage(currentImage, getImageXPos() - cameraX -12, getImageYPos() - cameraY -12);
+		g.fillOval(getImageXPos() - cameraX+getBoundingBox().getWidth()/3, getImageYPos() - cameraY+getBoundingBox().getWidth()/3, this.getBoundingBox().getWidth()/3, this.getBoundingBox().getHeight()/3);
 	}
 
 	public void update(int delta, ArrayList<Player> entities, Player myself) {

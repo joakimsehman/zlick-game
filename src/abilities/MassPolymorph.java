@@ -23,8 +23,8 @@ public class MassPolymorph extends Ability{
 	public void useAbility(int id, float mouseGameX, float mouseGameY,
 			int[] spellEffectId) {
 		
-		
-		PolymorphingEffect spell = new PolymorphingEffect(mouseGameX-100, mouseGameY-94, new Vector2f(0,0), duration, id, spellEffectId[0]);
+		// -140 -66
+		PolymorphingEffect spell = new PolymorphingEffect(mouseGameX, mouseGameY, new Vector2f(0,0), duration, id, spellEffectId[0]);
 	
 		Model.model.addActiveSpell(spell);
 	}

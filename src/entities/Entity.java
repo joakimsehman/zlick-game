@@ -21,6 +21,9 @@ public abstract class Entity {
     private boolean isMoving;
     private Direction direction;
     
+    private int imageXPos;
+    private int imageYPos;
+    
 	public Entity(float xPos, float yPos, Vector2f vector, Shape boundingBox,
 			Image image) {
 		this.xPos = xPos;
@@ -30,6 +33,9 @@ public abstract class Entity {
 		this.boundingBox = boundingBox;
 		this.image = image;
 		speedModifier = 1;
+		
+		imageXPos = (int) (xPos - boundingBox.getWidth()/2);
+		imageYPos = (int) (yPos - boundingBox.getHeight()/2);
 	}
 
 	public float getXPos() {
@@ -55,11 +61,15 @@ public abstract class Entity {
 	public void setVectorWithoutSpeedModifier(float x, float y){
         vector.set(x, y);
         if(x == 0 && y == 0){
-            isMoving = false;
+            setIsMoving(false);
         }else{
-            isMoving = true;
+            setIsMoving(true);
             checkAndSetDirection();
         }
+	}
+	
+	protected void setIsMoving(boolean isMoving){
+		this.isMoving = isMoving;
 	}
 
 	public void setVectorByDegree(float length, float degree) {
@@ -68,9 +78,9 @@ public abstract class Entity {
 		float dy = (float) (length * Math.sin(Math.toRadians(degree)));
 		vector.set(dx, dy);
         if(length == 0){
-            isMoving = false;
+            setIsMoving(false);
         }else{
-            isMoving = true;
+            setIsMoving(true);
             checkAndSetDirection();
         }
 	}
@@ -161,6 +171,8 @@ public abstract class Entity {
 			} else {
 				xPos = newXPos;
 				yPos = newYPos;
+				imageXPos = (int) (xPos - boundingBox.getWidth()/2);
+				imageYPos = (int) (yPos - boundingBox.getHeight()/2);
 			}
 		}
 	}
@@ -168,7 +180,7 @@ public abstract class Entity {
 	public void draw(Graphics g, float cameraX, float cameraY) {
 		
 		if (image != null) {
-			g.drawImage(image, getXPos() - cameraX, getYPos() - cameraY);
+			g.drawImage(image, imageXPos - cameraX, imageYPos - cameraY);
 		}
 	}
 
@@ -223,6 +235,14 @@ public abstract class Entity {
     
     public Direction getDirection(){
     	return direction;
+    }
+    
+    public int getImageXPos(){
+    	return imageXPos;
+    }
+    
+    public int getImageYPos(){
+    	return imageYPos;
     }
 
 }

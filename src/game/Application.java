@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import entities.Entity;
 import entities.Terrain;
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 
 public class Application extends StateBasedGame{
@@ -31,6 +32,7 @@ public class Application extends StateBasedGame{
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 			TextureHandler.getInstance().loadTextures();
+			SoundHandler.getInstance().loadSounds();
 			Model.model.initModel();
 //			this.getState(MAINMENU).init(gc, this);
 //			this.getState(GAME).init(gc, this);

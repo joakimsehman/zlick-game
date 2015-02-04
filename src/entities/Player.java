@@ -15,6 +15,7 @@ import org.newdawn.slick.geom.Vector2f;
 import abilities.Ability;
 import animation.AnimationGroup;
 import animation.DirectedAnimation;
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 
 public class Player extends Minion {
@@ -36,12 +37,11 @@ public class Player extends Minion {
 	private Clothes clothes;
 	private Weapon weapon;
 
-
 	private Image[] northSheep;
 	private Image[] westSheep;
 	private Image[] eastSheep;
 	private Image[] southSheep;
-	
+
 	private AnimationGroup playerStillAnimation;
 	private AnimationGroup playerMovingAnimation;
 	private AnimationGroup playerCastingAnimation;
@@ -75,25 +75,44 @@ public class Player extends Minion {
 		gender = Gender.MALE;
 		clothes = Clothes.STEEL;
 		weapon = Weapon.SWORD;
-		
+
 		playerStillAnimation = new AnimationGroup();
-		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("steel_armor.png", 0, 4, 0, 8)));
-		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_head2.png", 0, 4, 0, 8)));
-		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("greatsword.png", 0, 4, 0, 8)));
-		
+		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("steel_armor.png", 0, 4, 0,
+						8)));
+		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation
+						.getSpritesAlongX("male_head2.png", 0, 4, 0, 8)));
+		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation
+						.getSpritesAlongX("greatsword.png", 0, 4, 0, 8)));
+
 		playerMovingAnimation = new AnimationGroup();
-		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("steel_armor.png", 4, 8, 0, 8)));
-		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_head2.png", 4, 8, 0, 8)));
-		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("greatsword.png", 4, 8, 0, 8)));
+		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("steel_armor.png", 4, 8, 0,
+						8)));
+		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation
+						.getSpritesAlongX("male_head2.png", 4, 8, 0, 8)));
+		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation
+						.getSpritesAlongX("greatsword.png", 4, 8, 0, 8)));
 
 		playerCastingAnimation = new AnimationGroup();
-		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("steel_armor.png", 24, 4, 0, 8)));
-		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_head2.png", 24, 4, 0, 8)));
-		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("greatsword.png", 24, 4, 0, 8)));
-		
-		
+		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("steel_armor.png", 24, 4, 0,
+						8)));
+		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("male_head2.png", 24, 4, 0,
+						8)));
+		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("greatsword.png", 24, 4, 0,
+						8)));
+
+		playerMovingAnimation.setImageSwitchSpeed(110);
+
 		currentPlayerAnimation = playerStillAnimation;
-		
+
 		northSheep = new Image[3];
 		westSheep = new Image[3];
 		eastSheep = new Image[3];
@@ -125,13 +144,11 @@ public class Player extends Minion {
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
 
-		
-
 		if (!isPolymorphed()) {
-			
-			currentPlayerAnimation.draw(g, getXPos() - cameraX - 40, getYPos()
-					- cameraY - 50);		
-			
+
+			currentPlayerAnimation.draw(g, getImageXPos() - cameraX - 20,
+					getImageYPos() - cameraY - 20);
+
 		} else {
 			g.drawImage(currentBody, getXPos() - cameraX, getYPos() - cameraY);
 		}
@@ -171,8 +188,8 @@ public class Player extends Minion {
 			return true;
 		}
 	}
-	
-	public float getEnergy(){
+
+	public float getEnergy() {
 		return energy;
 	}
 
@@ -182,7 +199,6 @@ public class Player extends Minion {
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
 		}
-
 
 		if (isPolymorphed()) {
 			if (isMoving()) {
@@ -199,9 +215,9 @@ public class Player extends Minion {
 				currentPlayerAnimation = playerStillAnimation;
 			}
 		}
-		
+
 		double playerDegrees = 0;
-		switch(getDirection()){
+		switch (getDirection()) {
 		case WEST:
 			playerDegrees = 0;
 			break;
@@ -227,9 +243,7 @@ public class Player extends Minion {
 			playerDegrees = 315;
 			break;
 		}
-		
-		
-		
+
 		currentPlayerAnimation.update(delta, playerDegrees);
 
 		if (isCasting()) {
@@ -248,8 +262,7 @@ public class Player extends Minion {
 		}
 	}
 
-	
-	//tobe removed when sheep animation is replaced with Animation
+	// tobe removed when sheep animation is replaced with Animation
 	private Image[] getMovingDirectionSheep() {
 		switch (getDirection()) {
 		case WEST:
@@ -294,10 +307,8 @@ public class Player extends Minion {
 		return isCasting;
 	}
 
-	
-	//tobe removed when sheep animation is replaced with Animation
+	// tobe removed when sheep animation is replaced with Animation
 	private void loadImages() {
- 
 
 		for (int i = 0; i < southSheep.length; i++) {
 			southSheep[i] = TextureHandler.getInstance()
@@ -342,7 +353,7 @@ public class Player extends Minion {
 			if (this.getAbility(castingSpellAbilityNumber)
 					.isCastableWhileMoving()) {
 				Model.model.finishCastingAbility(castingSpellAbilityNumber);
-			}else{
+			} else {
 				Model.model.finishCastingAbility(castingSpellAbilityNumber,
 						castingSpellXPos, castingSpellYPos);
 			}
@@ -360,6 +371,17 @@ public class Player extends Minion {
 	public int getTileCounter() {
 		return tileCounter;
 
+	}
+
+	protected void setIsMoving(boolean isMoving) {
+		if (isMoving != isMoving()) {
+			if (isMoving) {
+				SoundHandler.getInstance().runningSound.loop(1.0f, 0.1f);
+			} else {
+				SoundHandler.getInstance().runningSound.stop();
+			}
+		}
+		super.setIsMoving(isMoving);
 	}
 
 }

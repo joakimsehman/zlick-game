@@ -1,8 +1,6 @@
 package entities;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Circle;
-import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Ellipse;
 import org.newdawn.slick.geom.Vector2f;
 
 import utilities.TextureHandler;
@@ -12,10 +10,11 @@ public class PolymorphingEffect extends SpellAreaOfEffect {
 
 	private Polymorph polymorph;
 
+	//change to be actual size of new image
 	public PolymorphingEffect(float xPos, float yPos, Vector2f vector,
 			int duration, int playerId,
 			int spellEffectId) {
-		super(xPos, yPos, vector, new Circle(xPos, yPos, 100), TextureHandler
+		super(xPos, yPos, vector, new Ellipse(xPos, yPos, 140, 66), TextureHandler
 				.getInstance().getImageByName("spell_circle.png"), duration,
 				false, playerId, spellEffectId);
 		polymorph = new Polymorph(3000);
