@@ -260,6 +260,12 @@ public class Player extends Minion {
 				isCasting = false;
 			}
 		}
+
+		for (int i = 0; i < abilities.length; i++) {
+			if (abilities[i] != null) {
+				abilities[i].update(delta);
+			}
+		}
 	}
 
 	// tobe removed when sheep animation is replaced with Animation
@@ -374,7 +380,8 @@ public class Player extends Minion {
 	}
 
 	protected void setIsMoving(boolean isMoving) {
-		if (isMoving != isMoving() && this.getID() == Model.model.getMyself().getID()) {
+		if (isMoving != isMoving()
+				&& this.getID() == Model.model.getMyself().getID()) {
 			if (isMoving) {
 				SoundHandler.getInstance().runningSound.loop(1.0f, 0.1f);
 			} else {

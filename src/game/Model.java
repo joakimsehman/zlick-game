@@ -271,7 +271,7 @@ public class Model {
 		if (abilityNumber > 0 && abilityNumber < 5) {
 
 			if (!getMyself().isPolymorphed()) {
-				if (getMyself().getAbility(abilityNumber) != null) {
+				if (getMyself().getAbility(abilityNumber) != null && getMyself().getAbility(abilityNumber).getMsSinceLastUse() > getMyself().getAbility(abilityNumber).getCooldown()) {
 					if (getMyself().getAbility(abilityNumber).getCastTime() == 0) {
 						if (getMyself()
 								.reduceEnergy(

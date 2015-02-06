@@ -21,6 +21,7 @@ public class Bola extends Ability{
 	@Override
 	public void useAbility(int id, float mouseGameX, float mouseGameY,
 			int[] spellEffectId) {
+		super.useAbility(id, mouseGameX, mouseGameY, spellEffectId);
 		Player usingPlayer = Model.model.getPlayer(id);
 		
 		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
@@ -53,6 +54,11 @@ public class Bola extends Ability{
 	public boolean isCastableWhileMoving() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public int getCooldown() {
+		return 10000;
 	}
 
 }

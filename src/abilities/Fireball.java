@@ -30,6 +30,7 @@ public class Fireball extends Ability{
 
 	@Override
 	public void useAbility(int id, float mouseGameX, float mouseGameY, int spellEffectId[]) {
+		super.useAbility(id, mouseGameX, mouseGameY, spellEffectId);
 		Player usingPlayer = Model.model.getPlayer(id);
 		
 		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
@@ -68,6 +69,15 @@ public class Fireball extends Ability{
 
 	public boolean isCastableWhileMoving() {
 		return true;
+	}
+
+
+
+
+
+	@Override
+	public int getCooldown() {
+		return 2000;
 	}
 
 }

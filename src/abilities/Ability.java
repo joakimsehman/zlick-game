@@ -25,17 +25,25 @@ public abstract class Ability{
 	private String name;
 	private int playerCreatedId;
 	private int id;
+	private int msSinceLastUsed;
 	
 	public Ability(String name, int id, int playerCreatedId){
 		this.name = name;
 		this.id = id;
         this.playerCreatedId = playerCreatedId;
+        msSinceLastUsed = getCooldown();
 	}
 	
 	
 	
 	//TODO change id to be player used on if any instead of the player self, change in all abilities and all places where abilities are used
-	public abstract void useAbility(int id, float mouseGameX, float mouseGameY, int[] spellEffectId);
+	public void useAbility(int id, float mouseGameX, float mouseGameY, int[] spellEffectId){
+		msSinceLastUsed = 0;
+	}
+	
+	public void update(int delta){
+		msSinceLastUsed += delta;
+	}
 	
 	public final String getName(){
 		return name;
@@ -60,5 +68,11 @@ public abstract class Ability{
 	public abstract int getCastTime();
 	
 	public abstract boolean isCastableWhileMoving();
+	
+	public abstract int getCooldown();
+	
+	public int getMsSinceLastUse(){
+		return msSinceLastUsed;
+	}
 	
 }
