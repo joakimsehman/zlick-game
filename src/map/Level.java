@@ -5,18 +5,19 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Level {
 
-	private int width = 150, height = 150;
+	private int width = 100, height = 100;
 	
 	private Tile[][] tileProperties = new Tile[width][height];
 
     private int background;
     private int stuff;
     private int decorations;
+    private int trees;
 	
 	public TiledMap map = null;
 	
 	public Level(){
-		String path = "assets/tileMaps/nufan.tmx";
+		String path = "assets/tileMaps/nufan2.tmx";
 
         try {
             map = new TiledMap(path);
@@ -31,6 +32,7 @@ public class Level {
         background = map.getLayerIndex("background");
         stuff = map.getLayerIndex("solids");
         decorations = map.getLayerIndex("decorations");
+        trees = map.getLayerIndex("trees");
 
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
@@ -53,8 +55,14 @@ public class Level {
                 	
                     tileProperties[x][y] = Tile.grass;
 
-                }else if(tileId == 86){
+                }else if(tileId == 86 || tileId == 85){
                     tileProperties[x][y] = Tile.water;
+                }
+                
+                tileId = map.getTileId(x, y, trees);
+                
+                if(tileId == 159 || tileId == 156 || tileId == 154 || tileId == 153 || tileId == 152 || tileId == 151 ||tileId == 134 || tileId == 133){
+                	tileProperties[x][y] = Tile.treeTrunk;
                 }
 
                 //check second map layer for some stuff(ex. rocks)
@@ -90,7 +98,7 @@ public class Level {
     }
     
     public void renderDecorations(int x, int y){
-    	
+    	map.render(x, y, trees);
     }
 	
 }

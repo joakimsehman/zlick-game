@@ -374,7 +374,7 @@ public class Player extends Minion {
 	}
 
 	protected void setIsMoving(boolean isMoving) {
-		if (isMoving != isMoving()) {
+		if (isMoving != isMoving() && this.getID() == Model.model.getMyself().getID()) {
 			if (isMoving) {
 				SoundHandler.getInstance().runningSound.loop(1.0f, 0.1f);
 			} else {

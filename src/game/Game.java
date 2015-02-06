@@ -241,12 +241,15 @@ public class Game implements GameState {
 			Model.model.getOtherPlayers().get(i).draw(g, cameraX, cameraY);
 		}
 
+		Model.model.getLevel().renderDecorations((int) -cameraX, (int) -cameraY);
+		
 		// shows coordinates and stuff
 		g.setColor(Color.blue);
 		g.drawString("cameraX:" + cameraX + "  cameraY:" + cameraY
 				+ "   playerX:" + Model.model.getMyself().getXPos()
 				+ "   playerY:" + Model.model.getMyself().getYPos(), 100, 100);
 
+		
 		// draw gui
 		for (int i = 0; i < Model.model.getActiveGui().size(); i++) {
 			Model.model.getActiveGui().get(i).draw(g);

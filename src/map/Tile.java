@@ -38,6 +38,13 @@ public abstract class Tile {
             return true;
         }
     }
+    
+    public static Tile treeTrunk = new TrunkTile();
+    public static class TrunkTile extends Tile{
+    	public boolean isSolid(){
+    		return true;
+    	}
+    }
 
 	public Tile(){
 		

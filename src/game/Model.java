@@ -228,9 +228,9 @@ public class Model {
 
 	public void startGame() {
 		if (getMyself().getTeam() == Team.GREEN) {
-			getMyself().setPos(-4400, 2350);
+			getMyself().setPos(-2650, 1550);
 		} else if (getMyself().getTeam() == Team.BROWN) {
-			getMyself().setPos(4400, 2350);
+			getMyself().setPos(2650, 1550);
 		}
 		network.startNetworkThread();
 		isGaming = true;
