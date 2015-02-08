@@ -53,6 +53,9 @@ public class Model {
 	private int id;
 	private float cameraX;
 	private float cameraY;
+	
+	private int screenWidth;
+	private int screenHeight;
 
 	private Level level;
 	private float mouseGameX;
@@ -68,6 +71,11 @@ public class Model {
 		activeSpells = new ArrayList<SpellAreaOfEffect>();
 		activeGui = new ArrayList<GuiEntity>();
 		spellEffectIdCounter = 0;
+	}
+	
+	public void setScreenSize(int width, int height){
+		screenWidth = width;
+		screenHeight = height;
 	}
 
 	public static Model getModel() {
@@ -464,6 +472,13 @@ public class Model {
 
 	public void initLevel(Level level) {
 		this.level = level;
+	}
+	
+	public boolean isOnScreen(float xPos, float yPos){
+		if(xPos > cameraX && xPos < cameraX + screenWidth && yPos > cameraY && yPos < cameraY + screenHeight){
+			return true;
+		}
+		return false;
 	}
 	
 	

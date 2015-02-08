@@ -123,11 +123,11 @@ public class Player extends Minion {
 	}
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
-		
+
 		if (!isTransformed()) {
 
-			currentPlayerAnimation.draw(g, getXPos() - cameraX - 45,
-					getYPos() - cameraY - 50);
+			currentPlayerAnimation.draw(g, getXPos() - cameraX - 45, getYPos()
+					- cameraY - 50);
 
 		} else {
 			super.draw(g, cameraX, cameraY);
@@ -143,8 +143,8 @@ public class Player extends Minion {
 			}
 		}
 
-//		 g.drawRect(getXPos() - cameraX, getYPos() - cameraY, getBoundingBox()
-//		.getWidth(), getBoundingBox().getHeight());
+		// g.drawRect(getXPos() - cameraX, getYPos() - cameraY, getBoundingBox()
+		// .getWidth(), getBoundingBox().getHeight());
 	}
 
 	private Color getTeamColor() {
@@ -179,7 +179,7 @@ public class Player extends Minion {
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
 		}
-		
+
 		if (!isTransformed()) {
 			double playerDegrees = 0;
 			switch (getDirection()) {
@@ -208,8 +208,6 @@ public class Player extends Minion {
 				playerDegrees = 315;
 				break;
 			}
-
-			
 
 			if (isCasting() && !isMoving()) {
 				currentPlayerAnimation = playerCastingAnimation;
@@ -336,12 +334,14 @@ public class Player extends Minion {
 		if (isMoving != isMoving()
 				&& this.getID() == Model.model.getMyself().getID()) {
 
-			SoundHandler.getInstance().runningSound.loop(1.0f, 0.1f);
-		} else {
-			SoundHandler.getInstance().runningSound.stop();
-		}
+			if (isMoving) {
+				SoundHandler.getInstance().runningSound.loop(1.0f, 0.5f);
+			} else {
+				SoundHandler.getInstance().runningSound.stop();
+			}
 
-		super.setIsMoving(isMoving);
+			super.setIsMoving(isMoving);
+		}
 	}
 
 }

@@ -6,6 +6,7 @@ import org.newdawn.slick.Sound;
 public class SoundHandler {
 
 	public Sound runningSound;
+	public Sound fireballSound;
 	private static SoundHandler soundHandler;
 	
 	private SoundHandler(){
@@ -22,6 +23,7 @@ public class SoundHandler {
 	
 	public void loadSounds() throws SlickException{
 		runningSound = new Sound("assets/sound/running1.wav");
+		fireballSound = new Sound("assets/sound/fireball.wav");
 	}
 	
 }

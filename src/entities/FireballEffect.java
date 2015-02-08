@@ -1,11 +1,14 @@
 package entities;
 
+import game.Model;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 
 public class FireballEffect extends SpellAreaOfEffect{
@@ -17,6 +20,9 @@ public class FireballEffect extends SpellAreaOfEffect{
 		super(xPos, yPos, vector, new Circle(xPos, yPos, 10), TextureHandler.getInstance().getImageByName("fireball.png"), duration, true,
 				playerId, spellEffectId);
 		damage = 10;
+		if(Model.model.isOnScreen(xPos, yPos)){
+			SoundHandler.getInstance().fireballSound.play();
+		}
 	}
 	
 	public void applyEffect(Player player){
