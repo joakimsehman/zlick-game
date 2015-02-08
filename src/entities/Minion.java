@@ -2,29 +2,52 @@ package entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import animation.AnimationGroup;
 import buffs.Buff;
 
 //Everything is coded as minions...
 
 public abstract class Minion extends Entity {
 
-	private boolean isPolymorphed;
 	private float maxHealthPoints;
 	private float hp;
 	private int speedDurationLeft;
 	private ArrayList<Buff> activeBuffs;
+
+	private int transformWalkingAnimationNumber;
+	private int transformStandingAnimationNumber;
+
+	private AnimationGroup transformAnimation;
+
+	private boolean isTransformed;
+
+	private boolean isAbleToCast;
+
+	private boolean isStunned;
+
+	private int totalTransformationTime;
+	private int transformationTimeLeft;
 
 	public Minion(float xPos, float yPos, Vector2f vector, Shape boundingBox,
 			Image image, float maxHealthPoints) {
 		super(xPos, yPos, vector, boundingBox, image);
 		this.maxHealthPoints = maxHealthPoints;
 		hp = maxHealthPoints;
-		isPolymorphed = false;
 		activeBuffs = new ArrayList<Buff>();
+
+		isTransformed = false;
+		isAbleToCast = true;
+
+		transformWalkingAnimationNumber = -1;
+		transformStandingAnimationNumber = -1;
+
+		totalTransformationTime = -1;
+		transformationTimeLeft = -1;
 	}
 
 	public void setMaxHealthPoints(int healthPoints) {
@@ -75,6 +98,14 @@ public abstract class Minion extends Entity {
 		return hp;
 	}
 
+	public void draw(Graphics g, float cameraX, float cameraY) {
+
+		if (isTransformed()) {
+			transformAnimation
+					.draw(g, getXPos() - cameraX, getYPos() - cameraY);
+		}
+	}
+
 	public void update(int delta, ArrayList<Entity> entities,
 			boolean collidesWithTerrain) {
 		super.update(delta, entities, collidesWithTerrain);
@@ -86,30 +117,128 @@ public abstract class Minion extends Entity {
 		for (int i = 0; i < activeBuffs.size(); i++) {
 			activeBuffs.get(i).update(delta, this);
 		}
-		
+		if (isTransformed()) {
+			if(totalTransformationTime != -1){
+				transformationTimeLeft -= delta;
+				if(transformationTimeLeft < 0){
+					isTransformed = false;
+				}
+			}
+			double animSpritePercent = 0;
+			switch (getDirection()) {
+			case WEST:
+			case NORTHWEST:
+				animSpritePercent = 0.25;
+				break;
+			case NORTH:
+			case NORTHEAST:
+				animSpritePercent = 0.9;
+				break;
+			case EAST:
+			case SOUTHEAST:
+				animSpritePercent = 0.5;
+				break;
+			case SOUTH:
+			case SOUTHWEST:
+				animSpritePercent = 0;
+				break;
+			}
+//		case WEST:
+//			animDegrees = 0;
+//			break;
+//		case NORTHWEST:
+//			animDegrees = 45;
+//			break;
+//		case NORTH:
+//			animDegrees = 90;
+//			break;
+//		case NORTHEAST:
+//			animDegrees = 135;
+//			break;
+//		case EAST:
+//			animDegrees = 180;
+//			break;
+//		case SOUTHEAST:
+//			animDegrees = 225;
+//			break;
+//		case SOUTH:
+//			animDegrees = 270;
+//			break;
+//		case SOUTHWEST:
+//			animDegrees = 315;
+//			break;
+//		}
+			transformAnimation.update1(delta, animSpritePercent);
+			
+		}
 		checkForExpiredBuffs();
 	}
-	
+
 	private void checkForExpiredBuffs() {
-		for(int i = 0; i < activeBuffs.size(); i++){
-			if(activeBuffs.get(i).getDurationLeft() < 0){
+		for (int i = 0; i < activeBuffs.size(); i++) {
+			if (activeBuffs.get(i).getDurationLeft() < 0) {
 				activeBuffs.get(i).onRemove(this);
 				activeBuffs.remove(i);
 				break;
 			}
 		}
-		
+
 	}
 
-	public void setPolymorphed(boolean isPolymorphed, int duration){
-		this.isPolymorphed = isPolymorphed;
-		if(isPolymorphed){
-			applyMovementModifyer(0.2f, duration);
+	protected void setIsMoving(boolean isMoving) {
+		
+		if (isMoving != isMoving() && isTransformed) {
+			if (isMoving && transformWalkingAnimationNumber != -1) {
+
+				transformAnimation
+						.setCurrentAnimation(transformWalkingAnimationNumber);
+
+			} else {
+				if (transformStandingAnimationNumber != -1) {
+					transformAnimation
+							.setCurrentAnimation(transformStandingAnimationNumber);
+				}
+			}
 		}
+		super.setIsMoving(isMoving);
 	}
-	
-	public boolean isPolymorphed(){
-		return isPolymorphed;
+
+	public void setIsAbleToCast(boolean isAbleToCast) {
+		this.isAbleToCast = isAbleToCast;
+	}
+
+	public boolean isAbleToCast() {
+		return isAbleToCast;
+	}
+
+	public void setIsStunned(boolean isStunned) {
+		this.isStunned = isStunned;
+	}
+
+	public boolean isTransformed() {
+		return isTransformed;
+	}
+
+	public void cancelTransformation() {
+		isTransformed = false;
+	}
+
+	public void setTransformed(AnimationGroup transAnim, int transformDuration,
+			int transformWalkingAnimationNumber,
+			int transformStandingAnimationNumber) {
+		isTransformed = true;
+		this.transformAnimation = transAnim;
+		this.totalTransformationTime = transformDuration;
+		this.transformationTimeLeft = transformDuration;
+		this.transformWalkingAnimationNumber = transformWalkingAnimationNumber;
+		this.transformStandingAnimationNumber = transformStandingAnimationNumber;
+		
+		if(isMoving()){
+			transformAnimation.setCurrentAnimation(transformWalkingAnimationNumber);
+		}else{
+			transformAnimation.setCurrentAnimation(transformStandingAnimationNumber);
+		}
+
 	}
 
 }

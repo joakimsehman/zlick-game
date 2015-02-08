@@ -11,21 +11,30 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import animation.AnimationGroup;
+import animation.DirectedAnimation;
 import utilities.TextureHandler;
 
 public class BolaEffect extends SpellAreaOfEffect {
 
-	private Image currentImage;
+	
 	private int playerId;
 	private int damage;
+	private AnimationGroup animation;
+	
 
 	public BolaEffect(float xPos, float yPos, Vector2f vector, int duration,
 			int playerId, int spellEffectId) {
 		super(xPos, yPos, vector, new Circle(xPos, yPos, 20), null,
 				duration, true, playerId, spellEffectId);
-		currentImage = TextureHandler.getInstance().getBola(0);
 		this.playerId = playerId;
 		damage = 5;
+		
+		if(animation == null){
+			animation = new AnimationGroup();
+			animation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("projectiles.png", 0, 4, 2,
+						1)));
+		}
 	}
 
 	// make it multiply? Model.model.launchCustomSpellAreaOfEffect?
@@ -40,15 +49,19 @@ public class BolaEffect extends SpellAreaOfEffect {
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
 		g.setColor(new Color(150, 75, 0));
-		g.drawOval(getImageXPos() - cameraX, getImageYPos() - cameraY, this.getBoundingBox().getWidth(), this.getBoundingBox().getHeight());
-		g.drawImage(currentImage, getImageXPos() - cameraX -12, getImageYPos() - cameraY -12);
-		g.fillOval(getImageXPos() - cameraX+getBoundingBox().getWidth()/3, getImageYPos() - cameraY+getBoundingBox().getWidth()/3, this.getBoundingBox().getWidth()/3, this.getBoundingBox().getHeight()/3);
+		g.drawOval(getXPos() - cameraX, getYPos() - cameraY, this.getBoundingBox().getWidth(), this.getBoundingBox().getHeight());
+		
+		
+		animation.draw(g, getXPos() - cameraX -12, getYPos() - cameraY -12);
+		
+		g.fillOval(getXPos() - cameraX+getBoundingBox().getWidth()/3, getYPos() - cameraY+getBoundingBox().getWidth()/3, this.getBoundingBox().getWidth()/3, this.getBoundingBox().getHeight()/3);
 	}
 
 	public void update(int delta, ArrayList<Player> entities, Player myself) {
 		super.update(delta, entities, myself);
-		currentImage = TextureHandler.getInstance().getBola(
-				Model.model.getMyself().getTileCounter() % 4);
+
+		
+		animation.update(delta, 0);
 	}
 
 	public static int getEffectId() {

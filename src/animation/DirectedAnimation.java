@@ -10,10 +10,17 @@ public class DirectedAnimation {
 	private Image currentImage;
 	private Image[][] images;
 
+	private int animationLength;
+	private int currentAnimXStart;
+	private int currentAnimCurrentX;
+	
 	private int imageCounter;
 
 	public DirectedAnimation(Image[][] animImages) {
 		images = animImages;
+		animationLength = images[0].length;
+		currentAnimXStart = 0;
+		currentAnimCurrentX = 0;
 	}
 
 	public static Image[][] getSpritesAlongX(String spriteSheetName, int x,
@@ -53,13 +60,16 @@ public class DirectedAnimation {
 
 		return images;
 	}
+	
+	
 
 	protected void switchImage() {
-		if (imageCounter < images[0].length - 1) {
+		if (imageCounter < animationLength -1) {
 			imageCounter++;
 		} else {
 			imageCounter = 0;
 		}
+		currentAnimCurrentX = currentAnimXStart + imageCounter;
 	}
 
 	protected void draw(Graphics g, float xPos, float yPos) {
@@ -69,9 +79,14 @@ public class DirectedAnimation {
 	}
 
 	protected void update(int delta, double directionInPercentOfDirections) {
-		
 
-		currentImage = images[((int) (directionInPercentOfDirections * images.length))][imageCounter];
+		currentImage = images[((int) (directionInPercentOfDirections * images.length))][currentAnimCurrentX];
+	}
+
+	public void setCurrentAnimation(int currentAnimX, int deltaX) {
+		animationLength = deltaX;
+		this.currentAnimXStart = currentAnimX;
+		currentAnimCurrentX = currentAnimXStart;
 	}
 
 }

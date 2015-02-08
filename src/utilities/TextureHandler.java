@@ -18,12 +18,12 @@ public class TextureHandler {
     private ArrayList<Image> images;
     private ArrayList<SpriteSheet> spriteSheets;
 	private static TextureHandler textureHandler;
-	private final Image[] bola;
+
 
 	private TextureHandler() {
 		images = new ArrayList<Image>();
         spriteSheets = new ArrayList<SpriteSheet>();
-        bola = new Image[4];
+        
 	}
 
 	public static TextureHandler getInstance() {
@@ -69,9 +69,6 @@ public class TextureHandler {
         addSpriteSheet("projectiles.png", 64, 64);
 
         
-        for(int i = 0; i < bola.length; i++){
-        	bola[i] = getImageFromSpriteSheet(i, 2, "projectiles.png");
-        }
 	}
 	
 	
@@ -107,9 +104,7 @@ public class TextureHandler {
         return getSpriteSheetByName(sheetName).getSprite(tileX, tileY);
     }
     
-    public Image getBola(int i){
-		return bola[i];
-    }
+   
     
     
 

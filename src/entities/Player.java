@@ -37,22 +37,10 @@ public class Player extends Minion {
 	private Clothes clothes;
 	private Weapon weapon;
 
-	private Image[] northSheep;
-	private Image[] westSheep;
-	private Image[] eastSheep;
-	private Image[] southSheep;
-
 	private AnimationGroup playerStillAnimation;
 	private AnimationGroup playerMovingAnimation;
 	private AnimationGroup playerCastingAnimation;
 	private AnimationGroup currentPlayerAnimation;
-
-	private Image currentBody;
-	private Image currentHead;
-	private Image currentWeapon;
-
-	private int tileTimeCounter;
-	private int tileCounter;
 
 	private enum Gender {
 		MALE, FEMALE
@@ -113,11 +101,6 @@ public class Player extends Minion {
 
 		currentPlayerAnimation = playerStillAnimation;
 
-		northSheep = new Image[3];
-		westSheep = new Image[3];
-		eastSheep = new Image[3];
-		southSheep = new Image[3];
-
 		this.name = name;
 		energy = 100f;
 		abilities = new Ability[4];
@@ -126,9 +109,6 @@ public class Player extends Minion {
 		brown = new Color(150, 75, 0);
 		castTimeLeft = 0;
 		castingSpellAbilityNumber = -1;
-
-		loadImages();
-		tileCounter = 0;
 
 	}
 
@@ -143,14 +123,14 @@ public class Player extends Minion {
 	}
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
+		
+		if (!isTransformed()) {
 
-		if (!isPolymorphed()) {
-
-			currentPlayerAnimation.draw(g, getImageXPos() - cameraX - 20,
-					getImageYPos() - cameraY - 20);
+			currentPlayerAnimation.draw(g, getXPos() - cameraX - 45,
+					getYPos() - cameraY - 50);
 
 		} else {
-			g.drawImage(currentBody, getXPos() - cameraX, getYPos() - cameraY);
+			super.draw(g, cameraX, cameraY);
 		}
 
 		if (name != null) {
@@ -163,8 +143,8 @@ public class Player extends Minion {
 			}
 		}
 
-		// g.drawRect(getXPos() - cameraX, getYPos() - cameraY, getBoundingBox()
-		// .getWidth(), getBoundingBox().getHeight());
+//		 g.drawRect(getXPos() - cameraX, getYPos() - cameraY, getBoundingBox()
+//		.getWidth(), getBoundingBox().getHeight());
 	}
 
 	private Color getTeamColor() {
@@ -199,52 +179,51 @@ public class Player extends Minion {
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
 		}
-
-		if (isPolymorphed()) {
-			if (isMoving()) {
-				currentBody = getMovingDirectionSheep()[tileCounter % 3];
-			} else {
-				currentBody = getMovingDirectionSheep()[1];
+		
+		if (!isTransformed()) {
+			double playerDegrees = 0;
+			switch (getDirection()) {
+			case WEST:
+				playerDegrees = 0;
+				break;
+			case NORTHWEST:
+				playerDegrees = 45;
+				break;
+			case NORTH:
+				playerDegrees = 90;
+				break;
+			case NORTHEAST:
+				playerDegrees = 135;
+				break;
+			case EAST:
+				playerDegrees = 180;
+				break;
+			case SOUTHEAST:
+				playerDegrees = 225;
+				break;
+			case SOUTH:
+				playerDegrees = 270;
+				break;
+			case SOUTHWEST:
+				playerDegrees = 315;
+				break;
 			}
-		} else if (isCasting() && !isMoving()) {
-			currentPlayerAnimation = playerCastingAnimation;
-		} else {
-			if (isMoving()) {
-				currentPlayerAnimation = playerMovingAnimation;
+
+			
+
+			if (isCasting() && !isMoving()) {
+				currentPlayerAnimation = playerCastingAnimation;
 			} else {
-				currentPlayerAnimation = playerStillAnimation;
+				if (isMoving()) {
+					currentPlayerAnimation = playerMovingAnimation;
+				} else {
+					currentPlayerAnimation = playerStillAnimation;
+				}
 			}
-		}
 
-		double playerDegrees = 0;
-		switch (getDirection()) {
-		case WEST:
-			playerDegrees = 0;
-			break;
-		case NORTHWEST:
-			playerDegrees = 45;
-			break;
-		case NORTH:
-			playerDegrees = 90;
-			break;
-		case NORTHEAST:
-			playerDegrees = 135;
-			break;
-		case EAST:
-			playerDegrees = 180;
-			break;
-		case SOUTHEAST:
-			playerDegrees = 225;
-			break;
-		case SOUTH:
-			playerDegrees = 270;
-			break;
-		case SOUTHWEST:
-			playerDegrees = 315;
-			break;
-		}
+			currentPlayerAnimation.update(delta, playerDegrees);
 
-		currentPlayerAnimation.update(delta, playerDegrees);
+		}
 
 		if (isCasting()) {
 			if (!isMoving()
@@ -266,27 +245,6 @@ public class Player extends Minion {
 				abilities[i].update(delta);
 			}
 		}
-	}
-
-	// tobe removed when sheep animation is replaced with Animation
-	private Image[] getMovingDirectionSheep() {
-		switch (getDirection()) {
-		case WEST:
-		case NORTHWEST:
-			return westSheep;
-		case NORTH:
-		case NORTHEAST:
-			return northSheep;
-		case EAST:
-		case SOUTHEAST:
-			return eastSheep;
-		case SOUTH:
-		case SOUTHWEST:
-			return southSheep;
-		default:
-			return null;
-		}
-
 	}
 
 	public Ability getAbility(int abilityNumber) {
@@ -313,27 +271,27 @@ public class Player extends Minion {
 		return isCasting;
 	}
 
-	// tobe removed when sheep animation is replaced with Animation
-	private void loadImages() {
-
-		for (int i = 0; i < southSheep.length; i++) {
-			southSheep[i] = TextureHandler.getInstance()
-					.getImageFromSpriteSheet(9 + i, 0, "animal.png");
-		}
-		for (int i = 0; i < westSheep.length; i++) {
-			westSheep[i] = TextureHandler.getInstance()
-					.getImageFromSpriteSheet(9 + i, 1, "animal.png");
-		}
-		for (int i = 0; i < eastSheep.length; i++) {
-			eastSheep[i] = TextureHandler.getInstance()
-					.getImageFromSpriteSheet(9 + i, 2, "animal.png");
-		}
-		for (int i = 0; i < northSheep.length; i++) {
-			northSheep[i] = TextureHandler.getInstance()
-					.getImageFromSpriteSheet(9 + i, 3, "animal.png");
-		}
-
-	}
+	// // tobe removed when sheep animation is replaced with Animation
+	// private void loadImages() {
+	//
+	// for (int i = 0; i < southSheep.length; i++) {
+	// southSheep[i] = TextureHandler.getInstance()
+	// .getImageFromSpriteSheet(9 + i, 0, "animal.png");
+	// }
+	// for (int i = 0; i < westSheep.length; i++) {
+	// westSheep[i] = TextureHandler.getInstance()
+	// .getImageFromSpriteSheet(9 + i, 1, "animal.png");
+	// }
+	// for (int i = 0; i < eastSheep.length; i++) {
+	// eastSheep[i] = TextureHandler.getInstance()
+	// .getImageFromSpriteSheet(9 + i, 2, "animal.png");
+	// }
+	// for (int i = 0; i < northSheep.length; i++) {
+	// northSheep[i] = TextureHandler.getInstance()
+	// .getImageFromSpriteSheet(9 + i, 3, "animal.png");
+	// }
+	//
+	// }
 
 	public void startCastedAbility(int abilityNumber, float mouseGameX,
 			float mouseGameY) {
@@ -374,20 +332,15 @@ public class Player extends Minion {
 		return castTime;
 	}
 
-	public int getTileCounter() {
-		return tileCounter;
-
-	}
-
 	protected void setIsMoving(boolean isMoving) {
 		if (isMoving != isMoving()
 				&& this.getID() == Model.model.getMyself().getID()) {
-			if (isMoving) {
-				SoundHandler.getInstance().runningSound.loop(1.0f, 0.1f);
-			} else {
-				SoundHandler.getInstance().runningSound.stop();
-			}
+
+			SoundHandler.getInstance().runningSound.loop(1.0f, 0.1f);
+		} else {
+			SoundHandler.getInstance().runningSound.stop();
 		}
+
 		super.setIsMoving(isMoving);
 	}
 

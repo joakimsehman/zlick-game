@@ -9,11 +9,17 @@ public class AnimationGroup {
 	private int imageSwitchSpeed;
 	private int imageDeltaSinceSwitch;
 	
+	
 	private ArrayList<DirectedAnimation> animations;
+	
+	private ArrayList<Integer> animationPartX;
+	private ArrayList<Integer> animationPartDeltaX;
 	
 	public AnimationGroup(){
 		animations = new ArrayList<DirectedAnimation>();
 		imageSwitchSpeed = 100;
+		animationPartX = new ArrayList<Integer>();
+		animationPartDeltaX = new ArrayList<Integer>();
 	}
 	
 	public int getImageSwitchSpeed(){
@@ -28,9 +34,25 @@ public class AnimationGroup {
 		animations.add(anim);
 	}
 	
+	public int addNewPartAnimation(int x, int deltaX){
+		animationPartX.add(x);
+		animationPartDeltaX.add(deltaX);
+		
+		
+		return animationPartX.size() - 1;
+	}
+	
 	public void draw(Graphics g, float xPos, float yPos){
 		for(int i = 0; i < animations.size(); i++){
 			animations.get(i).draw(g, xPos, yPos);
+		}
+	}
+	
+	
+	//this will probably also start the anim over, over and over again, if used in the update loop consecutively 
+	public void setCurrentAnimation(int animation){
+		for(int i = 0; i < animations.size(); i++){
+			animations.get(i).setCurrentAnimation(animationPartX.get(animation), animationPartDeltaX.get(animation));
 		}
 	}
 	

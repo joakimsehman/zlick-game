@@ -21,8 +21,6 @@ public abstract class Entity {
     private boolean isMoving;
     private Direction direction;
     
-    private int imageXPos;
-    private int imageYPos;
     
 	public Entity(float xPos, float yPos, Vector2f vector, Shape boundingBox,
 			Image image) {
@@ -34,8 +32,7 @@ public abstract class Entity {
 		this.image = image;
 		speedModifier = 1;
 		
-		imageXPos = (int) (xPos - boundingBox.getWidth()/2);
-		imageYPos = (int) (yPos - boundingBox.getHeight()/2);
+		
 	}
 
 	public float getXPos() {
@@ -171,8 +168,7 @@ public abstract class Entity {
 			} else {
 				xPos = newXPos;
 				yPos = newYPos;
-				imageXPos = (int) (xPos - boundingBox.getWidth()/2);
-				imageYPos = (int) (yPos - boundingBox.getHeight()/2);
+				
 			}
 		}
 	}
@@ -180,7 +176,7 @@ public abstract class Entity {
 	public void draw(Graphics g, float cameraX, float cameraY) {
 		
 		if (image != null) {
-			g.drawImage(image, imageXPos - cameraX, imageYPos - cameraY);
+			g.drawImage(image, xPos - cameraX, yPos - cameraY);
 		}
 	}
 
@@ -235,14 +231,6 @@ public abstract class Entity {
     
     public Direction getDirection(){
     	return direction;
-    }
-    
-    public int getImageXPos(){
-    	return imageXPos;
-    }
-    
-    public int getImageYPos(){
-    	return imageYPos;
     }
 
 }
