@@ -299,6 +299,9 @@ public class Player extends Minion {
 			castTime = this.getAbility(abilityNumber).getCastTime();
 			castTimeLeft = castTime;
 			isCasting = true;
+			if(Model.model.isOnScreen(getXPos(), getYPos())){
+				SoundHandler.getInstance().castingSound.play(1.0f, 0.1f);
+			}
 			this.castingSpellAbilityNumber = abilityNumber;
 			this.castingSpellXPos = mouseGameX;
 			this.castingSpellYPos = mouseGameY;
@@ -308,6 +311,9 @@ public class Player extends Minion {
 	// for network
 	public void setIsCasting(boolean isCasting) {
 		this.isCasting = isCasting;
+		if(isCasting && Model.model.isOnScreen(getXPos(), getYPos())){
+			SoundHandler.getInstance().castingSound.play();
+		}
 	}
 
 	private void useCastedSpell() {

@@ -21,7 +21,7 @@ public class FireballEffect extends SpellAreaOfEffect{
 				playerId, spellEffectId);
 		damage = 10;
 		if(Model.model.isOnScreen(xPos, yPos)){
-			SoundHandler.getInstance().fireballSound.play();
+			SoundHandler.getInstance().fireballSound.play(1.0f, 0.3f);
 		}
 	}
 	

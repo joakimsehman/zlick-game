@@ -10,6 +10,7 @@ public class SoundHandler {
 	public Sound sheepSound;
 	public Sound spellCircleSound;
 	public Sound bolaSound;
+	public Sound castingSound;
 	private static SoundHandler soundHandler;
 	
 	private SoundHandler(){
@@ -30,6 +31,7 @@ public class SoundHandler {
 		sheepSound = new Sound("assets/sound/sheep.wav");
 		spellCircleSound = new Sound("assets/sound/spellCircle.wav");
 		bolaSound = new Sound("assets/sound/bola.wav");
+		castingSound = new Sound("assets/sound/casting.wav");
 	}
 	
 }
