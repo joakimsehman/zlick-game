@@ -2,6 +2,7 @@ package entities;
 
 import game.Model;
 import game.Model.Team;
+import gui.HealthBar;
 
 import java.util.ArrayList;
 
@@ -41,6 +42,8 @@ public class Player extends Minion {
 	private AnimationGroup playerMovingAnimation;
 	private AnimationGroup playerCastingAnimation;
 	private AnimationGroup currentPlayerAnimation;
+	
+	private HealthBar healthBar;
 
 	private enum Gender {
 		MALE, FEMALE
@@ -109,6 +112,9 @@ public class Player extends Minion {
 		brown = new Color(150, 75, 0);
 		castTimeLeft = 0;
 		castingSpellAbilityNumber = -1;
+		
+		
+		healthBar = new HealthBar(0, 0, id);
 
 	}
 
@@ -124,6 +130,9 @@ public class Player extends Minion {
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
 
+		healthBar.draw(g);
+		
+		
 		if (!isTransformed()) {
 
 			currentPlayerAnimation.draw(g, getXPos() - cameraX - 45, getYPos()
@@ -176,6 +185,8 @@ public class Player extends Minion {
 	public void update(int delta, ArrayList<Entity> entities) {
 		super.update(delta, entities, true);
 
+		healthBar.update1(delta, getXPos() - 5, getYPos() - 35);
+		
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
 		}
