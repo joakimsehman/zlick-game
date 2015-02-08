@@ -23,7 +23,7 @@ public class HealthBar extends GuiEntity {
 	public void draw(Graphics g) {
 		if (isOnScreen) {
 			g.setColor(Color.black);
-			g.drawRect(health.getX()-1, health.getY(), health.getWidth()+2, health.getHeight()+2);
+			g.drawRect(health.getX()-1, health.getY(), 62.0f, health.getHeight()+2);
 			g.setColor(Color.green);
 			g.fillRect(health.getX(), health.getY()+1, health.getWidth(),
 					health.getHeight());
