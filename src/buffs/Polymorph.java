@@ -1,8 +1,10 @@
 package buffs;
 
+import utilities.SoundHandler;
 import animation.AnimationGroup;
 import animation.DirectedAnimation;
 import entities.Minion;
+import game.Model;
 
 public class Polymorph extends Buff{
 
@@ -26,6 +28,9 @@ public class Polymorph extends Buff{
 		minion.setTransformed(polymorphAnimation, getDuration(), walkingAnimation, standingAnimation);
 		minion.applyMovementModifyer(0.2f, getDuration());
 		minion.setIsAbleToCast(false);
+		if(Model.model.isOnScreen(minion.getXPos(), minion.getYPos())){
+			SoundHandler.getInstance().sheepSound.play(1.0f, 0.5f);
+		}
 		System.out.println("polymorph applied");
 	}
 

@@ -1,10 +1,13 @@
 package entities;
 
+import game.Model;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Ellipse;
 import org.newdawn.slick.geom.Vector2f;
 
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 import buffs.Polymorph;
 
@@ -20,6 +23,9 @@ public class PolymorphingEffect extends SpellAreaOfEffect {
 				.getInstance().getImageByName("spell_circle.png"), duration,
 				false, playerId, spellEffectId);
 		polymorph = new Polymorph(3000);
+		if(Model.model.isOnScreen(xPos, yPos)){
+			SoundHandler.getInstance().spellCircleSound.play(1.0f, 0.1f);
+		}
 	}
 
 	protected void onTic(int delta, Player player) {

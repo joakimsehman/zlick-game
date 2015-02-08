@@ -77,7 +77,7 @@ public class Fireball extends Ability{
 
 	@Override
 	public int getCooldown() {
-		return 1000;
+		return 500;
 	}
 
 }

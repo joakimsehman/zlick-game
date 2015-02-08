@@ -58,7 +58,7 @@ public class Bola extends Ability{
 
 	@Override
 	public int getCooldown() {
-		return 10000;
+		return 5000;
 	}
 
 }

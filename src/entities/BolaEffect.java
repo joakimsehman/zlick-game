@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import animation.AnimationGroup;
 import animation.DirectedAnimation;
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 
 public class BolaEffect extends SpellAreaOfEffect {
@@ -20,7 +21,7 @@ public class BolaEffect extends SpellAreaOfEffect {
 	
 	private int playerId;
 	private int damage;
-	private AnimationGroup animation;
+	private static AnimationGroup animation;
 	
 
 	public BolaEffect(float xPos, float yPos, Vector2f vector, int duration,
@@ -34,6 +35,10 @@ public class BolaEffect extends SpellAreaOfEffect {
 			animation = new AnimationGroup();
 			animation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("projectiles.png", 0, 4, 2,
 						1)));
+		}
+		
+		if(Model.model.isOnScreen(xPos, yPos)){
+			SoundHandler.getInstance().bolaSound.play();
 		}
 	}
 

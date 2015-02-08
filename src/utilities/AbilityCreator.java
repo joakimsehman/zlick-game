@@ -39,7 +39,7 @@ public class AbilityCreator {
 		if(abilityID == 0){
 			return new Fireball("fireball", 1000, usingPlayerId);
 		}else if(abilityID == 1){
-			return new MassPolymorph("massPolymorph", 3000, usingPlayerId);
+			return new MassPolymorph("massPolymorph", 5000, usingPlayerId);
 		}else if(abilityID == 2){
 			return new Bola("bola", 500, usingPlayerId);
 		}

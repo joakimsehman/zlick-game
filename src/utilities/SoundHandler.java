@@ -7,6 +7,9 @@ public class SoundHandler {
 
 	public Sound runningSound;
 	public Sound fireballSound;
+	public Sound sheepSound;
+	public Sound spellCircleSound;
+	public Sound bolaSound;
 	private static SoundHandler soundHandler;
 	
 	private SoundHandler(){
@@ -24,6 +27,9 @@ public class SoundHandler {
 	public void loadSounds() throws SlickException{
 		runningSound = new Sound("assets/sound/running1.wav");
 		fireballSound = new Sound("assets/sound/fireball.wav");
+		sheepSound = new Sound("assets/sound/sheep.wav");
+		spellCircleSound = new Sound("assets/sound/spellCircle.wav");
+		bolaSound = new Sound("assets/sound/bola.wav");
 	}
 	
 }
