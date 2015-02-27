@@ -46,8 +46,9 @@ public class Game implements GameState {
 
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		// TODO Auto-generated method stub
-
+		if(button == 0){
+			Model.model.useMouseAttack(button, x, y);
+		}
 	}
 
 	@Override
@@ -200,6 +201,7 @@ public class Game implements GameState {
 				.getScreenHeight() / 2 - 10));
 
 		gc.getInput().addKeyListener(this);
+		
 	}
 
 	@Override

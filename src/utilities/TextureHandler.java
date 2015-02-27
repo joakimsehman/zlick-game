@@ -58,6 +58,7 @@ public class TextureHandler {
 			addImage("spell_circle.png");
 			addImage("castbar.png");
 			addImage("bolaIcon.png");
+			addImage("spell_circle2.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -40,5 +40,8 @@ public abstract class Network {
 	public abstract void sendCustomSpellAreaOfEffect(int effectId, float xPos,
 			float yPos, float vectorX, float vectorY, int duration, int playerUsedId,
 			int spellEffectId);
+
+	public abstract void sendMouseAttack(int id, int mouseButton, float mouseGameX,
+			float mouseGameY);
 	
 }

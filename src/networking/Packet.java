@@ -63,6 +63,13 @@ public class Packet {
 		int spellEffectId;
 	}
 	
+	public static class Packet11MouseAttack{
+		int id; 
+		int mouseButton; 
+		float mouseGameX;
+		float mouseGameY;
+	}
+	
 	//hej
 	
 }

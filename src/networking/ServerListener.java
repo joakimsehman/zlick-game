@@ -5,6 +5,7 @@ import entities.Player;
 import game.Model;
 import networking.Packet.Packet0LoginRequest;
 import networking.Packet.Packet10CustomSpellEffect;
+import networking.Packet.Packet11MouseAttack;
 import networking.Packet.Packet1LoginAnswer;
 import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
@@ -112,6 +113,10 @@ public class ServerListener extends Listener{
 			Packet10CustomSpellEffect customSpellEffect = (Packet10CustomSpellEffect)obj;
 			server.forwardTCPToAll(customSpellEffect, connection);
 			Model.model.recieveCustomSpellAreaOfEffect(customSpellEffect.effectId, customSpellEffect.xPos, customSpellEffect.yPos, customSpellEffect.vectorX, customSpellEffect.vectorY, customSpellEffect.duration, customSpellEffect.playerUsedId, customSpellEffect.spellEffectId);
+		}else if(obj instanceof Packet11MouseAttack){
+			Packet11MouseAttack mouseAttack = (Packet11MouseAttack)obj;
+			server.forwardTCPToAll(mouseAttack, connection);
+			Model.model.executeMouseAttack(mouseAttack.id, mouseAttack.mouseButton, mouseAttack.mouseGameX, mouseAttack.mouseGameY);
 		}
 	}
 }

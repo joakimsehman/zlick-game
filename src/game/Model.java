@@ -272,9 +272,9 @@ public class Model {
 
 	public void useAbility(int abilityNumber, int mouseXPos, int mouseYPos) {
 		System.out.println("ability: " + abilityNumber + " used");
-
-		float mouseGameX = cameraX + mouseXPos;
-		float mouseGameY = cameraY + mouseYPos;
+//		we keep this in model now so not needed, might be this should be refactored some..
+//		float mouseGameX = cameraX + mouseXPos;
+//		float mouseGameY = cameraY + mouseYPos;
 
 		if (abilityNumber > 0 && abilityNumber < 5) {
 
@@ -360,6 +360,18 @@ public class Model {
 				mouseGameY, spellEffectId);
 
 	}
+	
+	public void useMouseAttack(int mouseButton, int x, int y){
+		if(getMyself().isAbleToCast() && getMyself().isMouseAttackReady()){
+			network.sendMouseAttack(getMyself().getID(), mouseButton, mouseGameX, mouseGameY);
+			executeMouseAttack(getMyself().getID(), mouseButton, mouseGameX, mouseGameY);
+		}
+	}
+	
+	public void executeMouseAttack(int playerId, int mouseButton, float mouseGameX, float mouseGameY){
+		getPlayer(id).useMouseAttack(mouseButton, mouseGameX, mouseGameY);
+	}
+	
 
 	public void setPlayerSpeed(float playerSpeed) {
 		this.playerSpeed = playerSpeed;

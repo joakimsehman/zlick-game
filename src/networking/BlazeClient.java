@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import networking.Packet.Packet0LoginRequest;
 import networking.Packet.Packet10CustomSpellEffect;
+import networking.Packet.Packet11MouseAttack;
 import networking.Packet.Packet1LoginAnswer;
 import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
@@ -60,6 +61,7 @@ public class BlazeClient extends Network implements Runnable{
 		kryo.register(Packet8SetTeam.class);
 		kryo.register(Packet9SpellHit.class);
 		kryo.register(Packet10CustomSpellEffect.class);
+		kryo.register(Packet11MouseAttack.class);
 		kryo.register(int[].class);
 	}
 
@@ -165,6 +167,17 @@ public class BlazeClient extends Network implements Runnable{
 		customSpellEffect.playerUsedId = playerUsedId;
 		customSpellEffect.spellEffectId = spellEffectId;
 		client.sendTCP(customSpellEffect);
+	}
+
+	@Override
+	public void sendMouseAttack(int id, int mouseButton, float mouseGameX,
+			float mouseGameY) {
+		Packet11MouseAttack mouseAttack = new Packet11MouseAttack();
+		mouseAttack.id = id;
+		mouseAttack.mouseButton = mouseButton;
+		mouseAttack.mouseGameX = mouseGameX;
+		mouseAttack.mouseGameY = mouseGameY;
+		sendTCPToAll(mouseAttack);
 	}
 	
 }

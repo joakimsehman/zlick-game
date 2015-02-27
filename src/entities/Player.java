@@ -37,11 +37,18 @@ public class Player extends Minion {
 	private Gender gender;
 	private Clothes clothes;
 	private Weapon weapon;
+	
+	private AnimationGroup playerAnimation;
 
-	private AnimationGroup playerStillAnimation;
-	private AnimationGroup playerMovingAnimation;
-	private AnimationGroup playerCastingAnimation;
-	private AnimationGroup currentPlayerAnimation;
+	final private int playerStillAnimation;
+	final private int playerMoveAnimation;
+	final private int playerCastAnimation;
+	final private int playerAttackAnimation;
+	
+//	private AnimationGroup playerStillAnimation;
+//	private AnimationGroup playerMovingAnimation;
+//	private AnimationGroup playerCastingAnimation;
+//	private AnimationGroup currentPlayerAnimation;
 	
 	private HealthBar healthBar;
 
@@ -66,43 +73,21 @@ public class Player extends Minion {
 		gender = Gender.MALE;
 		clothes = Clothes.STEEL;
 		weapon = Weapon.SWORD;
-
-		playerStillAnimation = new AnimationGroup();
-		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("steel_armor.png", 0, 4, 0,
+		
+		playerAnimation = new AnimationGroup();
+		playerAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("steel_armor.png", 0, 32, 0,
 						8)));
-		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation
-						.getSpritesAlongX("male_head2.png", 0, 4, 0, 8)));
-		playerStillAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation
-						.getSpritesAlongX("greatsword.png", 0, 4, 0, 8)));
+		playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation
+						.getSpritesAlongX("male_head2.png", 0, 32, 0, 8)));
+		playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("greatsword.png", 0, 32, 0, 8)));
 
-		playerMovingAnimation = new AnimationGroup();
-		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("steel_armor.png", 4, 8, 0,
-						8)));
-		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation
-						.getSpritesAlongX("male_head2.png", 4, 8, 0, 8)));
-		playerMovingAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation
-						.getSpritesAlongX("greatsword.png", 4, 8, 0, 8)));
+		playerStillAnimation = playerAnimation.addNewPartAnimation(0, 4);
+		playerMoveAnimation = playerAnimation.addNewPartAnimation(4, 8);
+		playerCastAnimation = playerAnimation.addNewPartAnimation(24, 4);
+		playerAttackAnimation = playerAnimation.addNewPartAnimation(12, 4);
 
-		playerCastingAnimation = new AnimationGroup();
-		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("steel_armor.png", 24, 4, 0,
-						8)));
-		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("male_head2.png", 24, 4, 0,
-						8)));
-		playerCastingAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("greatsword.png", 24, 4, 0,
-						8)));
-
-		playerMovingAnimation.setImageSwitchSpeed(110);
-
-		currentPlayerAnimation = playerStillAnimation;
+		playerAnimation.setImageSwitchSpeed(110);
 
 		this.name = name;
 		energy = 100f;
@@ -135,7 +120,7 @@ public class Player extends Minion {
 		
 		if (!isTransformed()) {
 
-			currentPlayerAnimation.draw(g, getXPos() - cameraX - 45, getYPos()
+			playerAnimation.draw(g, getXPos() - cameraX - 45, getYPos()
 					- cameraY - 50);
 
 		} else {
@@ -221,16 +206,16 @@ public class Player extends Minion {
 			}
 
 			if (isCasting() && !isMoving()) {
-				currentPlayerAnimation = playerCastingAnimation;
+				playerAnimation.setCurrentAnimation(playerCastAnimation);
 			} else {
 				if (isMoving()) {
-					currentPlayerAnimation = playerMovingAnimation;
+					playerAnimation.setCurrentAnimation(playerMoveAnimation);
 				} else {
-					currentPlayerAnimation = playerStillAnimation;
+					playerAnimation.setCurrentAnimation(playerStillAnimation);
 				}
 			}
 
-			currentPlayerAnimation.update(delta, playerDegrees);
+			playerAnimation.update(delta, playerDegrees);
 
 		}
 
@@ -359,6 +344,23 @@ public class Player extends Minion {
 
 			super.setIsMoving(isMoving);
 		}
+	}
+
+	public boolean isMouseAttackReady() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	public void useMouseAttack(int mouseButton, float mouseGameX, float mouseGameY){
+		double angle = this.getAngleToPoint(mouseGameX, mouseGameY);
+		
+		//should be correct, but somehow it feels like the player is not always hitting the correct direction
+		angle = angle + Math.PI+Math.PI/8;
+		angle = angle/(Math.PI*2);
+		if(angle >= 1){
+			angle = 0;
+		}
+		playerAnimation.playAnimationOnce(playerAttackAnimation, angle);
 	}
 
 }

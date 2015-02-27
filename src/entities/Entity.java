@@ -232,5 +232,34 @@ public abstract class Entity {
     public Direction getDirection(){
     	return direction;
     }
+    
+    public Direction getDirectionToPoint(float x, float y){
+    	double angle = getAngleToPoint(x, y);
+    	double eigthOfPi = Math.PI / 8;
+    	if(angle < -eigthOfPi*7 || angle > eigthOfPi*7){
+    		return Direction.WEST;
+    	}else if(angle > eigthOfPi*5){
+    		return Direction.SOUTHWEST;
+    	}else if(angle > eigthOfPi*3){
+    		return Direction.SOUTH;
+    	}else if(angle > eigthOfPi){
+    		return Direction.SOUTHEAST;
+    	}else if(angle > -eigthOfPi){
+    		return Direction.EAST;
+    	}else if(angle > -eigthOfPi*3){
+    		return Direction.NORTHEAST;
+    	}else if(angle > -eigthOfPi*5){
+    		return Direction.NORTH;
+    	}else{
+    		return Direction.NORTHWEST;
+    	}
+    }
+    
+    //returns as radians
+    public double getAngleToPoint(float x, float y){
+    	float deltaY = y+boundingBox.getHeight()/2-yPos;
+    	float deltaX = x+boundingBox.getWidth()/2-xPos;
+    	return Math.atan2(deltaY, deltaX);
+    }
 
 }
