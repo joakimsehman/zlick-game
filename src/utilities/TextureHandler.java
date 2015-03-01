@@ -65,6 +65,7 @@ public class TextureHandler {
 			addImage("female.png");
 			addImage("background.jpg");
 			addImage("title.png");
+			addImage("teleportIcon.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -98,6 +99,8 @@ public class TextureHandler {
         
         addSpriteSheet("animal.png", 32,  32);
         addSpriteSheet("projectiles.png", 64, 64);
+        
+        addSpriteSheet("teleport_rune.png", 64, 64);
 
         
 	}

@@ -61,4 +61,10 @@ public class Bola extends Ability{
 		return 5000;
 	}
 
+	@Override
+	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
+		
+		return true;
+	}
+
 }

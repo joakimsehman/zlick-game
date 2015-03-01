@@ -80,4 +80,14 @@ public class Fireball extends Ability{
 		return 500;
 	}
 
+
+
+
+
+	@Override
+	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
+		
+		return true;
+	}
+
 }

@@ -232,6 +232,10 @@ public class Game implements GameState {
 		
 		Model.model.getLevel().render((int) -cameraX, (int) -cameraY);
 
+		for(int i = 0; i < Model.model.getTemporaryDecorations().size(); i++){
+			Model.model.getTemporaryDecorations().get(i).draw(g, cameraX, cameraY);
+		}
+		
 		for (int i = 0; i < Model.model.getActiveSpells().size(); i++) {
 			Model.model.getActiveSpells().get(i).draw(g, cameraX, cameraY);
 		}
@@ -263,8 +267,6 @@ public class Game implements GameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame app, int delta)
 			throws SlickException {
-		int posX = Mouse.getX();
-		int posY = Mouse.getY();
 
 		boolean leftKeyPressed = false;
 		boolean rightKeyPressed = false;
@@ -304,6 +306,8 @@ public class Game implements GameState {
 		Model.model.updateMouseGameXY(Mouse.getX(), gc.getScreenHeight() - Mouse.getY());
 
 		Model.model.updateSpells(delta);
+		
+		Model.model.updateTemporaryDecorations(delta);
 
 		Model.model.checkForExpiredSpells();
 

@@ -16,6 +16,7 @@ import abilities.Ability;
 import utilities.AbilityCreator;
 import utilities.SpellAreaOfEffectCreator;
 import utilities.TextureHandler;
+import entities.AnimatedDecoration;
 import entities.Entity;
 import entities.Player;
 import entities.Player.Clothes;
@@ -51,6 +52,8 @@ public class Model {
 	private ArrayList<Entity> terrain;
 	private ArrayList<SpellAreaOfEffect> activeSpells;
 	private ArrayList<GuiEntity> activeGui;
+	private ArrayList<AnimatedDecoration> temporaryDecorations;
+	private ArrayList<Integer> temporaryDecorationTimers;
 
 	private ArrayList<Player> otherPlayers;
 
@@ -74,6 +77,8 @@ public class Model {
 		isGaming = false;
 		activeSpells = new ArrayList<SpellAreaOfEffect>();
 		activeGui = new ArrayList<GuiEntity>();
+		temporaryDecorations = new ArrayList<AnimatedDecoration>();
+		temporaryDecorationTimers = new ArrayList<Integer>();
 		spellEffectIdCounter = 0;
 	}
 	
@@ -283,7 +288,7 @@ public class Model {
 		if (abilityNumber > 0 && abilityNumber < 5) {
 
 			if (getMyself().isAbleToCast()) {
-				if (getMyself().getAbility(abilityNumber) != null && getMyself().getAbility(abilityNumber).getMsSinceLastUse() > getMyself().getAbility(abilityNumber).getCooldown()) {
+				if (getMyself().getAbility(abilityNumber) != null && getMyself().getAbility(abilityNumber).getMsSinceLastUse() > getMyself().getAbility(abilityNumber).getCooldown() && getMyself().getAbility(abilityNumber).isCastable(-1, mouseGameX, mouseGameY)) {
 					if (getMyself().getAbility(abilityNumber).getCastTime() == 0) {
 						if (getMyself()
 								.reduceEnergy(
@@ -517,6 +522,37 @@ public class Model {
 		
 	}
 	
+	public void addTemporaryDecoration(AnimatedDecoration decoration, int duration){
+		temporaryDecorations.add(decoration);
+		temporaryDecorationTimers.add(duration);
+	}
 	
-
+	public ArrayList<AnimatedDecoration> getTemporaryDecorations(){
+		return temporaryDecorations;
+	}
+	
+	public void updateTemporaryDecorations(int delta){
+		for(int i = 0; i < temporaryDecorations.size(); i++){
+			temporaryDecorations.get(i).update(delta);
+			temporaryDecorationTimers.set(i, temporaryDecorationTimers.get(i) - delta);
+		}
+		
+		for(int i = 0; i < temporaryDecorations.size(); i++){
+			if(temporaryDecorationTimers.get(i) < 0){
+				temporaryDecorations.remove(i);
+				temporaryDecorationTimers.remove(i);
+			}
+		}
+	}
+	
+	public boolean isNonSolidNonNullPosition(float xPos, float yPos){
+		if(level.getTileAtPos(xPos, yPos) == null){
+			return false;
+		}
+		if(level.getTileAtPos(xPos, yPos).isSolid()){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }

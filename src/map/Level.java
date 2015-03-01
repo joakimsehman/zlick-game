@@ -83,7 +83,9 @@ public class Level {
         int mapX = (int)(x / 64 + y / 32);
         int mapY = (int)(y / 32 - x / 64);
 
-
+        if(mapX < 0 || mapX > tileProperties.length || mapY < 0 || mapY > tileProperties[0].length){
+        	return null;
+        }
         return tileProperties[mapX][mapY];
 
     }

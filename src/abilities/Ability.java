@@ -12,7 +12,7 @@ import utilities.AbilityCreator;
 
 /*
  * create a new class in abilities that extends Ability
-add a constructor and pass Ability lobbyicon to super constructor
+add a constructor
 add your ability to AbilityCreator
 
 in lobby, in the enter method add your Ability's Icon (this will be changed later but do as it says now)
@@ -70,6 +70,8 @@ public abstract class Ability{
 	public abstract boolean isCastableWhileMoving();
 	
 	public abstract int getCooldown();
+	
+	public abstract boolean isCastable(int id, float mouseGameX, float mouseGameY);
 	
 	public int getMsSinceLastUse(){
 		return msSinceLastUsed;

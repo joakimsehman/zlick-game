@@ -57,6 +57,11 @@ public class MassPolymorph extends Ability{
 		return 0;
 	}
 
+	@Override
+	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
+		return true;
+	}
+
 	
 	
 }

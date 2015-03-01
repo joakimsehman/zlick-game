@@ -178,6 +178,7 @@ public class Lobby implements GameState {
         abilityIcons.add(TextureHandler.getInstance().getImageByName("fireballIcon.png"));
         abilityIcons.add(TextureHandler.getInstance().getImageByName("massPolymorphIcon.png"));
         abilityIcons.add(TextureHandler.getInstance().getImageByName("bolaIcon.png"));
+        abilityIcons.add(TextureHandler.getInstance().getImageByName("teleportIcon.png"));
         
         playerCustomizer = new PlayerCustomizer(gc.getScreenWidth()/2, gc.getScreenHeight()/2);
         Model.model.addActiveGui(playerCustomizer);
