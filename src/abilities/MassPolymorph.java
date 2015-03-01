@@ -44,7 +44,7 @@ public class MassPolymorph extends Ability{
 
 	@Override
 	public int getCastTime() {
-		return 1500;
+		return 1000;
 	}
 
 	@Override

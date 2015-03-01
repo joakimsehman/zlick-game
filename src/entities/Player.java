@@ -1,5 +1,9 @@
 package entities;
 
+import entities.Player.Clothes;
+import entities.Player.Gender;
+import entities.Player.Hair;
+import entities.Player.Weapon;
 import game.Model;
 import game.Model.Team;
 import gui.HealthBar;
@@ -37,31 +41,75 @@ public class Player extends Minion {
 	private Gender gender;
 	private Clothes clothes;
 	private Weapon weapon;
-	
+	private Hair hair;
+
 	private AnimationGroup playerAnimation;
 
-	final private int playerStillAnimation;
-	final private int playerMoveAnimation;
-	final private int playerCastAnimation;
-	final private int playerAttackAnimation;
-	
-//	private AnimationGroup playerStillAnimation;
-//	private AnimationGroup playerMovingAnimation;
-//	private AnimationGroup playerCastingAnimation;
-//	private AnimationGroup currentPlayerAnimation;
-	
+	private int playerStillAnimation;
+	private int playerMoveAnimation;
+	private int playerCastAnimation;
+	private int playerAttackAnimation;
+
+	//	private AnimationGroup playerStillAnimation;
+	//	private AnimationGroup playerMovingAnimation;
+	//	private AnimationGroup playerCastingAnimation;
+	//	private AnimationGroup currentPlayerAnimation;
+
 	private HealthBar healthBar;
 
-	private enum Gender {
+	public enum Gender {
 		MALE, FEMALE
 	};
 
-	private enum Clothes {
-		CLOTHES, LETHER, STEEL
+	public enum Clothes {
+		CLOTHES, LETHER, STEEL;
+		private static Clothes[] vals = values();
+
+		public Clothes getNext() {
+			return vals[(ordinal() + 1) % vals.length];
+		}
+
+		public Clothes getPrevious() {
+			if (ordinal() - 1 < 0) {
+				return vals[vals.length - 1];
+			} else {
+				return vals[(ordinal() - 1)];
+			}
+		}
 	};
 
-	private enum Weapon {
-		BOW, STAFF, SWORD
+	public enum Weapon {
+		BOW, STAFF, SWORD, SHIELD;
+		private static Weapon[] vals = values();
+
+		public Weapon getNext() {
+			return vals[(ordinal() + 1) % vals.length];
+		}
+
+		public Weapon getPrevious() {
+			if (ordinal() - 1 < 0) {
+				return vals[vals.length - 1];
+			} else {
+				return vals[(ordinal() - 1)];
+			}
+		}
+	};
+
+	public enum Hair {
+		NORMAL, BALD, HOOD;
+		private static Hair[] vals = values();
+
+		public Hair getNext() {
+			return vals[(ordinal() + 1) % vals.length];
+		}
+
+		public Hair getPrevious() {
+			if (ordinal() - 1 < 0) {
+				return vals[vals.length - 1];
+			} else {
+				return vals[(ordinal() - 1)];
+			}
+		}
 	};
 
 	public Player(float xPos, float yPos, Vector2f vector, Shape boundingBox,
@@ -73,14 +121,17 @@ public class Player extends Minion {
 		gender = Gender.MALE;
 		clothes = Clothes.STEEL;
 		weapon = Weapon.SWORD;
-		
+
 		playerAnimation = new AnimationGroup();
 		playerAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("steel_armor.png", 0, 32, 0,
+				DirectedAnimation.getSpritesAlongX("male_steel_armor.png", 0,
+						32, 0, 8)));
+		playerAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("male_head2.png", 0, 32, 0,
 						8)));
-		playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation
-						.getSpritesAlongX("male_head2.png", 0, 32, 0, 8)));
-		playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("greatsword.png", 0, 32, 0, 8)));
+		playerAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("male_greatsword.png", 0,
+						32, 0, 8)));
 
 		playerStillAnimation = playerAnimation.addNewPartAnimation(0, 4);
 		playerMoveAnimation = playerAnimation.addNewPartAnimation(4, 8);
@@ -97,8 +148,7 @@ public class Player extends Minion {
 		brown = new Color(150, 75, 0);
 		castTimeLeft = 0;
 		castingSpellAbilityNumber = -1;
-		
-		
+
 		healthBar = new HealthBar(0, 0, id);
 
 	}
@@ -116,8 +166,7 @@ public class Player extends Minion {
 	public void draw(Graphics g, float cameraX, float cameraY) {
 
 		healthBar.draw(g);
-		
-		
+
 		if (!isTransformed()) {
 
 			playerAnimation.draw(g, getXPos() - cameraX - 45, getYPos()
@@ -171,7 +220,7 @@ public class Player extends Minion {
 		super.update(delta, entities, true);
 
 		healthBar.update1(delta, getXPos() - 5, getYPos() - 35);
-		
+
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
 		}
@@ -295,7 +344,7 @@ public class Player extends Minion {
 			castTime = this.getAbility(abilityNumber).getCastTime();
 			castTimeLeft = castTime;
 			isCasting = true;
-			if(Model.model.isOnScreen(getXPos(), getYPos())){
+			if (Model.model.isOnScreen(getXPos(), getYPos())) {
 				SoundHandler.getInstance().castingSound.play(1.0f, 0.1f);
 			}
 			this.castingSpellAbilityNumber = abilityNumber;
@@ -307,7 +356,7 @@ public class Player extends Minion {
 	// for network
 	public void setIsCasting(boolean isCasting) {
 		this.isCasting = isCasting;
-		if(isCasting && Model.model.isOnScreen(getXPos(), getYPos())){
+		if (isCasting && Model.model.isOnScreen(getXPos(), getYPos())) {
 			SoundHandler.getInstance().castingSound.play();
 		}
 	}
@@ -350,17 +399,128 @@ public class Player extends Minion {
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
-	public void useMouseAttack(int mouseButton, float mouseGameX, float mouseGameY){
+
+	public void useMouseAttack(int mouseButton, float mouseGameX,
+			float mouseGameY) {
 		double angle = this.getAngleToPoint(mouseGameX, mouseGameY);
-		
+
 		//should be correct, but somehow it feels like the player is not always hitting the correct direction
-		angle = angle + Math.PI+Math.PI/8;
-		angle = angle/(Math.PI*2);
-		if(angle >= 1){
+		angle = angle + Math.PI + Math.PI / 8;
+		angle = angle / (Math.PI * 2);
+		if (angle >= 1) {
 			angle = 0;
 		}
 		playerAnimation.playAnimationOnce(playerAttackAnimation, angle);
+	}
+
+	public void setCustomization(Gender gender, Clothes clothes, Hair hair,
+			Weapon weapon) {
+		this.gender = gender;
+		this.clothes = clothes;
+		this.hair = hair;
+		this.weapon = weapon;
+
+		playerAnimation = new AnimationGroup();
+
+		if (gender == Gender.MALE) {
+			if (hair == Hair.NORMAL) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX("male_head1.png", 0,
+								32, 0, 8)));
+			} else if (hair == Hair.BALD) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX("male_head2.png", 0,
+								32, 0, 8)));
+			} else if (hair == Hair.HOOD) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX("male_head3.png", 0,
+								32, 0, 8)));
+			}
+
+			if (clothes == Clothes.CLOTHES) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX("male_clothes.png",
+								0, 32, 0, 8)));
+			} else if (clothes == Clothes.LETHER) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"male_leather_armor.png", 0, 32, 0, 8)));
+			} else if (clothes == Clothes.STEEL) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"male_steel_armor.png", 0, 32, 0, 8)));
+
+			}
+			if (weapon == Weapon.BOW) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX("male_greatbow.png",
+								0, 32, 0, 8)));
+			} else if (weapon == Weapon.SWORD) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"male_greatsword.png", 0, 32, 0, 8)));
+			} else if (weapon == Weapon.STAFF) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"male_greatstaff.png", 0, 32, 0, 8)));
+			} else if (weapon == Weapon.SHIELD) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"male_longsword.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX("male_shield.png",
+								0, 32, 0, 8)));
+			}
+
+		} else {
+			playerAnimation.addDirectedAnimation(new DirectedAnimation(
+					DirectedAnimation.getSpritesAlongX("female_head_long.png",
+							0, 32, 0, 8)));
+
+			if (clothes == Clothes.CLOTHES) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"female_clothes.png", 0, 32, 0, 8)));
+			} else if (clothes == Clothes.LETHER) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"female_leather_armor.png", 0, 32, 0, 8)));
+			} else if (clothes == Clothes.STEEL) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"female_steel_armor.png", 0, 32, 0, 8)));
+
+			}
+			if (weapon == Weapon.BOW) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"female_greatbow.png", 0, 32, 0, 8)));
+			} else if (weapon == Weapon.SWORD) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"female_greatsword.png", 0, 32, 0, 8)));
+			} else if (weapon == Weapon.STAFF) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"female_greatstaff.png", 0, 32, 0, 8)));
+			} else if (weapon == Weapon.SHIELD) {
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX(
+								"female_longsword.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(
+						DirectedAnimation.getSpritesAlongX("female_shield.png",
+								0, 32, 0, 8)));
+			}
+
+		}
+		
+		playerStillAnimation = playerAnimation.addNewPartAnimation(0, 4);
+		playerMoveAnimation = playerAnimation.addNewPartAnimation(4, 8);
+		playerCastAnimation = playerAnimation.addNewPartAnimation(24, 4);
+		playerAttackAnimation = playerAnimation.addNewPartAnimation(12, 4);
+
+		playerAnimation.setImageSwitchSpeed(110);
+
 	}
 
 }

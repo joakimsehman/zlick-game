@@ -1,10 +1,15 @@
 package networking;
 
+import entities.Player.Clothes;
+import entities.Player.Gender;
+import entities.Player.Hair;
+import entities.Player.Weapon;
 import game.Model;
 import game.Model.Team;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 
 
@@ -227,6 +232,19 @@ public class BlazeServer extends Network implements Runnable{
 		mouseAttack.mouseGameX = mouseGameX;
 		mouseAttack.mouseGameY = mouseGameY;
 		sendTCPToAll(mouseAttack);
+		
+	}
+
+	@Override
+	public void sendPlayerCustomization(int playerId, int gender,
+			int clothes, int hair, int weapon) {
+		Packet12PlayerCustomizer playerCustomizer = new Packet12PlayerCustomizer();
+		playerCustomizer.playerId = playerId;
+		playerCustomizer.gender = gender;
+		playerCustomizer.clothes = clothes;
+		playerCustomizer.hair = hair;
+		playerCustomizer.weapon = weapon;
+		sendTCPToAll(playerCustomizer);
 		
 	}
 

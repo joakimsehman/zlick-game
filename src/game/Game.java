@@ -195,8 +195,9 @@ public class Game implements GameState {
 		screenWidth = gc.getScreenWidth();
 		screenHeight = gc.getScreenHeight();
 
-		gc.setFullscreen(false);
+		gc.setFullscreen(true);
 
+		Model.model.clearGui();
 		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc
 				.getScreenHeight() / 2 - 10));
 

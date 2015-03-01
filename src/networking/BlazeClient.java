@@ -1,5 +1,9 @@
 package networking;
 
+import entities.Player.Clothes;
+import entities.Player.Gender;
+import entities.Player.Hair;
+import entities.Player.Weapon;
 import game.Model;
 import game.Model.Team;
 
@@ -10,6 +14,7 @@ import org.newdawn.slick.geom.Vector2f;
 import networking.Packet.Packet0LoginRequest;
 import networking.Packet.Packet10CustomSpellEffect;
 import networking.Packet.Packet11MouseAttack;
+import networking.Packet.Packet12PlayerCustomizer;
 import networking.Packet.Packet1LoginAnswer;
 import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
@@ -177,7 +182,19 @@ public class BlazeClient extends Network implements Runnable{
 		mouseAttack.mouseButton = mouseButton;
 		mouseAttack.mouseGameX = mouseGameX;
 		mouseAttack.mouseGameY = mouseGameY;
-		sendTCPToAll(mouseAttack);
+		client.sendTCP(mouseAttack);
+	}
+
+	@Override
+	public void sendPlayerCustomization(int playerId, int gender,
+			int clothes, int hair, int weapon) {
+		Packet12PlayerCustomizer playerCustomizer = new Packet12PlayerCustomizer();
+		playerCustomizer.playerId = playerId;
+		playerCustomizer.gender = gender;
+		playerCustomizer.clothes = clothes;
+		playerCustomizer.hair = hair;
+		playerCustomizer.weapon = weapon;
+		client.sendTCP(playerCustomizer);
 	}
 	
 }

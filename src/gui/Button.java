@@ -1,5 +1,6 @@
 package gui;
 
+import game.Model;
 import listener.ButtonListener;
 
 import org.lwjgl.input.Mouse;
@@ -19,13 +20,11 @@ public class Button extends GuiEntity {
 	private Image button;
 	private int height;
 	private int width;
-	private boolean buttonClicked;
 	private boolean buttonPressed;
 	private ButtonListener buttonListener;
 
 	public Button(int xPos, int yPos, Image image, int width, int height) {
 		super(xPos, yPos);
-		buttonClicked = false;
 		buttonPressed = false;
 
 		button = image;
@@ -34,7 +33,7 @@ public class Button extends GuiEntity {
 		id = buttonIdCounter++;
 	}
 
-	public void addButtonToListener(ButtonListener buttonListener) {
+	public void addButtonListener(ButtonListener buttonListener) {
 		this.buttonListener = buttonListener;
 	}
 
@@ -45,14 +44,14 @@ public class Button extends GuiEntity {
 	@Override
 	public void update(int delta) {
 
-		if (!Mouse.isButtonDown(0) && buttonPressed	&& (Mouse.getX() > getxPos() && Mouse.getX() <= getxPos() + width && Mouse.getY() > getyPos() && Mouse.getY() <= getyPos() + height)) {
-			buttonClicked = true;
+		float actualY = Model.model.getScreenHeight() - Mouse.getY();
+		if (!Mouse.isButtonDown(0) && buttonPressed	&& (Mouse.getX() > getxPos() && Mouse.getX() <= getxPos() + width && actualY > getyPos() && actualY <= getyPos() + height)) {
 			if (buttonListener != null) {
 				buttonListener.buttonEvent(ButtonEvent.BUTTON_CLICKED, id);
 			}
 		}
 
-		if ((Mouse.isButtonDown(0) && Mouse.getX() > getxPos() && Mouse.getX() <= getxPos() + width	&& Mouse.getY() > getyPos() && Mouse.getY() <= getyPos() + height)) {
+		if ((Mouse.isButtonDown(0) && Mouse.getX() > getxPos() && Mouse.getX() <= getxPos() + width	&& actualY > getyPos() && actualY <= getyPos() + height)) {
 			buttonPressed = true;
 			if (buttonListener != null) {
 				buttonListener.buttonEvent(ButtonEvent.BUTTON_PRESSED, id);
@@ -61,6 +60,10 @@ public class Button extends GuiEntity {
 			buttonPressed = false;
 		}
 
+	}
+	
+	public boolean getButtonPressed(){
+		return buttonPressed;
 	}
 
 	public int getId() {

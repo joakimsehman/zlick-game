@@ -18,6 +18,10 @@ import utilities.SpellAreaOfEffectCreator;
 import utilities.TextureHandler;
 import entities.Entity;
 import entities.Player;
+import entities.Player.Clothes;
+import entities.Player.Gender;
+import entities.Player.Hair;
+import entities.Player.Weapon;
 import entities.SpellAreaOfEffect;
 import entities.Terrain;
 import gui.GuiEntity;
@@ -491,6 +495,26 @@ public class Model {
 			return true;
 		}
 		return false;
+	}
+	
+	public int getScreenWidth(){
+		return screenWidth;
+	}
+	
+	public int getScreenHeight(){
+		return screenHeight;
+	}
+
+	public void setAndSendPlayerCustomization(Gender gender,
+			Clothes clothes, Hair hair, Weapon weapon) {
+		getMyself().setCustomization(gender, clothes, hair, weapon);
+		network.sendPlayerCustomization(getMyself().getID(), gender.ordinal(), clothes.ordinal(), hair.ordinal(), weapon.ordinal());
+	}
+
+	public void recievePlayerCustomizer(int playerId, int gender, int clothes,
+			int hair, int weapon) {
+		this.getPlayer(playerId).setCustomization(Gender.values()[gender], Clothes.values()[clothes], Hair.values()[hair], Weapon.values()[weapon]);
+		
 	}
 	
 	

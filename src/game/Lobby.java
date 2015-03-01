@@ -1,5 +1,7 @@
 package game;
 
+import gui.PlayerCustomizer;
+
 import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
@@ -21,6 +23,9 @@ public class Lobby implements GameState {
 	private final int stateID;
 	private int selectedAbility;
 	private ArrayList<Image> abilityIcons;
+	private PlayerCustomizer playerCustomizer;
+	
+	private Image background;
 	
 
 	public Lobby(int GameState) {
@@ -161,8 +166,10 @@ public class Lobby implements GameState {
 	}
 
 	@Override
-	public void enter(GameContainer arg0, StateBasedGame arg1)
+	public void enter(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
+		background = TextureHandler.getInstance().getImageByName("background.jpg");
+		
 		selectedAbility = 1;
 		abilityIcons.clear();
 
@@ -171,7 +178,9 @@ public class Lobby implements GameState {
         abilityIcons.add(TextureHandler.getInstance().getImageByName("fireballIcon.png"));
         abilityIcons.add(TextureHandler.getInstance().getImageByName("massPolymorphIcon.png"));
         abilityIcons.add(TextureHandler.getInstance().getImageByName("bolaIcon.png"));
-
+        
+        playerCustomizer = new PlayerCustomizer(gc.getScreenWidth()/2, gc.getScreenHeight()/2);
+        Model.model.addActiveGui(playerCustomizer);
 	}
 
 	@Override
@@ -197,7 +206,7 @@ public class Lobby implements GameState {
 			throws SlickException {
 
 		// background
-		//g.drawImage(background, 0, 0);
+		g.drawImage(background, 0, 0);
 
 		// draw player name
 		if (Model.model.getMyself() != null) {
@@ -273,11 +282,19 @@ public class Lobby implements GameState {
 					.get(i).draw(gc.getScreenWidth() / 2 + (i % 10) * 40,
 							90 + (i / 10) * 40);
 		}
+		
+		//draw gui..
+		for (int i = 0; i < Model.model.getActiveGui().size(); i++) {
+			Model.model.getActiveGui().get(i).draw(g);
+		}
+		
 
 		if (Model.model.isServer()) {
 			TextureHandler.getInstance().getImageByName("startGame.png")
 					.draw(200, gc.getScreenHeight() - 200);
 		}
+		
+		
 	}
 
 	@Override
@@ -341,9 +358,12 @@ public class Lobby implements GameState {
 				}
 			}
 		}
+		
+		Model.model.updateGui(delta);
 
 		if (Model.model.isGaming()) {
 			sbg.enterState(1);
+			Model.model.setAndSendPlayerCustomization(playerCustomizer.getSelectedGender(), playerCustomizer.getSelectedClothes(), playerCustomizer.getSelectedHair(), playerCustomizer.getSelectedWeapon());
 		}
 
 	}

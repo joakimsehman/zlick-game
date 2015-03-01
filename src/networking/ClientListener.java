@@ -6,6 +6,7 @@ import game.Model;
 import networking.Packet.Packet0LoginRequest;
 import networking.Packet.Packet10CustomSpellEffect;
 import networking.Packet.Packet11MouseAttack;
+import networking.Packet.Packet12PlayerCustomizer;
 import networking.Packet.Packet1LoginAnswer;
 import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
@@ -102,6 +103,9 @@ public class ClientListener extends Listener{
 		}else if(obj instanceof Packet11MouseAttack){
 			Packet11MouseAttack mouseAttack = (Packet11MouseAttack)obj;
 			Model.model.executeMouseAttack(mouseAttack.id, mouseAttack.mouseButton, mouseAttack.mouseGameX, mouseAttack.mouseGameY);
+		}else if(obj instanceof Packet12PlayerCustomizer){
+			Packet12PlayerCustomizer playerCustomizer = (Packet12PlayerCustomizer)obj;
+			Model.model.recievePlayerCustomizer(playerCustomizer.playerId, playerCustomizer.gender, playerCustomizer.clothes, playerCustomizer.hair,playerCustomizer.weapon);
 		}
 	}
 	
