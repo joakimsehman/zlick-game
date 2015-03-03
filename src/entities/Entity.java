@@ -276,8 +276,8 @@ public abstract class Entity {
 
 	//returns as radians
 	public double getAngleToPoint(float x, float y) {
-		float deltaY = y + boundingBox.getHeight() / 2 - yPos;
-		float deltaX = x + boundingBox.getWidth() / 2 - xPos;
+		float deltaY = y - yPos;
+		float deltaX = x - xPos;
 		return Math.atan2(deltaY, deltaX);
 	}
 

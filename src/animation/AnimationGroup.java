@@ -87,4 +87,13 @@ public class AnimationGroup {
 			animations.get(i).update(delta, directionInPercentOfDirections);
 		}
 	}
+	
+	public void update2(int delta, double directionInRadians){
+		directionInRadians += Math.PI + Math.PI / 8;
+		double directionInPercentOfDirections = directionInRadians / (Math.PI * 2);
+		if(directionInPercentOfDirections >= 1){
+			directionInPercentOfDirections = 0;
+		}
+		update1(delta, directionInPercentOfDirections);
+	}
 }

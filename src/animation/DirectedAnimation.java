@@ -100,7 +100,7 @@ public class DirectedAnimation {
 		if(oneTimeAnimPlaying && oneTimeAnimDirectionSpriteNr != -1){
 			directionSpriteNr = oneTimeAnimDirectionSpriteNr;
 		}else{
-			directionSpriteNr = (int) (directionInPercentOfDirections * images.length);
+			directionSpriteNr = (int) Math.floor(directionInPercentOfDirections * images.length);
 		}
 		currentImage = images[directionSpriteNr][currentAnimCurrentX];
 		

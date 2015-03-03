@@ -240,5 +240,14 @@ public abstract class Minion extends Entity {
 		}
 
 	}
+	
+	public boolean hasBuff(Buff buff){
+		for (int i = 0; i < activeBuffs.size(); i++) {
+			if (activeBuffs.get(i).getID() == buff.getID()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

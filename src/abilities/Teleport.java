@@ -39,7 +39,7 @@ public class Teleport extends Ability{
 
 	@Override
 	public int getCastTime() {
-		return 200;
+		return 0;
 	}
 
 	@Override

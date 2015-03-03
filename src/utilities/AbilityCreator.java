@@ -5,6 +5,7 @@ import org.newdawn.slick.Image;
 import abilities.Ability;
 import abilities.Bola;
 import abilities.Fireball;
+import abilities.IceLance;
 import abilities.MassPolymorph;
 import abilities.Teleport;
 
@@ -34,6 +35,7 @@ public class AbilityCreator {
 		abilityIcons[1] = TextureHandler.getInstance().getImageByName("massPolymorphIcon.png");
 		abilityIcons[2] = TextureHandler.getInstance().getImageByName("bolaIcon.png");
 		abilityIcons[3] = TextureHandler.getInstance().getImageByName("teleportIcon.png");
+		abilityIcons[4] = TextureHandler.getInstance().getImageByName("icelanceIcon.png");
 	}
 	
 	public Ability getNewAbility(int abilityID, int usingPlayerId){
@@ -46,13 +48,16 @@ public class AbilityCreator {
 			return new Bola("bola", 500, usingPlayerId);
 		}else if(abilityID == 3){
 			return new Teleport("teleport", usingPlayerId);
+		}else if(abilityID == 4){
+			return new IceLance("icelance", 1000, usingPlayerId);
 		}
 		return null;
 		
 	}
 	
+	//increase this everytime you add an ability
 	public int getNumberOfAbilities(){
-		return 4;
+		return 5;
 	}
 	
 	
