@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 import entities.Entity;
 import gui.CastBar;
@@ -202,6 +203,8 @@ public class Game implements GameState {
 				.getScreenHeight() / 2 - 10));
 
 		gc.getInput().addKeyListener(this);
+		
+		SoundHandler.getInstance().menuMusic.stop();
 		
 	}
 

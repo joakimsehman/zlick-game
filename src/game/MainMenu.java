@@ -13,6 +13,7 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 
 public class MainMenu implements GameState {
@@ -198,6 +199,7 @@ public class MainMenu implements GameState {
 			throws SlickException {
 		// TODO Auto-generated method stub
 		background = TextureHandler.getInstance().getImageByName("background.jpg");
+		SoundHandler.getInstance().menuMusic.loop();
 	}
 
 	@Override

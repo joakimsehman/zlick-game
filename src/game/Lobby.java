@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import abilities.Ability;
 import utilities.AbilityCreator;
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 
 public class Lobby implements GameState {
