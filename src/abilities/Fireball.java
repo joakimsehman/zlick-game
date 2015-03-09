@@ -31,11 +31,11 @@ public class Fireball extends Ability{
 	@Override
 	public void useAbility(int id, float mouseGameX, float mouseGameY, int spellEffectId[]) {
 		super.useAbility(id, mouseGameX, mouseGameY, spellEffectId);
-		Player usingPlayer = Model.model.getPlayer(id);
+		Player usingPlayer = Model.model.getPlayer(this.getPlayerCreatedId());
 		
 		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
 		
-		FireballEffect spell = new FireballEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, id, spellEffectId[0]);
+		FireballEffect spell = new FireballEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, getPlayerCreatedId(), spellEffectId[0]);
 		spell.setVectorByDegree(80, angle);
 		
 		Model.model.addActiveSpell(spell);

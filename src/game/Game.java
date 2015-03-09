@@ -14,6 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import utilities.SoundHandler;
 import utilities.TextureHandler;
 import entities.Entity;
+import gui.AbilityBar;
 import gui.CastBar;
 
 public class Game implements GameState {
@@ -201,6 +202,7 @@ public class Game implements GameState {
 		Model.model.clearGui();
 		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc
 				.getScreenHeight() / 2 - 10));
+		Model.model.addActiveGui(new AbilityBar(gc.getScreenWidth() / 2 - 206, gc.getScreenHeight() - 137));
 
 		gc.getInput().addKeyListener(this);
 		

@@ -13,9 +13,7 @@ import utilities.AbilityCreator;
 /*
  * create a new class in abilities that extends Ability
 add a constructor
-add your ability to AbilityCreator
-
-in lobby, in the enter method add your Ability's Icon (this will be changed later but do as it says now)
+add your ability to AbilityCreator, as well as increase the amount of abilities in AbilityCreator
 
 implement useAbility, and decide cost and castTime for ability in getCost() and getCastTime
  */
@@ -75,6 +73,10 @@ public abstract class Ability{
 	
 	public int getMsSinceLastUse(){
 		return msSinceLastUsed;
+	}
+	
+	public void resetCooldown(){
+		msSinceLastUsed = getCooldown();
 	}
 	
 }

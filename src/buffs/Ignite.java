@@ -22,9 +22,9 @@ public class Ignite extends Buff{
 	public void onUpdate(int delta, Minion minion) {
 		// TODO Auto-generated method stub
 		dmgCounter += delta;
-		if(dmgCounter > 100){
-			dmgCounter -=100;
-			minion.applyDamageModifyer(1);
+		if(dmgCounter > 1000){
+			dmgCounter -=1000;
+			minion.applyDamage(-1);
 		}
 	}
 

@@ -44,9 +44,9 @@ public class FireballEffect extends SpellAreaOfEffect {
 	public void applyEffect(Player player) {
 		super.applyEffect(player);
 		if (player.hasBuff(ignite)) {
-			player.applyDamageModifyer(-(damage + damage));
+			player.applyDamage(-(damage + damage));
 		} else {
-			player.applyDamageModifyer(-damage);
+			player.applyDamage(-damage);
 			player.addBuff(ignite);
 		}
 	}

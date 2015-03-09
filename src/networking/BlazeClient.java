@@ -67,6 +67,7 @@ public class BlazeClient extends Network implements Runnable{
 		kryo.register(Packet9SpellHit.class);
 		kryo.register(Packet10CustomSpellEffect.class);
 		kryo.register(Packet11MouseAttack.class);
+		kryo.register(Packet12PlayerCustomizer.class);
 		kryo.register(int[].class);
 	}
 

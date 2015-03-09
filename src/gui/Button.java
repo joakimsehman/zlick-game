@@ -70,4 +70,8 @@ public class Button extends GuiEntity {
 		return id;
 	}
 
+	public void setImage(Image image){
+		button = image;
+	}
+	
 }

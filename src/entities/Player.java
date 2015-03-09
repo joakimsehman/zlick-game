@@ -522,5 +522,12 @@ public class Player extends Minion {
 		playerAnimation.setImageSwitchSpeed(110);
 
 	}
+	
+	protected void onDying(){
+		setHealthToMax();
+		if(Model.model.getMyself().getID() == this.getID()){
+			goToSpawnPoint();
+		}
+	}
 
 }

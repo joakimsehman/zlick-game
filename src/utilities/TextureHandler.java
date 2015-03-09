@@ -67,6 +67,8 @@ public class TextureHandler {
 			addImage("title.png");
 			addImage("teleportIcon.png");
 			addImage("icelanceIcon.png");
+			addImage("elementalDischargeIcon.png");
+			addImage("actionbar.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,6 +108,7 @@ public class TextureHandler {
         addSpriteSheet("teleport_rune.png", 64, 64);
         
         addSpriteSheet("icespikes.png", 64, 64);
+        addSpriteSheet("elementaldischarge.png", 32, 32);
 
         
 	}

@@ -27,6 +27,7 @@ public class SpellAreaOfEffectCreator {
 		} else if (effectId == IceLanceEffect.getEffectId()){
 			return new IceLanceEffect(xPos, yPos, vector, duration,
 					playerUsedId, spellEffectId);
+			
 		} else{
 			return null;
 		}

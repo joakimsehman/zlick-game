@@ -245,9 +245,11 @@ public class Model {
 
 	public void startGame() {
 		if (getMyself().getTeam() == Team.GREEN) {
-			getMyself().setPos(-2650, 1550);
+			getMyself().setSpawnPoint(-2650, 1550);
+			getMyself().goToSpawnPoint();
 		} else if (getMyself().getTeam() == Team.BROWN) {
-			getMyself().setPos(2650, 1550);
+			getMyself().setSpawnPoint(2650, 1550);
+			getMyself().goToSpawnPoint();
 		}
 		network.startNetworkThread();
 		isGaming = true;

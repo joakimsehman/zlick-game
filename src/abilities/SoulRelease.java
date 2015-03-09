@@ -10,7 +10,7 @@ import org.newdawn.slick.Image;
 public class SoulRelease extends Ability{
 
     public SoulRelease(String name, int id, Image icon, int playerCreatedId){
-       super(name, id, icon, playerCreatedId);
+       super(name, id, playerCreatedId);
 
 
     }
@@ -22,11 +22,11 @@ public class SoulRelease extends Ability{
 
     //du kan använda getPlayerCreatedId() för att komma åt usingPlayer
     public int getCost(){
-
+    	return 0;
     }
 
     public int getSpellEffectAmount(){
-
+    	return 0;
     }
 
     public int getCastTime(){
@@ -37,5 +37,17 @@ public class SoulRelease extends Ability{
     public boolean isCastableWhileMoving(){
         return true;
     }
+
+	@Override
+	public int getCooldown() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

@@ -26,7 +26,7 @@ public class IceLance extends Ability {
 		
 		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
 		
-		IceLanceEffect spell = new IceLanceEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, id, spellEffectId[0]);
+		IceLanceEffect spell = new IceLanceEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, getPlayerCreatedId(), spellEffectId[0]);
 		spell.setVectorByDegree(100, angle);
 		
 		Model.model.addActiveSpell(spell);
