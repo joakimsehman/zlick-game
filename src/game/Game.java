@@ -11,8 +11,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 import entities.Entity;
+import gui.AbilityBar;
 import gui.CastBar;
 
 public class Game implements GameState {
@@ -46,8 +48,9 @@ public class Game implements GameState {
 
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		// TODO Auto-generated method stub
-
+		if(button == 0){
+			Model.model.useMouseAttack(button, x, y);
+		}
 	}
 
 	@Override
@@ -194,12 +197,17 @@ public class Game implements GameState {
 		screenWidth = gc.getScreenWidth();
 		screenHeight = gc.getScreenHeight();
 
-		gc.setFullscreen(false);
+		gc.setFullscreen(true);
 
+		Model.model.clearGui();
 		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc
 				.getScreenHeight() / 2 - 10));
+		Model.model.addActiveGui(new AbilityBar(gc.getScreenWidth() / 2 - 206, gc.getScreenHeight() - 137));
 
 		gc.getInput().addKeyListener(this);
+		
+		SoundHandler.getInstance().menuMusic.stop();
+		
 	}
 
 	@Override
@@ -229,6 +237,10 @@ public class Game implements GameState {
 		
 		Model.model.getLevel().render((int) -cameraX, (int) -cameraY);
 
+		for(int i = 0; i < Model.model.getTemporaryDecorations().size(); i++){
+			Model.model.getTemporaryDecorations().get(i).draw(g, cameraX, cameraY);
+		}
+		
 		for (int i = 0; i < Model.model.getActiveSpells().size(); i++) {
 			Model.model.getActiveSpells().get(i).draw(g, cameraX, cameraY);
 		}
@@ -260,8 +272,6 @@ public class Game implements GameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame app, int delta)
 			throws SlickException {
-		int posX = Mouse.getX();
-		int posY = Mouse.getY();
 
 		boolean leftKeyPressed = false;
 		boolean rightKeyPressed = false;
@@ -301,6 +311,8 @@ public class Game implements GameState {
 		Model.model.updateMouseGameXY(Mouse.getX(), gc.getScreenHeight() - Mouse.getY());
 
 		Model.model.updateSpells(delta);
+		
+		Model.model.updateTemporaryDecorations(delta);
 
 		Model.model.checkForExpiredSpells();
 

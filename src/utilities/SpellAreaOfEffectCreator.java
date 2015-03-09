@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import entities.BolaEffect;
 import entities.FireballEffect;
+import entities.IceLanceEffect;
 import entities.PolymorphingEffect;
 import entities.SpellAreaOfEffect;
 
@@ -23,7 +24,11 @@ public class SpellAreaOfEffectCreator {
 		} else if (effectId == FireballEffect.getEffectId()) {
 			return new FireballEffect(xPos, yPos, vector, duration,
 					playerUsedId, spellEffectId);
-		} else {
+		} else if (effectId == IceLanceEffect.getEffectId()){
+			return new IceLanceEffect(xPos, yPos, vector, duration,
+					playerUsedId, spellEffectId);
+			
+		} else{
 			return null;
 		}
 	}

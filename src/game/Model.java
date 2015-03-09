@@ -16,8 +16,13 @@ import abilities.Ability;
 import utilities.AbilityCreator;
 import utilities.SpellAreaOfEffectCreator;
 import utilities.TextureHandler;
+import entities.AnimatedDecoration;
 import entities.Entity;
 import entities.Player;
+import entities.Player.Clothes;
+import entities.Player.Gender;
+import entities.Player.Hair;
+import entities.Player.Weapon;
 import entities.SpellAreaOfEffect;
 import entities.Terrain;
 import gui.GuiEntity;
@@ -47,6 +52,8 @@ public class Model {
 	private ArrayList<Entity> terrain;
 	private ArrayList<SpellAreaOfEffect> activeSpells;
 	private ArrayList<GuiEntity> activeGui;
+	private ArrayList<AnimatedDecoration> temporaryDecorations;
+	private ArrayList<Integer> temporaryDecorationTimers;
 
 	private ArrayList<Player> otherPlayers;
 
@@ -70,6 +77,8 @@ public class Model {
 		isGaming = false;
 		activeSpells = new ArrayList<SpellAreaOfEffect>();
 		activeGui = new ArrayList<GuiEntity>();
+		temporaryDecorations = new ArrayList<AnimatedDecoration>();
+		temporaryDecorationTimers = new ArrayList<Integer>();
 		spellEffectIdCounter = 0;
 	}
 	
@@ -236,9 +245,11 @@ public class Model {
 
 	public void startGame() {
 		if (getMyself().getTeam() == Team.GREEN) {
-			getMyself().setPos(-2650, 1550);
+			getMyself().setSpawnPoint(-2650, 1550);
+			getMyself().goToSpawnPoint();
 		} else if (getMyself().getTeam() == Team.BROWN) {
-			getMyself().setPos(2650, 1550);
+			getMyself().setSpawnPoint(2650, 1550);
+			getMyself().goToSpawnPoint();
 		}
 		network.startNetworkThread();
 		isGaming = true;
@@ -272,14 +283,14 @@ public class Model {
 
 	public void useAbility(int abilityNumber, int mouseXPos, int mouseYPos) {
 		System.out.println("ability: " + abilityNumber + " used");
-
-		float mouseGameX = cameraX + mouseXPos;
-		float mouseGameY = cameraY + mouseYPos;
+//		we keep this in model now so not needed, might be this should be refactored some..
+//		float mouseGameX = cameraX + mouseXPos;
+//		float mouseGameY = cameraY + mouseYPos;
 
 		if (abilityNumber > 0 && abilityNumber < 5) {
 
 			if (getMyself().isAbleToCast()) {
-				if (getMyself().getAbility(abilityNumber) != null && getMyself().getAbility(abilityNumber).getMsSinceLastUse() > getMyself().getAbility(abilityNumber).getCooldown()) {
+				if (getMyself().getAbility(abilityNumber) != null && getMyself().getAbility(abilityNumber).getMsSinceLastUse() > getMyself().getAbility(abilityNumber).getCooldown() && getMyself().getAbility(abilityNumber).isCastable(-1, mouseGameX, mouseGameY)) {
 					if (getMyself().getAbility(abilityNumber).getCastTime() == 0) {
 						if (getMyself()
 								.reduceEnergy(
@@ -360,6 +371,18 @@ public class Model {
 				mouseGameY, spellEffectId);
 
 	}
+	
+	public void useMouseAttack(int mouseButton, int x, int y){
+		if(getMyself().isAbleToCast() && getMyself().isMouseAttackReady()){
+			network.sendMouseAttack(getMyself().getID(), mouseButton, mouseGameX, mouseGameY);
+			executeMouseAttack(getMyself().getID(), mouseButton, mouseGameX, mouseGameY);
+		}
+	}
+	
+	public void executeMouseAttack(int playerId, int mouseButton, float mouseGameX, float mouseGameY){
+		getPlayer(id).useMouseAttack(mouseButton, mouseGameX, mouseGameY);
+	}
+	
 
 	public void setPlayerSpeed(float playerSpeed) {
 		this.playerSpeed = playerSpeed;
@@ -481,6 +504,57 @@ public class Model {
 		return false;
 	}
 	
+	public int getScreenWidth(){
+		return screenWidth;
+	}
 	
+	public int getScreenHeight(){
+		return screenHeight;
+	}
 
+	public void setAndSendPlayerCustomization(Gender gender,
+			Clothes clothes, Hair hair, Weapon weapon) {
+		getMyself().setCustomization(gender, clothes, hair, weapon);
+		network.sendPlayerCustomization(getMyself().getID(), gender.ordinal(), clothes.ordinal(), hair.ordinal(), weapon.ordinal());
+	}
+
+	public void recievePlayerCustomizer(int playerId, int gender, int clothes,
+			int hair, int weapon) {
+		this.getPlayer(playerId).setCustomization(Gender.values()[gender], Clothes.values()[clothes], Hair.values()[hair], Weapon.values()[weapon]);
+		
+	}
+	
+	public void addTemporaryDecoration(AnimatedDecoration decoration, int duration){
+		temporaryDecorations.add(decoration);
+		temporaryDecorationTimers.add(duration);
+	}
+	
+	public ArrayList<AnimatedDecoration> getTemporaryDecorations(){
+		return temporaryDecorations;
+	}
+	
+	public void updateTemporaryDecorations(int delta){
+		for(int i = 0; i < temporaryDecorations.size(); i++){
+			temporaryDecorations.get(i).update(delta);
+			temporaryDecorationTimers.set(i, temporaryDecorationTimers.get(i) - delta);
+		}
+		
+		for(int i = 0; i < temporaryDecorations.size(); i++){
+			if(temporaryDecorationTimers.get(i) < 0){
+				temporaryDecorations.remove(i);
+				temporaryDecorationTimers.remove(i);
+			}
+		}
+	}
+	
+	public boolean isNonSolidNonNullPosition(float xPos, float yPos){
+		if(level.getTileAtPos(xPos, yPos) == null){
+			return false;
+		}
+		if(level.getTileAtPos(xPos, yPos).isSolid()){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }

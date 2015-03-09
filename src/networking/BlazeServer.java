@@ -1,10 +1,15 @@
 package networking;
 
+import entities.Player.Clothes;
+import entities.Player.Gender;
+import entities.Player.Hair;
+import entities.Player.Weapon;
 import game.Model;
 import game.Model.Team;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 
 
@@ -63,6 +68,8 @@ public class BlazeServer extends Network implements Runnable{
 		kryo.register(Packet8SetTeam.class);
 		kryo.register(Packet9SpellHit.class);
 		kryo.register(Packet10CustomSpellEffect.class);
+		kryo.register(Packet11MouseAttack.class);
+		kryo.register(Packet12PlayerCustomizer.class);
 		kryo.register(int[].class);
 		
 	}
@@ -214,6 +221,31 @@ public class BlazeServer extends Network implements Runnable{
 		customSpellEffect.playerUsedId = playerUsedId;
 		customSpellEffect.spellEffectId = spellEffectId;
 		sendTCPToAll(customSpellEffect);
+		
+	}
+
+	@Override
+	public void sendMouseAttack(int id, int mouseButton, float mouseGameX,
+			float mouseGameY) {
+		Packet11MouseAttack mouseAttack = new Packet11MouseAttack();
+		mouseAttack.id = id;
+		mouseAttack.mouseButton = mouseButton;
+		mouseAttack.mouseGameX = mouseGameX;
+		mouseAttack.mouseGameY = mouseGameY;
+		sendTCPToAll(mouseAttack);
+		
+	}
+
+	@Override
+	public void sendPlayerCustomization(int playerId, int gender,
+			int clothes, int hair, int weapon) {
+		Packet12PlayerCustomizer playerCustomizer = new Packet12PlayerCustomizer();
+		playerCustomizer.playerId = playerId;
+		playerCustomizer.gender = gender;
+		playerCustomizer.clothes = clothes;
+		playerCustomizer.hair = hair;
+		playerCustomizer.weapon = weapon;
+		sendTCPToAll(playerCustomizer);
 		
 	}
 

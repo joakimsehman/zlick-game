@@ -1,5 +1,6 @@
 package utilities;
 
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -11,6 +12,7 @@ public class SoundHandler {
 	public Sound spellCircleSound;
 	public Sound bolaSound;
 	public Sound castingSound;
+	public Music menuMusic;
 	private static SoundHandler soundHandler;
 	
 	private SoundHandler(){
@@ -32,6 +34,8 @@ public class SoundHandler {
 		spellCircleSound = new Sound("assets/sound/spellCircle.wav");
 		bolaSound = new Sound("assets/sound/bola.wav");
 		castingSound = new Sound("assets/sound/casting.wav");
+		menuMusic = new Music("assets/sound/menuMusic.wav");
+		
 	}
 	
 }

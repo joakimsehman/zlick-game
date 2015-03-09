@@ -31,7 +31,7 @@ public class Polymorph extends Buff{
 		if(Model.model.isOnScreen(minion.getXPos(), minion.getYPos())){
 			SoundHandler.getInstance().sheepSound.play(1.0f, 0.5f);
 		}
-		System.out.println("polymorph applied");
+		
 	}
 
 	@Override
@@ -40,7 +40,6 @@ public class Polymorph extends Buff{
 
 	@Override
 	public void onRemove(Minion minion) {
-		System.out.println("polymorph removed");
 		minion.setIsAbleToCast(true);
 	}
 

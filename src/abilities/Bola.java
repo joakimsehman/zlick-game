@@ -26,7 +26,7 @@ public class Bola extends Ability{
 		
 		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
 		
-		BolaEffect spell = new BolaEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, id, spellEffectId[0]);
+		BolaEffect spell = new BolaEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, getPlayerCreatedId(), spellEffectId[0]);
 		spell.setVectorByDegree(100, angle);
 		
 		Model.model.addActiveSpell(spell);
@@ -59,6 +59,12 @@ public class Bola extends Ability{
 	@Override
 	public int getCooldown() {
 		return 5000;
+	}
+
+	@Override
+	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
+		
+		return true;
 	}
 
 }

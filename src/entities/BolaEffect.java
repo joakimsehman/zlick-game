@@ -46,7 +46,7 @@ public class BolaEffect extends SpellAreaOfEffect {
 	public void applyEffect(Player p) {
 		super.applyEffect(p);
 		p.applyMovementModifyer(0.1f, 2000);
-		p.applyDamageModifyer(-damage);
+		p.applyDamage(-damage);
 		if (playerId == Model.model.getMyself().getID()) {
 			Model.model.launchCustomSpellAreaOfEffect(getEffectId(), this.getXPos() + this.getVectorX()/2, this.getYPos() + this.getVectorY()/2, getVectorX(), getVectorY(), 500, this.playerId, Model.model.getNextSpellEffectId());
 		}

@@ -2,6 +2,10 @@ package networking;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import entities.Player.Clothes;
+import entities.Player.Gender;
+import entities.Player.Hair;
+import entities.Player.Weapon;
 import game.Model.Team;
 import networking.Packet.Packet0LoginRequest;
 import networking.Packet.Packet1LoginAnswer;
@@ -40,5 +44,11 @@ public abstract class Network {
 	public abstract void sendCustomSpellAreaOfEffect(int effectId, float xPos,
 			float yPos, float vectorX, float vectorY, int duration, int playerUsedId,
 			int spellEffectId);
+
+	public abstract void sendMouseAttack(int id, int mouseButton, float mouseGameX,
+			float mouseGameY);
+
+	public abstract void sendPlayerCustomization(int playerId, int gender,
+			int clothes, int hair, int weapon);
 	
 }

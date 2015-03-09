@@ -58,15 +58,57 @@ public class TextureHandler {
 			addImage("spell_circle.png");
 			addImage("castbar.png");
 			addImage("bolaIcon.png");
+			addImage("spell_circle2.png");
+			addImage("leftArrow.png");
+			addImage("rightArrow.png");
+			addImage("male.png");
+			addImage("female.png");
+			addImage("background.jpg");
+			addImage("title.png");
+			addImage("teleportIcon.png");
+			addImage("icelanceIcon.png");
+			addImage("elementalDischargeIcon.png");
+			addImage("actionbar.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-        addSpriteSheet("steel_armor.png", 128, 128);
+        addSpriteSheet("male_steel_armor.png", 128, 128);
+        addSpriteSheet("male_leather_armor.png", 128, 128);
+        addSpriteSheet("male_clothes.png", 128, 128);
+        
+        addSpriteSheet("female_steel_armor.png", 128, 128);
+        addSpriteSheet("female_leather_armor.png", 128, 128);
+        addSpriteSheet("female_clothes.png", 128, 128);
+        
+        
+        addSpriteSheet("male_head1.png", 128, 128);
         addSpriteSheet("male_head2.png", 128, 128);
-        addSpriteSheet("greatsword.png", 128, 128);
+        addSpriteSheet("male_head3.png", 128, 128);
+        addSpriteSheet("female_head_long.png", 128, 128);
+        
+        addSpriteSheet("male_greatsword.png", 128, 128);
+        addSpriteSheet("male_greatbow.png", 128, 128);
+        addSpriteSheet("male_greatstaff.png", 128, 128);
+        addSpriteSheet("male_shield.png", 128, 128);
+        addSpriteSheet("male_longsword.png", 128, 128);
+        
+        addSpriteSheet("female_greatsword.png", 128, 128);
+        addSpriteSheet("female_greatbow.png", 128, 128);
+        addSpriteSheet("female_greatstaff.png", 128, 128);
+        addSpriteSheet("female_shield.png", 128, 128);
+        addSpriteSheet("female_longsword.png", 128, 128);
+        
+        
         addSpriteSheet("animal.png", 32,  32);
         addSpriteSheet("projectiles.png", 64, 64);
+        addSpriteSheet("fireball.png", 64, 64);
+        addSpriteSheet("icelance.png", 64, 64);
+        
+        addSpriteSheet("teleport_rune.png", 64, 64);
+        
+        addSpriteSheet("icespikes.png", 64, 64);
+        addSpriteSheet("elementaldischarge.png", 32, 32);
 
         
 	}

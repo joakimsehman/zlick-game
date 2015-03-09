@@ -18,6 +18,8 @@ public abstract class Minion extends Entity {
 	private float hp;
 	private int speedDurationLeft;
 	private ArrayList<Buff> activeBuffs;
+	
+	private float spawnX, spawnY;
 
 	private int transformWalkingAnimationNumber;
 	private int transformStandingAnimationNumber;
@@ -48,6 +50,9 @@ public abstract class Minion extends Entity {
 
 		totalTransformationTime = -1;
 		transformationTimeLeft = -1;
+		
+		spawnX = 0;
+		spawnY = 0;
 	}
 
 	public void setMaxHealthPoints(int healthPoints) {
@@ -59,11 +64,23 @@ public abstract class Minion extends Entity {
 		this.setSpeedModifier(amount);
 	}
 
-	public void applyDamageModifyer(int amount) {
+	public void applyDamage(int amount) {
 		hp = hp + amount;
 		if (hp > maxHealthPoints) {
 			hp = maxHealthPoints;
 		}
+		if(hp <= 0){
+			onDying();
+		}
+	}
+
+	protected void onDying() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void setHealthToMax(){
+		hp = maxHealthPoints;
 	}
 
 	public void applyPlayerVector(Vector2f vector, int duration,
@@ -239,6 +256,32 @@ public abstract class Minion extends Entity {
 			transformAnimation.setCurrentAnimation(transformStandingAnimationNumber);
 		}
 
+	}
+	
+	public boolean hasBuff(Buff buff){
+		for (int i = 0; i < activeBuffs.size(); i++) {
+			if (activeBuffs.get(i).getID() == buff.getID()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void setSpawnPoint(float spawnX, float spawnY){
+		this.spawnX = spawnX;
+		this.spawnY = spawnY;
+	}
+	
+	public void goToSpawnPoint(){
+		setPos(spawnX, spawnY);
+	}
+	
+	public float getSpawnX(){
+		return spawnX;
+	}
+	
+	public float getSpawnY(){
+		return spawnY;
 	}
 
 }

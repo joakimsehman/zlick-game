@@ -5,6 +5,8 @@ import entities.Player;
 import game.Model;
 import networking.Packet.Packet0LoginRequest;
 import networking.Packet.Packet10CustomSpellEffect;
+import networking.Packet.Packet11MouseAttack;
+import networking.Packet.Packet12PlayerCustomizer;
 import networking.Packet.Packet1LoginAnswer;
 import networking.Packet.Packet2Message;
 import networking.Packet.Packet3PlayerSender;
@@ -18,27 +20,27 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 
-public class ServerListener extends Listener{
+public class ServerListener extends Listener {
 
 	private BlazeServer server;
-	
-	public ServerListener(BlazeServer server){
+
+	public ServerListener(BlazeServer server) {
 		super();
 		this.server = server;
 	}
-	
+
 	@Override
 	public void connected(Connection arg0) {
 		Log.info("[SERVER] Someone has to connect");
 		System.out.println("someone is connecting");
 	}
-	
+
 	@Override
 	public void disconnected(Connection connection) {
 		Log.info("[SERVER] Someone has to disconnect");
 		server.removeClient(connection);
 	}
-	
+
 	@Override
 	public void received(Connection connection, Object obj) {
 		
@@ -112,7 +114,14 @@ public class ServerListener extends Listener{
 			Packet10CustomSpellEffect customSpellEffect = (Packet10CustomSpellEffect)obj;
 			server.forwardTCPToAll(customSpellEffect, connection);
 			Model.model.recieveCustomSpellAreaOfEffect(customSpellEffect.effectId, customSpellEffect.xPos, customSpellEffect.yPos, customSpellEffect.vectorX, customSpellEffect.vectorY, customSpellEffect.duration, customSpellEffect.playerUsedId, customSpellEffect.spellEffectId);
+		}else if(obj instanceof Packet11MouseAttack){
+			Packet11MouseAttack mouseAttack = (Packet11MouseAttack)obj;
+			server.forwardTCPToAll(mouseAttack, connection);
+			Model.model.executeMouseAttack(mouseAttack.id, mouseAttack.mouseButton, mouseAttack.mouseGameX, mouseAttack.mouseGameY);
+		}else if(obj instanceof Packet12PlayerCustomizer){
+			Packet12PlayerCustomizer playerCustomizer = (Packet12PlayerCustomizer)obj;
+			server.forwardTCPToAll(playerCustomizer, connection);
+			Model.model.recievePlayerCustomizer(playerCustomizer.playerId, playerCustomizer.gender, playerCustomizer.clothes, playerCustomizer.hair,playerCustomizer.weapon);
 		}
 	}
 }
-	

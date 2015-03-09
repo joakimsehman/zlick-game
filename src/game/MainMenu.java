@@ -13,6 +13,7 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import utilities.SoundHandler;
 import utilities.TextureHandler;
 
 public class MainMenu implements GameState {
@@ -21,6 +22,7 @@ public class MainMenu implements GameState {
 	private final int stateID;
 	private String nameStr;
 	private String ipStr;
+	private Image background;
 
 	private enum STRINGS {
 		ipStr, nameStr
@@ -196,7 +198,8 @@ public class MainMenu implements GameState {
 	public void enter(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		// TODO Auto-generated method stub
-
+		background = TextureHandler.getInstance().getImageByName("background.jpg");
+		SoundHandler.getInstance().menuMusic.loop();
 	}
 
 	@Override
@@ -215,9 +218,9 @@ public class MainMenu implements GameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		//g.drawImage(background, 0, 0);
+		g.drawImage(background, 0, 0);
 		
-		g.drawString("Welcome to The Game", 200, 100);
+		g.drawImage(TextureHandler.getInstance().getImageByName("title.png"), 180, 100);
 		TextureHandler.getInstance().getImageByName("hostGame.png")
 				.draw(200, 200);
 		TextureHandler.getInstance().getImageByName("joinGame.png")

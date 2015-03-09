@@ -2,6 +2,10 @@ package networking;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import entities.Player.Clothes;
+import entities.Player.Gender;
+import entities.Player.Hair;
+import entities.Player.Weapon;
 import game.Model.Team;
 
 public class Packet {
@@ -61,6 +65,21 @@ public class Packet {
 		int duration;
 		int playerUsedId;
 		int spellEffectId;
+	}
+	
+	public static class Packet11MouseAttack{
+		int id; 
+		int mouseButton; 
+		float mouseGameX;
+		float mouseGameY;
+	}
+	
+	public static class Packet12PlayerCustomizer{
+		int playerId;
+		int gender;
+		int clothes;
+		int hair;
+		int weapon;
 	}
 	
 	//hej

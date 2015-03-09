@@ -44,7 +44,7 @@ public class MassPolymorph extends Ability{
 
 	@Override
 	public int getCastTime() {
-		return 1500;
+		return 1000;
 	}
 
 	@Override
@@ -55,6 +55,11 @@ public class MassPolymorph extends Ability{
 	@Override
 	public int getCooldown() {
 		return 0;
+	}
+
+	@Override
+	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
+		return true;
 	}
 
 	
