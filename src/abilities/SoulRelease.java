@@ -17,16 +17,20 @@ public class SoulRelease extends Ability{
 
     public void useAbility(int id, float mouseGameX, float mouseGameY, int[] spellEffectId){
         Player usingPlayer = Model.model.getPlayer(id);
+        
+        float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
+        
+        
     }
 
 
     //du kan använda getPlayerCreatedId() för att komma åt usingPlayer
     public int getCost(){
-
+    	
     }
 
     public int getSpellEffectAmount(){
-
+    	return 1;
     }
 
     public int getCastTime(){
