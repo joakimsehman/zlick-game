@@ -1,8 +1,9 @@
-/entities/
 /abilities/
 /animation/
 /buffs/
+/entities/
 /game/
-/map/
-/utilities/
 /gui/
+/map/
+/networking/
+/utilities/

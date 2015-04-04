@@ -111,4 +111,5 @@ public abstract class SpellAreaOfEffect extends Entity {
 	public void setDurationLeft(int duration){
 		this.durationLeft = duration;
 	}
+	
 }

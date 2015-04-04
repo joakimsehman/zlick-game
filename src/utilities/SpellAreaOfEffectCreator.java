@@ -28,7 +28,9 @@ public class SpellAreaOfEffectCreator {
 			return new IceLanceEffect(xPos, yPos, vector, duration,
 					playerUsedId, spellEffectId);
 			
-		} else{
+		} else if (effectId == SoulReleaseEffect.getEffectId()){
+			
+		}else{
 			return null;
 		}
 	}

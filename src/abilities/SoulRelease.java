@@ -1,45 +1,68 @@
 package abilities;
 
 import entities.Player;
+import entities.SoulReleaseEffect;
 import game.Model;
+
 import org.newdawn.slick.Image;
 
 /**
  * Created by joakim on 2015-01-31.
  */
-public class SoulRelease extends Ability{
+public class SoulRelease extends Ability {
 
-    public SoulRelease(String name, int id, Image icon, int playerCreatedId){
-       super(name, id, icon, playerCreatedId);
+	private int cooldown;
 
+	public SoulRelease(String name, int duration, int playerCreatedId) {
+		super(name, 6, playerCreatedId);
 
-    }
+		cooldown = 0;
 
-    public void useAbility(int id, float mouseGameX, float mouseGameY, int[] spellEffectId){
-        Player usingPlayer = Model.model.getPlayer(id);
-        
-        float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
-        
-        
-    }
+	}
 
+	public void useAbility(int id, float mouseGameX, float mouseGameY,
+			int[] spellEffectId) {
+		super.useAbility(id, mouseGameX, mouseGameY, spellEffectId);
+		if (Model.model.getMyself().getID() == getPlayerCreatedId()) {
+			Player usingPlayer = Model.model.getPlayer(id);
 
-    //du kan använda getPlayerCreatedId() för att komma åt usingPlayer
-    public int getCost(){
-    	
-    }
+			float angle = (float) Math
+					.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),
+							mouseGameX - usingPlayer.getXPos()));
 
-    public int getSpellEffectAmount(){
-    	return 1;
-    }
+			// SoulReleaseEffect spell = new SoulReleaseEffect(angle, angle,
+			// null, null, id, id)
+		}
+	}
 
-    public int getCastTime(){
-        return 0;
+	// du kan använda getPlayerCreatedId() för att komma åt usingPlayer
+	public int getCost() {
+		return (int) Model.model.getPlayer(getPlayerCreatedId()).getEnergy() / 2;
+	}
 
-    }
+	public int getSpellEffectAmount() {
+		return 1;
+	}
 
-    public boolean isCastableWhileMoving(){
-        return true;
-    }
+	public int getCastTime() {
+		return 0;
+
+	}
+
+	public boolean isCastableWhileMoving() {
+		return true;
+	}
+
+	@Override
+	public int getCooldown() {
+		// TODO Auto-generated method stub
+		return cooldown;
+	}
+
+	@Override
+	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 }
