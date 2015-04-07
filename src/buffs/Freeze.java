@@ -23,7 +23,7 @@ public class Freeze extends Buff{
 	public void onApply(Minion minion) {
 		// TODO Auto-generated method stub
 		minion.applyMovementModifyer(0, getDuration());
-		Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(minion, animation, -10, 5), 1900);
+		Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(minion, animation, -10, 5), 1900, false);
 	}
 
 	@Override

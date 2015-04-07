@@ -110,6 +110,7 @@ public class BlazeServer extends Network implements Runnable{
 			playerSender.ID = Model.model.getOtherPlayers().get(i).getID();
 			playerSender.vectorX = Model.model.getOtherPlayers().get(i).getVectorX();
 			playerSender.vectorY = Model.model.getOtherPlayers().get(i).getVectorY();
+			playerSender.playerHealth = Model.model.getOtherPlayers().get(i).getHealthPoints();
 			playerSender.isCasting = Model.model.getOtherPlayers().get(i).isCasting();
 			sendUDPToAll(playerSender);
 		}
@@ -123,6 +124,7 @@ public class BlazeServer extends Network implements Runnable{
 		playerSender.ID = Model.model.getID();
 		playerSender.vectorX = Model.model.getMyself().getVectorX();
 		playerSender.vectorY = Model.model.getMyself().getVectorY();
+		playerSender.playerHealth = Model.model.getMyself().getHealthPoints();
 		playerSender.isCasting = Model.model.getMyself().isCasting();
 		sendUDPToAll(playerSender);
 		

@@ -10,7 +10,7 @@ public class Level {
 	private Tile[][] tileProperties = new Tile[width][height];
 
     private int background;
-    private int stuff;
+    private int solids;
     private int decorations;
     private int trees;
 	
@@ -30,7 +30,7 @@ public class Level {
         height = map.getHeight();
 
         background = map.getLayerIndex("background");
-        stuff = map.getLayerIndex("solids");
+        solids = map.getLayerIndex("solids");
         decorations = map.getLayerIndex("decorations");
         trees = map.getLayerIndex("trees");
 
@@ -65,10 +65,16 @@ public class Level {
                 	tileProperties[x][y] = Tile.treeTrunk;
                 }
 
-                //check second map layer for some stuff(ex. rocks)
-                tileId = map.getTileId(x, y, stuff);
+                //check solid map layer for some stuff(ex. rocks)
+                tileId = map.getTileId(x, y, solids);
                 if(tileId == 55 || tileId == 56){
                     tileProperties[x][y] = Tile.rock;
+                }
+                
+                //check decoration layer for some stuff(ex. bushes)
+                tileId = map.getTileId(x, y, decorations);
+                if(tileId > 110 && tileId < 120){
+                	tileProperties[x][y] = Tile.brush;
                 }
             }
         }
@@ -95,7 +101,7 @@ public class Level {
         //map.render(x, y, (-x)/64, (-y)/32, 50, 50);
         map.render(x, y, background);
         map.render(x, y, decorations);
-        map.render(x, y, stuff);
+        map.render(x, y, solids);
         
     }
     

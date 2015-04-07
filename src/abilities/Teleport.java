@@ -19,11 +19,11 @@ public class Teleport extends Ability{
 		AnimationGroup animation = new AnimationGroup();
 		animation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("teleport_rune.png", 0, 4, 0, 1)));
 		AnimatedDecoration decoration = new AnimatedDecoration(Model.model.getPlayer(this.getPlayerCreatedId()).getXPos()-7, Model.model.getPlayer(this.getPlayerCreatedId()).getYPos(), new Vector2f(0,0), animation);
-		Model.model.addTemporaryDecoration(decoration, 400);
+		Model.model.addTemporaryDecoration(decoration, 400, false);
 		animation = new AnimationGroup();
 		animation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("teleport_rune.png", 0, 4, 0, 1)));
 		decoration = new AnimatedDecoration(mouseGameX-35, mouseGameY-15, new Vector2f(0,0), animation);
-		Model.model.addTemporaryDecoration(decoration, 400);
+		Model.model.addTemporaryDecoration(decoration, 400, false);
 		Model.model.getPlayer(this.getPlayerCreatedId()).setPos(mouseGameX-25, mouseGameY-25);
 	}
 
@@ -49,7 +49,7 @@ public class Teleport extends Ability{
 
 	@Override
 	public int getCooldown() {
-		return 1500;
+		return 6000;
 	}
 
 	@Override

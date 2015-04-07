@@ -31,7 +31,7 @@ public class ElementalDischarge extends Ability {
 		Player usingPlayer = Model.model.getPlayer(this.getPlayerCreatedId());
 		
 		
-		if (msSinceLastUse > 10000) {
+		if (msSinceLastUse > duration) {
 			float angle = (float) Math
 					.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),
 							mouseGameX - usingPlayer.getXPos()));

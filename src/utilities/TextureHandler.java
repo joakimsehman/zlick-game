@@ -69,6 +69,7 @@ public class TextureHandler {
 			addImage("icelanceIcon.png");
 			addImage("elementalDischargeIcon.png");
 			addImage("actionbar.png");
+			addImage("cure-3.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,6 +110,12 @@ public class TextureHandler {
         
         addSpriteSheet("icespikes.png", 64, 64);
         addSpriteSheet("elementaldischarge.png", 32, 32);
+        
+        addSpriteSheet("healEffect.png", 64, 64);
+        addSpriteSheet("sparks.png", 64, 64);
+        
+        addSpriteSheet("quake_withheal.png", 256, 128);
+        
 
         
 	}

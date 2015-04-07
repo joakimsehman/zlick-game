@@ -252,6 +252,10 @@ public class Game implements GameState {
 		for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
 			Model.model.getOtherPlayers().get(i).draw(g, cameraX, cameraY);
 		}
+		
+		for(int i = 0; i < Model.model.getTemporaryAbovePlayerDecorations().size(); i++){
+			Model.model.getTemporaryAbovePlayerDecorations().get(i).draw(g, cameraX, cameraY);
+		}
 
 		Model.model.getLevel().renderDecorations((int) -cameraX, (int) -cameraY);
 		

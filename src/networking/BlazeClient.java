@@ -100,6 +100,7 @@ public class BlazeClient extends Network implements Runnable{
 		playerSender.vectorX = Model.model.getMyself().getVectorX();
 		playerSender.vectorY = Model.model.getMyself().getVectorY();
 		playerSender.ID = Model.model.getID();
+		playerSender.playerHealth = Model.model.getMyself().getHealthPoints();
 		playerSender.isCasting = Model.model.getMyself().isCasting();
 		
 		client.sendUDP(playerSender);

@@ -72,7 +72,7 @@ public class ClientListener extends Listener{
 		}else if(obj instanceof Packet3PlayerSender){
 			
 			Packet3PlayerSender playerSender = (Packet3PlayerSender)obj;
-			Model.model.updatePlayer(playerSender.xPos, playerSender.yPos, playerSender.vectorX, playerSender.vectorY, playerSender.ID, playerSender.isCasting);
+			Model.model.updatePlayer(playerSender.xPos, playerSender.yPos, playerSender.vectorX, playerSender.vectorY, playerSender.ID, playerSender.playerHealth, playerSender.isCasting);
 			
 		}else if(obj instanceof Packet4AddPlayer){
 			Packet4AddPlayer addPlayer = (Packet4AddPlayer)obj;

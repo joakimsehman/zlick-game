@@ -21,6 +21,7 @@ public abstract class Entity {
 	private Image image;
 	private float speedModifier;
 	private boolean isMoving;
+	private boolean isAbleToMove;
 	private Direction direction;
 
 	public Entity(float xPos, float yPos, Vector2f vector, Shape boundingBox,
@@ -32,6 +33,7 @@ public abstract class Entity {
 		this.boundingBox = boundingBox;
 		this.image = image;
 		speedModifier = 1;
+		isAbleToMove = true;
 
 	}
 
@@ -56,12 +58,14 @@ public abstract class Entity {
 	}
 
 	public void setVectorWithoutSpeedModifier(float x, float y) {
-		vector.set(x, y);
-		if (x == 0 && y == 0) {
-			setIsMoving(false);
-		} else {
-			setIsMoving(true);
-			checkAndSetDirection();
+		if (isAbleToMove) {
+			vector.set(x, y);
+			if (x == 0 && y == 0) {
+				setIsMoving(false);
+			} else {
+				setIsMoving(true);
+				checkAndSetDirection();
+			}
 		}
 	}
 
@@ -70,15 +74,17 @@ public abstract class Entity {
 	}
 
 	public void setVectorByDegree(float length, float degree) {
-		length = length * speedModifier;
-		float dx = (float) (length * Math.cos(Math.toRadians(degree)));
-		float dy = (float) (length * Math.sin(Math.toRadians(degree)));
-		vector.set(dx, dy);
-		if (length == 0) {
-			setIsMoving(false);
-		} else {
-			setIsMoving(true);
-			checkAndSetDirection();
+		if (isAbleToMove) {
+			length = length * speedModifier;
+			float dx = (float) (length * Math.cos(Math.toRadians(degree)));
+			float dy = (float) (length * Math.sin(Math.toRadians(degree)));
+			vector.set(dx, dy);
+			if (length == 0) {
+				setIsMoving(false);
+			} else {
+				setIsMoving(true);
+				checkAndSetDirection();
+			}
 		}
 	}
 
@@ -127,8 +133,7 @@ public abstract class Entity {
 			boolean moveForbidden = false;
 
 			if (boundingBox != null) {
-				boundingBox.setX(newXPos);
-				boundingBox.setY(newYPos);
+				setBoundingBox(newXPos, newYPos);
 
 				if (collidesWithTerrain) {
 					if (vector.getX() < 0) {
@@ -173,8 +178,7 @@ public abstract class Entity {
 			}
 
 			if (moveForbidden) {
-				boundingBox.setX(xPos);
-				boundingBox.setY(yPos);
+				setBoundingBox(xPos, yPos);
 			} else {
 				xPos = newXPos;
 				yPos = newYPos;
@@ -281,4 +285,25 @@ public abstract class Entity {
 		return Math.atan2(deltaY, deltaX);
 	}
 
+	protected void setBoundingBox(float xPos2, float yPos2) {
+		boundingBox.setX(xPos2);
+		boundingBox.setY(yPos2);
+	}
+
+	public float getDistanceTo(Entity otherEntity) {
+		return getDistanceTo(otherEntity.getXPos(), otherEntity.getYPos());
+	}
+
+	public float getDistanceTo(float x, float y) {
+		return (float) Math.sqrt(Math.pow(this.getXPos() - x, 2)
+				+ Math.pow(this.getYPos() - y, 2));
+	}
+
+	public void setIsAbleToMove(boolean isAbleToMove) {
+		this.isAbleToMove = isAbleToMove;
+		if (!isAbleToMove) {
+			this.vector.set(0, 0);
+			setIsMoving(false);
+		}
+	}
 }

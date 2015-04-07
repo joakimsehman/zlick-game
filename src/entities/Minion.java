@@ -18,7 +18,7 @@ public abstract class Minion extends Entity {
 	private float hp;
 	private int speedDurationLeft;
 	private ArrayList<Buff> activeBuffs;
-	
+
 	private float spawnX, spawnY;
 
 	private int transformWalkingAnimationNumber;
@@ -50,7 +50,7 @@ public abstract class Minion extends Entity {
 
 		totalTransformationTime = -1;
 		transformationTimeLeft = -1;
-		
+
 		spawnX = 0;
 		spawnY = 0;
 	}
@@ -69,17 +69,17 @@ public abstract class Minion extends Entity {
 		if (hp > maxHealthPoints) {
 			hp = maxHealthPoints;
 		}
-		if(hp <= 0){
+		if (hp <= 0) {
 			onDying();
 		}
 	}
 
 	protected void onDying() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	public void setHealthToMax(){
+
+	public void setHealthToMax() {
 		hp = maxHealthPoints;
 	}
 
@@ -135,9 +135,9 @@ public abstract class Minion extends Entity {
 			activeBuffs.get(i).update(delta, this);
 		}
 		if (isTransformed()) {
-			if(totalTransformationTime != -1){
+			if (totalTransformationTime != -1) {
 				transformationTimeLeft -= delta;
-				if(transformationTimeLeft < 0){
+				if (transformationTimeLeft < 0) {
 					isTransformed = false;
 				}
 			}
@@ -160,33 +160,33 @@ public abstract class Minion extends Entity {
 				animSpritePercent = 0;
 				break;
 			}
-//		case WEST:
-//			animDegrees = 0;
-//			break;
-//		case NORTHWEST:
-//			animDegrees = 45;
-//			break;
-//		case NORTH:
-//			animDegrees = 90;
-//			break;
-//		case NORTHEAST:
-//			animDegrees = 135;
-//			break;
-//		case EAST:
-//			animDegrees = 180;
-//			break;
-//		case SOUTHEAST:
-//			animDegrees = 225;
-//			break;
-//		case SOUTH:
-//			animDegrees = 270;
-//			break;
-//		case SOUTHWEST:
-//			animDegrees = 315;
-//			break;
-//		}
+			//		case WEST:
+			//			animDegrees = 0;
+			//			break;
+			//		case NORTHWEST:
+			//			animDegrees = 45;
+			//			break;
+			//		case NORTH:
+			//			animDegrees = 90;
+			//			break;
+			//		case NORTHEAST:
+			//			animDegrees = 135;
+			//			break;
+			//		case EAST:
+			//			animDegrees = 180;
+			//			break;
+			//		case SOUTHEAST:
+			//			animDegrees = 225;
+			//			break;
+			//		case SOUTH:
+			//			animDegrees = 270;
+			//			break;
+			//		case SOUTHWEST:
+			//			animDegrees = 315;
+			//			break;
+			//		}
 			transformAnimation.update1(delta, animSpritePercent);
-			
+
 		}
 		checkForExpiredBuffs();
 	}
@@ -203,7 +203,7 @@ public abstract class Minion extends Entity {
 	}
 
 	protected void setIsMoving(boolean isMoving) {
-		
+
 		if (isMoving != isMoving() && isTransformed) {
 			if (isMoving && transformWalkingAnimationNumber != -1) {
 
@@ -249,16 +249,18 @@ public abstract class Minion extends Entity {
 		this.transformationTimeLeft = transformDuration;
 		this.transformWalkingAnimationNumber = transformWalkingAnimationNumber;
 		this.transformStandingAnimationNumber = transformStandingAnimationNumber;
-		
-		if(isMoving()){
-			transformAnimation.setCurrentAnimation(transformWalkingAnimationNumber);
-		}else{
-			transformAnimation.setCurrentAnimation(transformStandingAnimationNumber);
+
+		if (isMoving()) {
+			transformAnimation
+					.setCurrentAnimation(transformWalkingAnimationNumber);
+		} else {
+			transformAnimation
+					.setCurrentAnimation(transformStandingAnimationNumber);
 		}
 
 	}
-	
-	public boolean hasBuff(Buff buff){
+
+	public boolean hasBuff(Buff buff) {
 		for (int i = 0; i < activeBuffs.size(); i++) {
 			if (activeBuffs.get(i).getID() == buff.getID()) {
 				return true;
@@ -266,22 +268,28 @@ public abstract class Minion extends Entity {
 		}
 		return false;
 	}
-	
-	public void setSpawnPoint(float spawnX, float spawnY){
+
+	public void setSpawnPoint(float spawnX, float spawnY) {
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
 	}
-	
-	public void goToSpawnPoint(){
+
+	public void goToSpawnPoint() {
 		setPos(spawnX, spawnY);
 	}
-	
-	public float getSpawnX(){
+
+	public float getSpawnX() {
 		return spawnX;
 	}
-	
-	public float getSpawnY(){
+
+	public float getSpawnY() {
 		return spawnY;
+	}
+
+	public void setHealthPoints(float hp) {
+		if (hp <= this.maxHealthPoints) {
+			this.hp = hp;
+		}
 	}
 
 }

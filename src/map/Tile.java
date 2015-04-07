@@ -45,6 +45,13 @@ public abstract class Tile {
     		return true;
     	}
     }
+    
+    public static Tile brush = new BrushTile();
+    public static class BrushTile extends Tile{
+    	public boolean isSolid(){
+    		return false;
+    	}
+    }
 
 	public Tile(){
 		

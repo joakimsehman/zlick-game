@@ -23,6 +23,7 @@ public class Packet {
 		int ID;
 		float vectorX;
 		float vectorY;
+		float playerHealth;
 		boolean isCasting;
 	}
 	public static class Packet4AddPlayer{

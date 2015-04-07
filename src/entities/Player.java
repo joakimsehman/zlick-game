@@ -31,6 +31,7 @@ public class Player extends Minion {
 	private Ability[] abilities;
 	private Team team;
 	private boolean isCasting;
+	private boolean isChanneling;
 	private int castTime;
 	private int castTimeLeft;
 	private int castingSpellAbilityNumber;
@@ -50,12 +51,20 @@ public class Player extends Minion {
 	private int playerCastAnimation;
 	private int playerAttackAnimation;
 
-	//	private AnimationGroup playerStillAnimation;
-	//	private AnimationGroup playerMovingAnimation;
-	//	private AnimationGroup playerCastingAnimation;
-	//	private AnimationGroup currentPlayerAnimation;
-
 	private HealthBar healthBar;
+
+	private AnimationGroup healAnimation;
+	private AnimationGroup fireAnimation;
+	private AnimationGroup iceAnimation;
+	private AnimationGroup bloodAnimation;
+
+	private int fireAnimationNr;
+	private int iceAnimationNr;
+	private int bloodAnimationNr;
+
+	public enum EffectAnimation {
+		HEAL, FIRE, ICE, BLOOD
+	}
 
 	public enum Gender {
 		MALE, FEMALE
@@ -140,11 +149,36 @@ public class Player extends Minion {
 
 		playerAnimation.setImageSwitchSpeed(110);
 
+		healAnimation = new AnimationGroup();
+		healAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation
+						.getSpritesAlongX("healEffect.png", 0, 6, 0, 1)));
+		healAnimation.setImageSwitchSpeed(170);
+
+		bloodAnimation = new AnimationGroup();
+		bloodAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 0, 2)));
+		bloodAnimation.setImageSwitchSpeed(100);
+		bloodAnimationNr = bloodAnimation.addNewPartAnimation(0, 4);
+
+		fireAnimation = new AnimationGroup();
+		fireAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 2, 2)));
+		fireAnimation.setImageSwitchSpeed(100);
+		fireAnimationNr = fireAnimation.addNewPartAnimation(0, 4);
+
+		iceAnimation = new AnimationGroup();
+		iceAnimation.addDirectedAnimation(new DirectedAnimation(
+				DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 4, 2)));
+		iceAnimation.setImageSwitchSpeed(100);
+		iceAnimationNr = iceAnimation.addNewPartAnimation(0, 4);
+
 		this.name = name;
 		energy = 100f;
 		abilities = new Ability[4];
 		team = Model.Team.GREEN;
 		isCasting = false;
+		isChanneling = false;
 		brown = new Color(150, 75, 0);
 		castTimeLeft = 0;
 		castingSpellAbilityNumber = -1;
@@ -270,13 +304,18 @@ public class Player extends Minion {
 
 		if (isCasting()) {
 			if (!isMoving()
+					|| isChanneling
 					|| getAbility(castingSpellAbilityNumber)
 							.isCastableWhileMoving()) {
 				if (castTimeLeft > 0) {
 					castTimeLeft = castTimeLeft - delta;
 				} else {
 					isCasting = false;
-					useCastedSpell();
+					if (!isChanneling) {
+						useCastedSpell();
+					} else {
+						isChanneling = false;
+					}
 				}
 			} else {
 				isCasting = false;
@@ -314,6 +353,10 @@ public class Player extends Minion {
 		return isCasting;
 	}
 
+	public boolean isChanneling() {
+		return isChanneling;
+	}
+
 	// // tobe removed when sheep animation is replaced with Animation
 	// private void loadImages() {
 	//
@@ -338,27 +381,45 @@ public class Player extends Minion {
 
 	public void startCastedAbility(int abilityNumber, float mouseGameX,
 			float mouseGameY) {
-		if ((!isMoving() || getAbility(abilityNumber).isCastableWhileMoving())
-				&& getAbility(abilityNumber).getCost() < this.energy) {
+		if (!isChanneling) {
+			if ((!isMoving() || getAbility(abilityNumber)
+					.isCastableWhileMoving())
+					&& getAbility(abilityNumber).getCost() < this.energy) {
 
-			castTime = this.getAbility(abilityNumber).getCastTime();
-			castTimeLeft = castTime;
-			isCasting = true;
-			if (Model.model.isOnScreen(getXPos(), getYPos())) {
-				SoundHandler.getInstance().castingSound.play(1.0f, 0.1f);
+				castTime = this.getAbility(abilityNumber).getCastTime();
+				castTimeLeft = castTime;
+				isCasting = true;
+				if (Model.model.isOnScreen(getXPos(), getYPos())) {
+					SoundHandler.getInstance().castingSound.play(1.0f, 0.1f);
+				}
+				this.castingSpellAbilityNumber = abilityNumber;
+				this.castingSpellXPos = mouseGameX;
+				this.castingSpellYPos = mouseGameY;
 			}
-			this.castingSpellAbilityNumber = abilityNumber;
-			this.castingSpellXPos = mouseGameX;
-			this.castingSpellYPos = mouseGameY;
 		}
 	}
 
 	// for network
 	public void setIsCasting(boolean isCasting) {
-		this.isCasting = isCasting;
-		if (isCasting && Model.model.isOnScreen(getXPos(), getYPos())) {
-			SoundHandler.getInstance().castingSound.play();
+		if (this.isCasting != isCasting) {
+			this.isCasting = isCasting;
+			if (isCasting && Model.model.isOnScreen(getXPos(), getYPos())) {
+				SoundHandler.getInstance().castingSound.play();
+			}
 		}
+	}
+
+	public void startChanneling(int channelingTime) {
+		setIsCasting(true);
+		isChanneling = true;
+		castTime = channelingTime;
+		castTimeLeft = castTime;
+	}
+
+	public void abortChanneling() {
+		setIsCasting(false);
+		isChanneling = false;
+
 	}
 
 	private void useCastedSpell() {
@@ -513,7 +574,7 @@ public class Player extends Minion {
 			}
 
 		}
-		
+
 		playerStillAnimation = playerAnimation.addNewPartAnimation(0, 4);
 		playerMoveAnimation = playerAnimation.addNewPartAnimation(4, 8);
 		playerCastAnimation = playerAnimation.addNewPartAnimation(24, 4);
@@ -522,11 +583,35 @@ public class Player extends Minion {
 		playerAnimation.setImageSwitchSpeed(110);
 
 	}
-	
-	protected void onDying(){
-		setHealthToMax();
-		if(Model.model.getMyself().getID() == this.getID()){
+
+	protected void onDying() {
+		if (Model.model.getMyself().getID() == this.getID()) {
+			setHealthToMax();
 			goToSpawnPoint();
+		}
+	}
+
+	public void applyDamage(int amount, EffectAnimation ea) {
+		super.applyDamage(amount);
+		playAnimation(ea);
+	}
+
+	protected void playAnimation(EffectAnimation ea) {
+		if (ea == EffectAnimation.FIRE) {
+			fireAnimation.playAnimationOnce(fireAnimationNr, Math.random());
+			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
+					this, fireAnimation, -15, -5), 400, true);
+		} else if (ea == EffectAnimation.ICE) {
+			iceAnimation.playAnimationOnce(iceAnimationNr, Math.random());
+			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
+					this, iceAnimation, -15, -5), 400, true);
+		} else if (ea == EffectAnimation.HEAL) {
+			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
+					this, healAnimation, -15, -5), 1000, true);
+		} else if (ea == EffectAnimation.BLOOD) {
+			bloodAnimation.playAnimationOnce(bloodAnimationNr, Math.random());
+			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
+					this, bloodAnimation, -15, -5), 400, true);
 		}
 	}
 

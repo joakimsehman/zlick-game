@@ -19,7 +19,7 @@ public class PolymorphingEffect extends SpellAreaOfEffect {
 	public PolymorphingEffect(float xPos, float yPos, Vector2f vector,
 			int duration, int playerId,
 			int spellEffectId) {
-		super(xPos-130, yPos-60, vector, new Ellipse(xPos, yPos, 130, 60), TextureHandler
+		super(xPos-130, yPos-60, vector, new Ellipse(xPos-130, yPos-60, 130, 60), TextureHandler
 				.getInstance().getImageByName("spell_circle.png"), duration,
 				false, playerId, spellEffectId);
 		polymorph = new Polymorph(3000);
@@ -32,10 +32,18 @@ public class PolymorphingEffect extends SpellAreaOfEffect {
 		player.addBuff(polymorph);
 	}
 	
-	
+//	public void draw(Graphics g, float cameraX, float cameraY) {
+//		super.draw(g, cameraX, cameraY);
+//		g.drawOval(getBoundingBox().getMinX() - cameraX, getBoundingBox().getMinY() - cameraY, getBoundingBox().getWidth(), getBoundingBox().getHeight());
+//	}
 
 	public static int getEffectId() {
 		return 1;
+	}
+	
+	protected void setBoundingBox(float xPos, float yPos){
+		this.getBoundingBox().setCenterX(getXPos() + 130);
+		this.getBoundingBox().setCenterY(getYPos() + 60);
 	}
 
 }

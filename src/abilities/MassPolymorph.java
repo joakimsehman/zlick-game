@@ -22,7 +22,7 @@ public class MassPolymorph extends Ability{
 	@Override
 	public void useAbility(int id, float mouseGameX, float mouseGameY,
 			int[] spellEffectId) {
-		
+		super.useAbility(id, mouseGameX, mouseGameY, spellEffectId);
 		
 		// -140 -66
 		PolymorphingEffect spell = new PolymorphingEffect(mouseGameX, mouseGameY, new Vector2f(0,0), duration, id, spellEffectId[0]);

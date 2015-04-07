@@ -54,6 +54,8 @@ public class Model {
 	private ArrayList<GuiEntity> activeGui;
 	private ArrayList<AnimatedDecoration> temporaryDecorations;
 	private ArrayList<Integer> temporaryDecorationTimers;
+	private ArrayList<AnimatedDecoration> temporaryAbovePlayerDecorations;
+	private ArrayList<Integer> temporaryAbovePlayerDecorationTimers;
 
 	private ArrayList<Player> otherPlayers;
 
@@ -79,6 +81,8 @@ public class Model {
 		activeGui = new ArrayList<GuiEntity>();
 		temporaryDecorations = new ArrayList<AnimatedDecoration>();
 		temporaryDecorationTimers = new ArrayList<Integer>();
+		temporaryAbovePlayerDecorations = new ArrayList<AnimatedDecoration>();
+		temporaryAbovePlayerDecorationTimers = new ArrayList<Integer>();
 		spellEffectIdCounter = 0;
 	}
 	
@@ -222,7 +226,7 @@ public class Model {
 	}
 
 	public void updatePlayer(float xPos, float yPos, float vectorX,
-			float vectorY, int id, boolean isCasting) {
+			float vectorY, int id, float playerHealth, boolean isCasting) {
 		if (id != this.id) {
 			for (int i = 0; i < otherPlayers.size(); i++) {
 				if (id == otherPlayers.get(i).getID()) {
@@ -230,6 +234,7 @@ public class Model {
 					otherPlayers.get(i).setVectorWithoutSpeedModifier(vectorX,
 							vectorY);
 					otherPlayers.get(i).setIsCasting(isCasting);
+					otherPlayers.get(i).setHealthPoints(playerHealth);
 				}
 			}
 		}
@@ -380,7 +385,7 @@ public class Model {
 	}
 	
 	public void executeMouseAttack(int playerId, int mouseButton, float mouseGameX, float mouseGameY){
-		getPlayer(id).useMouseAttack(mouseButton, mouseGameX, mouseGameY);
+		getPlayer(playerId).useMouseAttack(mouseButton, mouseGameX, mouseGameY);
 	}
 	
 
@@ -524,13 +529,22 @@ public class Model {
 		
 	}
 	
-	public void addTemporaryDecoration(AnimatedDecoration decoration, int duration){
-		temporaryDecorations.add(decoration);
-		temporaryDecorationTimers.add(duration);
+	public void addTemporaryDecoration(AnimatedDecoration decoration, int duration, boolean abovePlayer){
+		if(!abovePlayer){
+			temporaryDecorations.add(decoration);
+			temporaryDecorationTimers.add(duration);
+		}else{
+			temporaryAbovePlayerDecorations.add(decoration);
+			temporaryAbovePlayerDecorationTimers.add(duration);
+		}
 	}
 	
 	public ArrayList<AnimatedDecoration> getTemporaryDecorations(){
 		return temporaryDecorations;
+	}
+	
+	public ArrayList<AnimatedDecoration> getTemporaryAbovePlayerDecorations(){
+		return temporaryAbovePlayerDecorations;
 	}
 	
 	public void updateTemporaryDecorations(int delta){
@@ -545,6 +559,19 @@ public class Model {
 				temporaryDecorationTimers.remove(i);
 			}
 		}
+		
+		for(int i = 0; i < temporaryAbovePlayerDecorations.size(); i++){
+			temporaryAbovePlayerDecorations.get(i).update(delta);
+			temporaryAbovePlayerDecorationTimers.set(i, temporaryAbovePlayerDecorationTimers.get(i)- delta);
+		}
+		
+		for(int i = 0; i < temporaryAbovePlayerDecorations.size(); i++){
+			if(temporaryAbovePlayerDecorationTimers.get(i) < 0){
+				temporaryAbovePlayerDecorations.remove(i);
+				temporaryAbovePlayerDecorationTimers.remove(i);
+			}
+		}
+		
 	}
 	
 	public boolean isNonSolidNonNullPosition(float xPos, float yPos){

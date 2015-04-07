@@ -36,8 +36,13 @@ public class CastBar extends GuiEntity {
 
 	@Override
 	public void update(int delta) {
-		castTime.setWidth(45.0f - 44.0f * (((float) Model.model.getMyself()
-				.getCastTimeLeft()) / Model.model.getMyself().getCastTime()));
+		if (Model.model.getMyself().isChanneling()) {
+			castTime.setWidth(45.0f * (((float) Model.model.getMyself()
+					.getCastTimeLeft()) / Model.model.getMyself().getCastTime()));
+		} else {
+			castTime.setWidth(45.0f - 44.0f * (((float) Model.model.getMyself()
+					.getCastTimeLeft()) / Model.model.getMyself().getCastTime()));
+		}
 	}
 
 }

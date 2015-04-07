@@ -6,6 +6,7 @@ import abilities.Ability;
 import abilities.Bola;
 import abilities.ElementalDischarge;
 import abilities.Fireball;
+import abilities.Healcharge;
 import abilities.IceLance;
 import abilities.MassPolymorph;
 import abilities.Teleport;
@@ -38,6 +39,7 @@ public class AbilityCreator {
 		abilityIcons[3] = TextureHandler.getInstance().getImageByName("teleportIcon.png");
 		abilityIcons[4] = TextureHandler.getInstance().getImageByName("icelanceIcon.png");
 		abilityIcons[5] = TextureHandler.getInstance().getImageByName("elementalDischargeIcon.png");
+		abilityIcons[6] = TextureHandler.getInstance().getImageByName("cure-3.png");
 	}
 	
 	public Ability getNewAbility(int abilityID, int usingPlayerId){
@@ -54,6 +56,8 @@ public class AbilityCreator {
 			return new IceLance("icelance", 1000, usingPlayerId);
 		}else if(abilityID == 5){
 			return new ElementalDischarge("elemental discharge", 10000, usingPlayerId);
+		}else if(abilityID == 6){
+			return new Healcharge("heal", usingPlayerId);
 		}
 		return null;
 		
@@ -61,7 +65,7 @@ public class AbilityCreator {
 	
 	//increase this everytime you add an ability
 	public int getNumberOfAbilities(){
-		return 6;
+		return 7;
 	}
 	
 	
