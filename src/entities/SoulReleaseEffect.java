@@ -14,4 +14,8 @@ public class SoulReleaseEffect extends SpellAreaOfEffect{
 	
 	
 	
+	public static int getEffectId(){
+		return 5;
+	}
+	
 }

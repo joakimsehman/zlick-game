@@ -11,6 +11,16 @@ import abilities.IceLance;
 import abilities.MassPolymorph;
 import abilities.Teleport;
 
+
+/*
+ * Whenever a new ability is created in game(for example when you or another player has chosen an ability) it will be created from this class, 
+ * that is why every time you make a new ability you will need to change this class in the following ways:
+ * - increase getNumberOfAbilities() by 1
+ * - make loadAbilityIcons load your abilitys icon (remember to add icon to textureHandler)
+ * - make getNewAbility able to return your ability
+ * 
+ * this will make the ability visible and selectable in the lobby, so this should be done when you first want to start testing your ability.
+ */
 public class AbilityCreator {
 	
 	private static AbilityCreator abilityCreator;

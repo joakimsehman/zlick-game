@@ -8,10 +8,22 @@ import entities.BolaEffect;
 import entities.FireballEffect;
 import entities.IceLanceEffect;
 import entities.PolymorphingEffect;
+import entities.SoulReleaseEffect;
 import entities.SpellAreaOfEffect;
+
 
 public class SpellAreaOfEffectCreator {
 
+	
+	/*
+	 This method is to help the networking create custom spell area of effects that is not used within an ability(because an ability useAbility(), or update(), will be run on all clients), 
+	 if you want to be able to create a certain type of spell effect with the method launchCustomAreaOfEffect() in model
+	 give it a unique EffectId(ex. 1337 if that is not used by any other ability) that returns by the static method getEffectId() in your spell effect
+	 
+	 if you want to use launchCustomAreaOfEffect() you should check the comment above that method.
+	 
+	 as of now only the recieveCustomSpellAreaOfEffect() in Model calls this method
+	 */
 	public static SpellAreaOfEffect getNewEffect(int effectId, float xPos,
 			float yPos, Vector2f vector, int duration, int playerUsedId,
 			int spellEffectId) {
@@ -29,7 +41,7 @@ public class SpellAreaOfEffectCreator {
 					playerUsedId, spellEffectId);
 			
 		} else if (effectId == SoulReleaseEffect.getEffectId()){
-			
+			return null; //SHOULD NOT RETURN NULL, null is placeholder so program can run
 		}else{
 			return null;
 		}
