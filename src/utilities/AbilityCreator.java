@@ -17,7 +17,7 @@ import abilities.Teleport;
  * that is why every time you make a new ability you will need to change this class in the following ways:
  * - increase getNumberOfAbilities() by 1
  * - make loadAbilityIcons load your abilitys icon (remember to add icon to textureHandler)
- * - make getNewAbility able to return your ability
+ * - make getNewAbility able to return your ability(each ability should have a unique Id, an abilitysId is set in the Ability constructor, ie in the super constructor for every class extending Ability)
  * 
  * this will make the ability visible and selectable in the lobby, so this should be done when you first want to start testing your ability. ie it should contain no compilationerrors
  */
