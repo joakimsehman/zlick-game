@@ -59,7 +59,7 @@ public class Healcharge extends Ability {
 		} else if (isActive) {
 			Model.model.getPlayer(getPlayerCreatedId()).setPos(preTeleX,
 					preTeleY);
-			cooldown = 5000;
+			cooldown = 10000;
 			cost = 30;
 			isActive = false;
 			
@@ -97,7 +97,7 @@ public class Healcharge extends Ability {
 				}
 
 				if (tickCounter == 4) {
-					cooldown = 5000;
+					cooldown = 10000;
 					cost = 30;
 					isActive = false;
 					

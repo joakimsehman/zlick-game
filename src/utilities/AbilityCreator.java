@@ -19,7 +19,7 @@ import abilities.Teleport;
  * - make loadAbilityIcons load your abilitys icon (remember to add icon to textureHandler)
  * - make getNewAbility able to return your ability
  * 
- * this will make the ability visible and selectable in the lobby, so this should be done when you first want to start testing your ability.
+ * this will make the ability visible and selectable in the lobby, so this should be done when you first want to start testing your ability. ie it should contain no compilationerrors
  */
 public class AbilityCreator {
 	
