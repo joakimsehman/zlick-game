@@ -5,6 +5,7 @@ import org.newdawn.slick.Image;
 import abilities.Ability;
 import abilities.Bola;
 import abilities.ElementalDischarge;
+import abilities.FakeClone;
 import abilities.Fireball;
 import abilities.Healcharge;
 import abilities.IceLance;
@@ -50,6 +51,7 @@ public class AbilityCreator {
 		abilityIcons[4] = TextureHandler.getInstance().getImageByName("icelanceIcon.png");
 		abilityIcons[5] = TextureHandler.getInstance().getImageByName("elementalDischargeIcon.png");
 		abilityIcons[6] = TextureHandler.getInstance().getImageByName("cure-3.png");
+		abilityIcons[7] = TextureHandler.getInstance().getImageByName("stealth.png");
 	}
 	
 	public Ability getNewAbility(int abilityID, int usingPlayerId){
@@ -68,6 +70,8 @@ public class AbilityCreator {
 			return new ElementalDischarge("elemental discharge", 10000, usingPlayerId);
 		}else if(abilityID == 6){
 			return new Healcharge("heal", usingPlayerId);
+		}else if(abilityID == 7){
+			return new FakeClone("invis", usingPlayerId);
 		}
 		return null;
 		
@@ -75,7 +79,7 @@ public class AbilityCreator {
 	
 	//increase this everytime you add an ability
 	public int getNumberOfAbilities(){
-		return 7;
+		return 8;
 	}
 	
 	

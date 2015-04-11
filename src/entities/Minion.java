@@ -31,6 +31,11 @@ public abstract class Minion extends Entity {
 	private boolean isAbleToCast;
 
 	private boolean isStunned;
+	
+	private int notAbleToMoveDuration;
+	
+	private boolean isInvisible;
+	private int invisibilityDuration;
 
 	private int totalTransformationTime;
 	private int transformationTimeLeft;
@@ -53,6 +58,11 @@ public abstract class Minion extends Entity {
 
 		spawnX = 0;
 		spawnY = 0;
+		
+		isInvisible = false;
+		invisibilityDuration = 0;
+		
+		notAbleToMoveDuration = -1;
 	}
 
 	public void setMaxHealthPoints(int healthPoints) {
@@ -89,7 +99,13 @@ public abstract class Minion extends Entity {
 	}
 
 	public void applyInvis(int duration) {
-
+		isInvisible = true;
+		invisibilityDuration = duration;
+		onInvis(isInvisible);
+	}
+	
+	public boolean isInvisible(){
+		return isInvisible;
 	}
 
 	public float getSpeedDurationLeft() {
@@ -187,6 +203,19 @@ public abstract class Minion extends Entity {
 			//		}
 			transformAnimation.update1(delta, animSpritePercent);
 
+		}
+		if(isInvisible){
+			invisibilityDuration -= delta;
+			if(invisibilityDuration < 0){
+				isInvisible = false;
+				onInvis(isInvisible);
+			}
+		}
+		if(notAbleToMoveDuration > 0){
+			notAbleToMoveDuration -= delta;
+			if(notAbleToMoveDuration <= 0){
+				setIsAbleToMove(true);
+			}
 		}
 		checkForExpiredBuffs();
 	}
@@ -291,5 +320,21 @@ public abstract class Minion extends Entity {
 			this.hp = hp;
 		}
 	}
+	
+	//only works if isAbleToMove is not already set to false without a duration
+	public void setIsAbleToMove(boolean isAbleToMove, int duration){
+		if(!isAbleToMove() && notAbleToMoveDuration <= 0){
+			return;
+		}else{
+			setIsAbleToMove(isAbleToMove);
+			if(!isAbleToMove){
+				notAbleToMoveDuration = duration;
+			}
+		}
+	}
+	
+	public abstract void onInvis(boolean invis);
+	
+	public abstract int getID();
 
 }

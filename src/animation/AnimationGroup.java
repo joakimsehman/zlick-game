@@ -96,4 +96,10 @@ public class AnimationGroup {
 		}
 		update1(delta, directionInPercentOfDirections);
 	}
+	
+	public void setAlpha(float alpha){
+		for(int i = 0; i < animations.size(); i++){
+			animations.get(i).setAlpha(alpha);
+		}
+	}
 }

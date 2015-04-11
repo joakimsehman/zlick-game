@@ -30,6 +30,15 @@ public abstract class Entity {
 		this.yPos = yPos;
 		this.direction = Direction.EAST;
 		this.vector = vector;
+		if (vector != null) {
+			if (vector.length() > 0) {
+				isMoving = true;
+			} else {
+				isMoving = false;
+			}
+			checkAndSetDirection();
+		}
+		
 		this.boundingBox = boundingBox;
 		this.image = image;
 		speedModifier = 1;
@@ -306,4 +315,9 @@ public abstract class Entity {
 			setIsMoving(false);
 		}
 	}
+	
+	public boolean isAbleToMove(){
+		return isAbleToMove;
+	}
+	
 }

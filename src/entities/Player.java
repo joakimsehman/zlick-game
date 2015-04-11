@@ -50,6 +50,7 @@ public class Player extends Minion {
 	private int playerMoveAnimation;
 	private int playerCastAnimation;
 	private int playerAttackAnimation;
+	private int playerShootAnimation;
 
 	private HealthBar healthBar;
 
@@ -146,6 +147,7 @@ public class Player extends Minion {
 		playerMoveAnimation = playerAnimation.addNewPartAnimation(4, 8);
 		playerCastAnimation = playerAnimation.addNewPartAnimation(24, 4);
 		playerAttackAnimation = playerAnimation.addNewPartAnimation(12, 4);
+		playerShootAnimation = playerAnimation.addNewPartAnimation(28, 4);
 
 		playerAnimation.setImageSwitchSpeed(110);
 
@@ -199,24 +201,31 @@ public class Player extends Minion {
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
 
-		healthBar.draw(g);
-
-		if (!isTransformed()) {
-
-			playerAnimation.draw(g, getXPos() - cameraX - 45, getYPos()
-					- cameraY - 50);
+		if (isInvisible()
+				&& Model.model.getPlayer(Model.model.getID()).getTeam() != this
+						.getTeam()) {
 
 		} else {
-			super.draw(g, cameraX, cameraY);
-		}
+			healthBar.draw(g);
 
-		if (name != null) {
+			if (!isTransformed()) {
 
-			g.setColor(getTeamColor());
-			g.drawString(name, getXPos() - cameraX, getYPos() - cameraY - 25);
-			if (Model.model.getID() == id) {
-				g.drawString("Energy: " + (int) energy, 800, 50);
-				g.drawString("Health: " + getHealthPoints(), 800, 70);
+				playerAnimation.draw(g, getXPos() - cameraX - 45, getYPos()
+						- cameraY - 50);
+
+			} else {
+				super.draw(g, cameraX, cameraY);
+			}
+
+			if (name != null) {
+
+				g.setColor(getTeamColor());
+				g.drawString(name, getXPos() - cameraX, getYPos() - cameraY
+						- 25);
+				if (Model.model.getID() == id) {
+					g.drawString("Energy: " + (int) energy, 800, 50);
+					g.drawString("Health: " + getHealthPoints(), 800, 70);
+				}
 			}
 		}
 
@@ -237,6 +246,22 @@ public class Player extends Minion {
 
 	}
 
+	public Gender getGender() {
+		return gender;
+	}
+
+	public Clothes getClothes() {
+		return clothes;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public Hair getHair() {
+		return hair;
+	}
+
 	public boolean reduceEnergy(int amount) {
 		if (energy - amount < 0) {
 			return false;
@@ -249,12 +274,16 @@ public class Player extends Minion {
 	public float getEnergy() {
 		return energy;
 	}
+	
+	public void update(int delta, ArrayList<Entity> entities, boolean collidesWithTerrain){
+		update(delta, entities);
+	}
 
 	public void update(int delta, ArrayList<Entity> entities) {
 		super.update(delta, entities, true);
 
 		healthBar.update1(delta, getXPos() - 5, getYPos() - 35);
-
+		
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
 		}
@@ -471,7 +500,18 @@ public class Player extends Minion {
 		if (angle >= 1) {
 			angle = 0;
 		}
-		playerAnimation.playAnimationOnce(playerAttackAnimation, angle);
+		if(weapon == Weapon.BOW){
+			playerAnimation.playAnimationOnce(playerShootAnimation, angle);
+			if(this.getID() == Model.model.getID()){
+				setIsAbleToMove(false, 300);
+			}
+			
+		}else{
+			playerAnimation.playAnimationOnce(playerAttackAnimation, angle);
+			if(this.getID() == Model.model.getID()){
+				this.setIsAbleToMove(false, 150);
+			}
+		}
 	}
 
 	public void setCustomization(Gender gender, Clothes clothes, Hair hair,
@@ -579,6 +619,7 @@ public class Player extends Minion {
 		playerMoveAnimation = playerAnimation.addNewPartAnimation(4, 8);
 		playerCastAnimation = playerAnimation.addNewPartAnimation(24, 4);
 		playerAttackAnimation = playerAnimation.addNewPartAnimation(12, 4);
+		playerShootAnimation = playerAnimation.addNewPartAnimation(28, 4);
 
 		playerAnimation.setImageSwitchSpeed(110);
 
@@ -612,6 +653,14 @@ public class Player extends Minion {
 			bloodAnimation.playAnimationOnce(bloodAnimationNr, Math.random());
 			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
 					this, bloodAnimation, -15, -5), 400, true);
+		}
+	}
+
+	public void onInvis(boolean isInvisible) {
+		if (isInvisible) {
+			playerAnimation.setAlpha(0.5f);
+		} else {
+			playerAnimation.setAlpha(1);
 		}
 	}
 

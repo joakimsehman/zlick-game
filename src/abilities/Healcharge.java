@@ -84,7 +84,7 @@ public class Healcharge extends Ability {
 						new AttachedAnimatedDecoration(playerCreated,
 								healAoeEffect, -110, -40), 600, false);
 				if (500 > Model.model.getMyself().getDistanceTo(
-						playerCreated)) {
+						playerCreated) && Model.model.getMyself().getTeam() == playerCreated.getTeam()) {
 					Model.model.getMyself().applyDamage(healAmount,
 							Player.EffectAnimation.HEAL);
 				}

@@ -249,6 +249,9 @@ public class Game implements GameState {
 		for (Entity e : Model.model.getTerrain()) {
 			e.draw(g, cameraX, cameraY);
 		}
+		for(int i = 0; i < Model.model.getTemporaryMinions().size(); i++){
+			Model.model.getTemporaryMinions().get(i).draw(g, cameraX, cameraY);
+		}
 		for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
 			Model.model.getOtherPlayers().get(i).draw(g, cameraX, cameraY);
 		}
@@ -303,6 +306,8 @@ public class Game implements GameState {
 		for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
 			Model.model.getOtherPlayers().get(i).update(delta, null);
 		}
+		
+		Model.model.updateTemporaryMinions(delta);
 
 		// calculating camera position
 		float cameraX = Model.model.getMyself().getXPos() - gc.getScreenWidth()

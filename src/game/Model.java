@@ -2,6 +2,7 @@ package game;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import map.Level;
 import networking.BlazeClient;
@@ -18,6 +19,7 @@ import utilities.SpellAreaOfEffectCreator;
 import utilities.TextureHandler;
 import entities.AnimatedDecoration;
 import entities.Entity;
+import entities.Minion;
 import entities.Player;
 import entities.Player.Clothes;
 import entities.Player.Gender;
@@ -58,6 +60,9 @@ public class Model {
 	private ArrayList<Integer> temporaryAbovePlayerDecorationTimers;
 
 	private ArrayList<Player> otherPlayers;
+	
+	private ArrayList<Minion> temporaryMinions;
+	private ArrayList<Integer> temporaryMinionTimers;
 
 	private int id;
 	private float cameraX;
@@ -83,6 +88,8 @@ public class Model {
 		temporaryDecorationTimers = new ArrayList<Integer>();
 		temporaryAbovePlayerDecorations = new ArrayList<AnimatedDecoration>();
 		temporaryAbovePlayerDecorationTimers = new ArrayList<Integer>();
+		temporaryMinions = new ArrayList<Minion>();
+		temporaryMinionTimers = new ArrayList<Integer>();
 		spellEffectIdCounter = 0;
 	}
 	
@@ -220,6 +227,19 @@ public class Model {
 		for (int i = 0; i < otherPlayers.size(); i++) {
 			if (id == otherPlayers.get(i).getID()) {
 				return otherPlayers.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public Minion getMinion(int minionId) {
+		Minion minion = getPlayer(minionId);
+		if(minion != null){
+			return minion;
+		}
+		for(int i = 0; i < temporaryMinions.size(); i++){
+			if(minionId == temporaryMinions.get(i).getID()){
+				return temporaryMinions.get(i);
 			}
 		}
 		return null;
@@ -574,6 +594,29 @@ public class Model {
 		
 	}
 	
+	public void addTemporaryMinion(Minion minion, int duration){
+		temporaryMinions.add(minion);
+		temporaryMinionTimers.add(duration);
+	}
+	
+	public ArrayList<Minion> getTemporaryMinions(){
+		return temporaryMinions;
+	}
+	
+	public void updateTemporaryMinions(int delta){
+		for(int i = 0; i < temporaryMinions.size(); i++){
+			temporaryMinions.get(i).update(delta, null, true);
+			temporaryMinionTimers.set(i, temporaryMinionTimers.get(i) - delta);
+		}
+		
+		for(int i = 0; i < temporaryMinionTimers.size(); i++){
+			if(temporaryMinionTimers.get(i) < 0){
+				temporaryMinions.remove(i);
+				temporaryMinionTimers.remove(i);
+			}
+		}
+	}
+	
 	public boolean isNonSolidNonNullPosition(float xPos, float yPos){
 		if(level.getTileAtPos(xPos, yPos) == null){
 			return false;
@@ -584,4 +627,6 @@ public class Model {
 			return true;
 		}
 	}
+
+	
 }

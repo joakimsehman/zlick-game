@@ -32,7 +32,7 @@ public class HealthBar extends GuiEntity {
 
 	@Override
 	public void update(int delta) {
-		health.setWidth(60.0f * (((float) Model.model.getPlayer(playerId)
+		health.setWidth(60.0f * (((float) Model.model.getMinion(playerId)
 				.getHealthPoints())) / 100);
 	}
 

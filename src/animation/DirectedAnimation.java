@@ -125,4 +125,12 @@ public class DirectedAnimation {
 		imageCounter = 0;
 	}
 
+	
+	public void setAlpha(float alpha){
+		for(int i = 0; i < images.length; i++){
+			for(int j = 0; j < images[i].length; j++){
+				images[i][j].setAlpha(alpha);
+			}
+		}
+	}
 }

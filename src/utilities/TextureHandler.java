@@ -70,6 +70,7 @@ public class TextureHandler {
 			addImage("elementalDischargeIcon.png");
 			addImage("actionbar.png");
 			addImage("cure-3.png");
+			addImage("stealth.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
