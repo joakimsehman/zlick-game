@@ -98,31 +98,33 @@ public abstract class Entity {
 	}
 
 	private void checkAndSetDirection() {
-		if ((int) vector.getX() == 0) {
-			if ((int) vector.getY() == 0) {
-				//entity is still, direction unchanged
-			} else if ((int) vector.getY() > 0) {
-				direction = Direction.SOUTH;
-			} else {
-				direction = Direction.NORTH;
-			}
-		} else if ((int) vector.getX() > 0) {
-			if ((int) vector.getY() == 0) {
-				direction = Direction.EAST;
-			} else if ((int) vector.getY() > 0) {
-				direction = Direction.SOUTHEAST;
-			} else {
-				direction = Direction.NORTHEAST;
-			}
-		} else {
-			if ((int) vector.getY() == 0) {
-				direction = Direction.WEST;
-			} else if ((int) vector.getY() > 0) {
-				direction = Direction.SOUTHWEST;
-			} else {
-				direction = Direction.NORTHWEST;
-			}
-		}
+//		if ((int) vector.getX() == 0) {
+//			if ((int) vector.getY() == 0) {
+//				//entity is still, direction unchanged
+//			} else if ((int) vector.getY() > 0) {
+//				direction = Direction.SOUTH;
+//			} else {
+//				direction = Direction.NORTH;
+//			}
+//		} else if ((int) vector.getX() > 0) {
+//			if ((int) vector.getY() == 0) {
+//				direction = Direction.EAST;
+//			} else if ((int) vector.getY() > 0) {
+//				direction = Direction.SOUTHEAST;
+//			} else {
+//				direction = Direction.NORTHEAST;
+//			}
+//		} else {
+//			if ((int) vector.getY() == 0) {
+//				direction = Direction.WEST;
+//			} else if ((int) vector.getY() > 0) {
+//				direction = Direction.SOUTHWEST;
+//			} else {
+//				direction = Direction.NORTHWEST;
+//			}
+//		}
+		
+		direction = this.getDirectionToPoint(xPos + getVectorX(), yPos + getVectorY());
 	}
 
 	public float getSpeedModifier() {

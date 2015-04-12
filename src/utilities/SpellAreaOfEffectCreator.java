@@ -4,6 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import entities.Arrow;
 import entities.BolaEffect;
 import entities.FireballEffect;
 import entities.IceLanceEffect;
@@ -44,6 +45,8 @@ public class SpellAreaOfEffectCreator {
 			
 		} else if (effectId == SoulReleaseEffect.getEffectId()){
 			return null; //SHOULD NOT RETURN NULL, null is placeholder so program can run
+		}else if(effectId == Arrow.getEffectId()){
+			return new Arrow(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
 		}else{
 			return null;
 		}

@@ -62,6 +62,9 @@ public class Player extends Minion {
 	private int fireAnimationNr;
 	private int iceAnimationNr;
 	private int bloodAnimationNr;
+	
+	private int mouseAttackCooldown;
+	private int mouseAttackCooldownCounter;
 
 	public enum EffectAnimation {
 		HEAL, FIRE, ICE, BLOOD
@@ -187,6 +190,9 @@ public class Player extends Minion {
 
 		healthBar = new HealthBar(0, 0, id);
 
+		
+		mouseAttackCooldown = 1000;
+		mouseAttackCooldownCounter = 0;
 	}
 
 	public Player(float xPos, float yPos, String name, int id) {
@@ -283,6 +289,7 @@ public class Player extends Minion {
 		super.update(delta, entities, true);
 
 		healthBar.update1(delta, getXPos() - 5, getYPos() - 35);
+		mouseAttackCooldownCounter += delta;
 		
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
@@ -356,6 +363,7 @@ public class Player extends Minion {
 				abilities[i].update(delta);
 			}
 		}
+		
 	}
 
 	public Ability getAbility(int abilityNumber) {
@@ -486,8 +494,8 @@ public class Player extends Minion {
 	}
 
 	public boolean isMouseAttackReady() {
-		// TODO Auto-generated method stub
-		return true;
+		
+		return mouseAttackCooldownCounter > mouseAttackCooldown;
 	}
 
 	public void useMouseAttack(int mouseButton, float mouseGameX,
@@ -500,10 +508,19 @@ public class Player extends Minion {
 		if (angle >= 1) {
 			angle = 0;
 		}
+		mouseAttackCooldownCounter = 0;
 		if(weapon == Weapon.BOW){
 			playerAnimation.playAnimationOnce(playerShootAnimation, angle);
 			if(this.getID() == Model.model.getID()){
 				setIsAbleToMove(false, 300);
+				float length = 80;
+				
+				float angleToMouse = (float) Math.atan2(mouseGameY - getYPos(),mouseGameX - getXPos());
+				
+				float dx = (float) (length * Math.cos(angleToMouse));
+				float dy = (float) (length * Math.sin(angleToMouse));
+				
+				Model.model.launchCustomSpellAreaOfEffect(6, getXPos(), getYPos(), dx, dy, 1000, getID(), Model.model.getNextSpellEffectId());
 			}
 			
 		}else{
@@ -513,7 +530,7 @@ public class Player extends Minion {
 			}
 		}
 	}
-
+	
 	public void setCustomization(Gender gender, Clothes clothes, Hair hair,
 			Weapon weapon) {
 		this.gender = gender;
@@ -620,6 +637,10 @@ public class Player extends Minion {
 		playerCastAnimation = playerAnimation.addNewPartAnimation(24, 4);
 		playerAttackAnimation = playerAnimation.addNewPartAnimation(12, 4);
 		playerShootAnimation = playerAnimation.addNewPartAnimation(28, 4);
+		
+		if(weapon == Weapon.BOW){
+			mouseAttackCooldown = 300;
+		}
 
 		playerAnimation.setImageSwitchSpeed(110);
 
