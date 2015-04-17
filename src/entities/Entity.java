@@ -138,7 +138,7 @@ public abstract class Entity {
 
 	public void update(int delta, ArrayList<Entity> entities,
 			boolean collidesWithTerrain) {
-		if (vector != null) {
+		if (vector != null ) {   // && (vector.getX() != 0 || vector.getY() != 0)
 			float newXPos = xPos + vector.getX() * delta / 100f;
 			float newYPos = yPos + vector.getY() * delta / 100f;
 			boolean moveForbidden = false;
@@ -320,6 +320,14 @@ public abstract class Entity {
 	
 	public boolean isAbleToMove(){
 		return isAbleToMove;
+	}
+	
+	public float getCenterX(){
+		return boundingBox.getCenterX();
+	}
+	
+	public float getCenterY(){
+		return boundingBox.getCenterY();
 	}
 	
 }

@@ -11,6 +11,8 @@ import entities.IceLanceEffect;
 import entities.PolymorphingEffect;
 import entities.SoulReleaseEffect;
 import entities.SpellAreaOfEffect;
+import entities.SwordEffect;
+import entities.SwordEffect.WestSword;
 
 
 public class SpellAreaOfEffectCreator {
@@ -47,7 +49,27 @@ public class SpellAreaOfEffectCreator {
 			return null; //SHOULD NOT RETURN NULL, null is placeholder so program can run
 		}else if(effectId == Arrow.getEffectId()){
 			return new Arrow(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
-		}else{
+		}
+		
+		else if(effectId == SwordEffect.WestSword.getEffectId()){
+			return new SwordEffect.WestSword(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
+		}else if(effectId == SwordEffect.SouthWestSword.getEffectId()){
+			return new SwordEffect.SouthWestSword(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
+		}else if(effectId == SwordEffect.SouthSword.getEffectId()){
+			return new SwordEffect.SouthSword(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
+		}else if(effectId == SwordEffect.SouthEastSword.getEffectId()){
+			return new SwordEffect.SouthEastSword(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
+		}else if(effectId == SwordEffect.EastSword.getEffectId()){
+			return new SwordEffect.EastSword(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
+		}else if(effectId == SwordEffect.NorthEastSword.getEffectId()){
+			return new SwordEffect.NorthEastSword(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
+		}else if(effectId == SwordEffect.NorthSword.getEffectId()){
+			return new SwordEffect.NorthSword(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
+		}else if(effectId == SwordEffect.NorthWestSword.getEffectId()){
+			return new SwordEffect.NorthWestSword(xPos, yPos, vector, duration, playerUsedId, spellEffectId);
+		}
+		
+		else{
 			return null;
 		}
 	}

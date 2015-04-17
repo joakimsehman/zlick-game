@@ -527,6 +527,9 @@ public class Player extends Minion {
 			playerAnimation.playAnimationOnce(playerAttackAnimation, angle);
 			if(this.getID() == Model.model.getID()){
 				this.setIsAbleToMove(false, 150);
+				
+				Direction dir = this.getDirectionToPoint(mouseGameX, mouseGameY);
+				Model.model.launchCustomSpellAreaOfEffect(SwordEffect.getIdFromDirection(dir), this.getCenterX(), getCenterY(), 0, 0, 300, getID(), Model.model.getNextSpellEffectId());
 			}
 		}
 	}
@@ -639,6 +642,8 @@ public class Player extends Minion {
 		playerShootAnimation = playerAnimation.addNewPartAnimation(28, 4);
 		
 		if(weapon == Weapon.BOW){
+			mouseAttackCooldown = 300;
+		}else{
 			mouseAttackCooldown = 300;
 		}
 
