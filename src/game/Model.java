@@ -453,7 +453,6 @@ public class Model {
 				activeSpells.remove(i);
 			}
 		}
-
 	}
 
 	public void setPlayerAbility(int playerID, int abilityID, int abilityNumber) {

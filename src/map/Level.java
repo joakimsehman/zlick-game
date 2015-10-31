@@ -102,7 +102,12 @@ public class Level {
         map.render(x, y, background);
         map.render(x, y, decorations);
         map.render(x, y, solids);
-        
+
+        //for(int i = 0; i < map.getWidth(); i++){
+        //    for(int j = 0; j < map.getHeight(); j++){
+        //        if()
+        //    }
+        //}
     }
     
     public void renderDecorations(int x, int y){
