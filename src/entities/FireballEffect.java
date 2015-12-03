@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
+import entities.Player.EffectAnimation;
 import game.Model;
 
 import org.newdawn.slick.Graphics;
@@ -44,9 +45,9 @@ public class FireballEffect extends SpellAreaOfEffect {
 	public void applyEffect(Player player) {
 		super.applyEffect(player);
 		if (player.hasBuff(ignite)) {
-			player.applyDamage(-(damage + damage));
+			player.applyDamage(-(damage + damage), EffectAnimation.FIRE);
 		} else {
-			player.applyDamage(-damage);
+			player.applyDamage(-damage, EffectAnimation.FIRE);
 			player.addBuff(ignite);
 		}
 	}

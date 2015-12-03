@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
+import entities.Player.EffectAnimation;
 import game.Model;
 
 import org.newdawn.slick.Graphics;
@@ -42,7 +43,7 @@ public class IceLanceEffect extends SpellAreaOfEffect{
 	
 	public void applyEffect(Player player){
 		super.applyEffect(player);
-		player.applyDamage(-damage);
+		player.applyDamage(-damage, EffectAnimation.ICE);
 		if(player.hasBuff(chillBuff)){
 			player.addBuff(freezeBuff);
 		}else{

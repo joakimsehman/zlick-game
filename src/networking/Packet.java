@@ -1,6 +1,6 @@
 package networking;
 
-import org.newdawn.slick.geom.Vector2f;
+
 
 import entities.Player.Clothes;
 import entities.Player.Gender;
@@ -31,6 +31,8 @@ public class Packet {
 		float yPos;
 		int ID;
 		String name;
+		
+		//TODO Add team here
 	}
 	public static class Packet5StartThread{}
 	public static class Packet6UseAbility{
