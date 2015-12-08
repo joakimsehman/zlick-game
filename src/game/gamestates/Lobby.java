@@ -1,5 +1,6 @@
 package game.gamestates;
 
+import game.Application;
 import game.Model;
 import gui.Button;
 import gui.Button.ButtonEvent;
@@ -325,7 +326,7 @@ public class Lobby implements GameState, ButtonListener{
 					if (posY < 200 && posY > 150) {
 						Model.model.startGame();
 						Model.model.startClients();
-						sbg.enterState(1);
+						sbg.enterState(Application.GAME);
 					}
 				}
 			}
@@ -334,9 +335,9 @@ public class Lobby implements GameState, ButtonListener{
 		Model.model.updateGui(delta);
 
 		if (Model.model.isGaming()) {
-			sbg.enterState(1);
+			sbg.enterState(Application.GAME);
 			Model.model.setAndSendPlayerCustomization(playerCustomizer.getSelectedGender(), playerCustomizer.getSelectedClothes(), playerCustomizer.getSelectedHair(), playerCustomizer.getSelectedWeapon());
-		}
+        }
 
 	}
 

@@ -1,8 +1,14 @@
 package game.gamestates;
 
+import database.LoginInfo;
+import game.Application;
+import game.Model;
+import gui.Button;
+import listener.ButtonListener;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
+import utilities.TextureHandler;
 
 /**
  * Created by joakim on 2015-12-08.
@@ -25,7 +31,7 @@ public class GameSelection extends LoggedIn {
         super.render(gameContainer, stateBasedGame, graphics);
 
         graphics.setColor(Color.cyan);
-        graphics.fillRect(100, 220, 1100, 500);
+        graphics.fillRect(100, 220, 1100, 450);
     }
 
     @Override
@@ -34,13 +40,34 @@ public class GameSelection extends LoggedIn {
     }
 
     @Override
-    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    public void enter(GameContainer gameContainer, final StateBasedGame stateBasedGame) throws SlickException {
         super.enter(gameContainer, stateBasedGame);
+
+        final Button hostGameButton = new Button(1000 ,700, TextureHandler.getInstance().getImageByName("hostGame.png"), 200, 50);
+        Model.model.addActiveGui(hostGameButton);
+
+        ButtonListener buttonListener = new ButtonListener(){
+
+            @Override
+            public void buttonEvent(Button.ButtonEvent b, int buttonId) {
+                if(b == Button.ButtonEvent.BUTTON_CLICKED){
+                    if(buttonId == hostGameButton.getId()){
+                        Model.model.setName(LoginInfo.getInstance().getNick());
+                        Model.model.createHost();
+
+                        stateBasedGame.enterState(Application.LOBBY);
+                    }
+                }
+            }
+        };
+
+        hostGameButton.addButtonListener(buttonListener);
+
     }
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
+        super.leave(gameContainer, stateBasedGame);
     }
 
     @Override
