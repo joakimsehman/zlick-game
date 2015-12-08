@@ -71,6 +71,7 @@ public class TextureHandler {
 			addImage("actionbar.png");
 			addImage("cure-3.png");
 			addImage("stealth.png");
+            addImage("login_knapp.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -15,9 +15,10 @@ import utilities.TextureHandler;
 public class Application extends StateBasedGame{
 
 	//game state identifiers
-	public static final int MAINMENU = 0;
-	public static final int GAME = 1;
-	public static final int LOBBY = 2;  //IMPLEMENT
+    public static final int LOGINSCREEN = 0;
+	public static final int MAINMENU = 1;
+	public static final int GAME = 2;
+	public static final int LOBBY = 3;  //IMPLEMENT
 	
 	
 	public Application(String gamename) throws SlickException {
@@ -37,6 +38,7 @@ public class Application extends StateBasedGame{
 //			this.getState(MAINMENU).init(gc, this);
 //			this.getState(GAME).init(gc, this);
 //			this.getState(LOBBY).init(gc, this);
+            this.addState(new LoginScreen(LOGINSCREEN));
 			this.addState(new MainMenu(MAINMENU));
 			this.addState(new Game(GAME));
 			this.addState(new Lobby(LOBBY));

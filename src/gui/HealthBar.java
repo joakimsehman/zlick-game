@@ -36,7 +36,17 @@ public class HealthBar extends GuiEntity {
 				.getHealthPoints())) / 100);
 	}
 
-	public void update1(int delta, float posX, float posY) {
+    @Override
+    protected boolean isSelectable() {
+        return false;
+    }
+
+    @Override
+    public boolean intersects(int x, int y) {
+        return false;
+    }
+
+    public void update1(int delta, float posX, float posY) {
 		health.setX(posX - Model.model.getCameraX());
 		health.setY(posY - Model.model.getCameraY());
 		if (Model.model.isOnScreen(posX, posY)) {

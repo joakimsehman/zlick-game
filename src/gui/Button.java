@@ -61,8 +61,18 @@ public class Button extends GuiEntity {
 		}
 
 	}
-	
-	public boolean getButtonPressed(){
+
+    @Override
+    protected boolean isSelectable() {
+        return false;
+    }
+
+    @Override
+    public boolean intersects(int x, int y) {
+        return false;
+    }
+
+    public boolean getButtonPressed(){
 		return buttonPressed;
 	}
 

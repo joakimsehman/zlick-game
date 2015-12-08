@@ -154,7 +154,17 @@ public class PlayerCustomizer extends GuiEntity implements ButtonListener{
 		animation.update(delta, 0);
 	}
 
-	@Override
+    @Override
+    protected boolean isSelectable() {
+        return false;
+    }
+
+    @Override
+    public boolean intersects(int x, int y) {
+        return false;
+    }
+
+    @Override
 	public void buttonEvent(ButtonEvent b, int buttonId) {
 		if(b == ButtonEvent.BUTTON_CLICKED){
 			if(buttonId == leftHeadButton.getId()){

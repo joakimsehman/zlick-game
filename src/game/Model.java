@@ -508,13 +508,11 @@ public class Model {
 
 	public void clearGui() {
 		activeGui.clear();
+        GuiEntity.resetGui();
 	}
 
 	public void updateGui(int delta) {
-		for (int i = 0; i < activeGui.size(); i++) {
-			activeGui.get(i).update(delta);
-		}
-
+        GuiEntity.updateGUI(delta);
 	}
 
 	public void initLevel(Level level) {
