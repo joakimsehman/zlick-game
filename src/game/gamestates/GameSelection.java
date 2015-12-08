@@ -1,24 +1,19 @@
 package game.gamestates;
 
-import database.LoginInfo;
-import game.Model;
-import gui.Button;
-import listener.ButtonListener;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-import utilities.TextureHandler;
 
 /**
  * Created by joakim on 2015-12-08.
  */
-public class Profile extends LoggedIn {
+public class GameSelection extends LoggedIn {
 
 
-
-    public Profile(final int gamestate){
-        super(gamestate);
+    public GameSelection(int gameState){
+        super(gameState);
     }
+
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -28,11 +23,9 @@ public class Profile extends LoggedIn {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         super.render(gameContainer, stateBasedGame, graphics);
-        graphics.setBackground(Color.darkGray);
 
-        graphics.setColor(Color.white);
-        graphics.drawString("User:" + LoginInfo.getInstance().getUserName(), 100, 230);
-        graphics.drawString("Nick:" + LoginInfo.getInstance().getNick(), 100, 260);
+        graphics.setColor(Color.cyan);
+        graphics.fillRect(100, 220, 1100, 500);
     }
 
     @Override
@@ -47,7 +40,7 @@ public class Profile extends LoggedIn {
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        super.leave(gameContainer, stateBasedGame);
+
     }
 
     @Override

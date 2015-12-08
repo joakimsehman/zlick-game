@@ -1,5 +1,7 @@
 package game.gamestates;
 
+import database.LoginInfo;
+import game.Application;
 import game.Model;
 import gui.Button;
 import gui.GuiEntity;
@@ -8,7 +10,7 @@ import listener.ButtonListener;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-import utilities.DatabaseConfiguration;
+import database.DatabaseConfiguration;
 import utilities.SoundHandler;
 import utilities.TextureHandler;
 
@@ -64,7 +66,7 @@ public class LoginScreen implements GameState {
     }
 
     @Override
-    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    public void enter(GameContainer gameContainer, final StateBasedGame stateBasedGame) throws SlickException {
 
 
         final TextField userName = new TextField(100,100, 300, 50);
@@ -99,6 +101,11 @@ public class LoginScreen implements GameState {
 
                                     if(resultSet.getString(2).equals(password.getText())){
                                         message = "login successfull";
+
+                                        LoginInfo.getInstance().logIn(resultSet.getString(1), resultSet.getString(3));
+
+                                        SoundHandler.getInstance().loginMusic.stop();
+                                        stateBasedGame.enterState(Application.PROFILE);
                                     }else{
                                         message = "login failed";
                                     }
@@ -136,7 +143,7 @@ public class LoginScreen implements GameState {
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
+        Model.model.clearGui();
     }
 
     @Override

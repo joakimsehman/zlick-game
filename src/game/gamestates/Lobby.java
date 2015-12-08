@@ -36,9 +36,9 @@ public class Lobby implements GameState, ButtonListener{
 	private Image background;
 	
 
-	public Lobby(int GameState) {
+	public Lobby(int gameState) {
 
-		stateID = GameState;
+		stateID = gameState;
 	}
 
 	@Override

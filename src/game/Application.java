@@ -1,9 +1,6 @@
 package game;
 
-import game.gamestates.Game;
-import game.gamestates.Lobby;
-import game.gamestates.LoginScreen;
-import game.gamestates.MainMenu;
+import game.gamestates.*;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -17,7 +14,10 @@ public class Application extends StateBasedGame{
     public static final int LOGINSCREEN = 0;
 	public static final int MAINMENU = 1;
 	public static final int GAME = 2;
-	public static final int LOBBY = 3;  //IMPLEMENT
+	public static final int LOBBY = 3;
+	public static final int PROFILE = 4;
+    public static final int GAMESELECTION = 5;
+    //IMPLEMENT
 	
 	
 	public Application(String gamename) throws SlickException {
@@ -38,13 +38,12 @@ public class Application extends StateBasedGame{
 //			this.getState(GAME).init(gc, this);
 //			this.getState(LOBBY).init(gc, this);
             this.addState(new LoginScreen(LOGINSCREEN));
+            this.addState(new Profile(PROFILE));
 			this.addState(new MainMenu(MAINMENU));
 			this.addState(new Game(GAME));
 			this.addState(new Lobby(LOBBY));
+            this.addState(new GameSelection(GAMESELECTION));
 	}
-	
-	
-	
 	
 	public void keyPressed(int key, char c){
 		
