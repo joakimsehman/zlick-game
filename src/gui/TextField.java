@@ -109,8 +109,12 @@ public class TextField extends GuiEntity {
     public void onSelectedKeyPressed(int keyNr, char c){
         if(keyNr == 14 && text.length() > 0) {
             text = text.substring(0, text.length() -1);
+        }else if(keyNr == 42){
+        }else{
+            text = text + c;
         }
-        text = text + c;
+
+
     }
 
     @Override

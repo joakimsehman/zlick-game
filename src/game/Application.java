@@ -1,14 +1,13 @@
 package game;
 
-import org.newdawn.slick.BasicGame;
+import game.gamestates.Game;
+import game.gamestates.Lobby;
+import game.gamestates.LoginScreen;
+import game.gamestates.MainMenu;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import entities.Entity;
-import entities.Terrain;
 import utilities.SoundHandler;
 import utilities.TextureHandler;
 

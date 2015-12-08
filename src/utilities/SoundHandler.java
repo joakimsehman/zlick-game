@@ -13,6 +13,7 @@ public class SoundHandler {
 	public Sound bolaSound;
 	public Sound castingSound;
 	public Music menuMusic;
+    public Music loginMusic;
 	private static SoundHandler soundHandler;
 	
 	private SoundHandler(){
@@ -35,7 +36,7 @@ public class SoundHandler {
 		bolaSound = new Sound("assets/sound/bola.wav");
 		castingSound = new Sound("assets/sound/casting.wav");
 		menuMusic = new Music("assets/sound/menuMusic.wav");
-		
+        loginMusic = new Music("assets/sound/loginMusic.wav");
 	}
 	
 }

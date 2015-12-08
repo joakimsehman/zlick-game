@@ -30,6 +30,9 @@ public class DatabaseConfiguration {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return connection;
     }
+
+
 }

@@ -64,6 +64,7 @@ public class TextureHandler {
 			addImage("male.png");
 			addImage("female.png");
 			addImage("background.jpg");
+            addImage("background2.jpg");
 			addImage("title.png");
 			addImage("teleportIcon.png");
 			addImage("icelanceIcon.png");
@@ -72,6 +73,7 @@ public class TextureHandler {
 			addImage("cure-3.png");
 			addImage("stealth.png");
             addImage("login_knapp.png");
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
