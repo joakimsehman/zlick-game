@@ -32,9 +32,9 @@ public abstract class LoggedIn implements GameState {
     @Override
     public void enter(GameContainer gameContainer, final StateBasedGame stateBasedGame) throws SlickException {
 
-        final Button gamesButton = new Button(100, 50, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
-        final Button profileButton = new Button(500, 50, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
-        final Button abilitiesButton = new Button(900, 50, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
+        final Button gamesButton = new Button(100, 20, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
+        final Button profileButton = new Button(500, 20, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
+        final Button abilitiesButton = new Button(900, 20, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
 
         Model.model.addActiveGui(gamesButton);
         Model.model.addActiveGui(profileButton);

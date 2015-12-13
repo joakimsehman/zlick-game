@@ -1,9 +1,11 @@
 package game.gamestates;
 
+import database.HostGameManager;
 import database.LoginInfo;
 import game.Application;
 import game.Model;
 import gui.Button;
+import gui.GamesViewer;
 import listener.ButtonListener;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.GameState;
@@ -31,7 +33,6 @@ public class GameSelection extends LoggedIn {
         super.render(gameContainer, stateBasedGame, graphics);
 
         graphics.setColor(Color.cyan);
-        graphics.fillRect(100, 220, 1100, 450);
     }
 
     @Override
@@ -43,8 +44,14 @@ public class GameSelection extends LoggedIn {
     public void enter(GameContainer gameContainer, final StateBasedGame stateBasedGame) throws SlickException {
         super.enter(gameContainer, stateBasedGame);
 
-        final Button hostGameButton = new Button(1000 ,700, TextureHandler.getInstance().getImageByName("hostGame.png"), 200, 50);
+        final GamesViewer gamesViewer = new GamesViewer(100, 180, 1100, 450);
+        Model.model.addActiveGui(gamesViewer);
+
+        final Button hostGameButton = new Button(1000 ,640, TextureHandler.getInstance().getImageByName("hostGame.png"), 200, 50);
         Model.model.addActiveGui(hostGameButton);
+
+        final Button joinGameButton = new Button(100, 640, TextureHandler.getInstance().getImageByName("joinGame.png"), 200, 50);
+        Model.model.addActiveGui(joinGameButton);
 
         ButtonListener buttonListener = new ButtonListener(){
 
@@ -55,13 +62,20 @@ public class GameSelection extends LoggedIn {
                         Model.model.setName(LoginInfo.getInstance().getNick());
                         Model.model.createHost();
 
+                        HostGameManager.getInstance().hostNewGame();
+
                         stateBasedGame.enterState(Application.LOBBY);
+                    }else if(buttonId == joinGameButton.getId()){
+
+                        Model.model.setName(LoginInfo.getInstance().getNick());
+                        Model.model.createClient(gamesViewer.getSelectedGameGlobalIp());
                     }
                 }
             }
         };
 
         hostGameButton.addButtonListener(buttonListener);
+        joinGameButton.addButtonListener(buttonListener);
 
     }
 

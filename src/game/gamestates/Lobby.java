@@ -326,6 +326,7 @@ public class Lobby implements GameState, ButtonListener{
 					if (posY < 200 && posY > 150) {
 						Model.model.startGame();
 						Model.model.startClients();
+                        Model.model.setFullScreen();
 						sbg.enterState(Application.GAME);
 					}
 				}
