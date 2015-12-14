@@ -1,10 +1,7 @@
 package gui;
 
 import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.KeyListener;
+import org.newdawn.slick.*;
 
 /**
  * Created by joakim on 2015-12-08.
@@ -16,6 +13,8 @@ public class TextField extends GuiEntity {
     private boolean textHidden;
     private int backSpaceCounter;
     private Color backgroundColor, textColor;
+    private Image backgroundImage;
+    private boolean hasBackgroundImage;
 
     public TextField(int xPos, int yPos, int width, int height) {
         super(xPos, yPos);
@@ -29,22 +28,33 @@ public class TextField extends GuiEntity {
         backgroundColor = Color.white;
         textColor = Color.black;
 
+        hasBackgroundImage = false;
+
         textHidden = false;
+    }
+
+    public void setBackgroundImage(Image image){
+        backgroundImage = image;
+        hasBackgroundImage = true;
     }
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(backgroundColor);
-        g.fillRect(getxPos(), getyPos(), width, height);
+        if(!hasBackgroundImage) {
+            g.setColor(backgroundColor);
+            g.fillRect(getxPos(), getyPos(), width, height);
+        }else{
+            g.drawImage(backgroundImage, getxPos(), getyPos());
+        }
         g.setColor(textColor);
         if(!textHidden) {
-            g.drawString(text, getxPos(), getyPos() + height / 2);
+            g.drawString(text, getxPos(), getyPos() + height / 3);
         }else{
             StringBuffer outputBuffer = new StringBuffer(text.length());
             for (int i = 0; i < text.length(); i++){
                 outputBuffer.append("*");
             }
-            g.drawString(outputBuffer.toString(), getxPos(), getyPos() + height / 2);
+            g.drawString(outputBuffer.toString(), getxPos(), getyPos() + height / 3);
         }
     }
 

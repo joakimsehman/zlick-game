@@ -12,12 +12,14 @@ import org.newdawn.slick.Graphics;
 
 import animation.AnimationGroup;
 import animation.DirectedAnimation;
+import org.newdawn.slick.Image;
 import utilities.TextureHandler;
 
 public class PlayerCustomizer extends GuiEntity implements ButtonListener{
 
 	private AnimationGroup animation;
-	
+
+    private Image background;
 	
 	private Button leftHeadButton;
 	private Button rightHeadButton;
@@ -60,6 +62,8 @@ public class PlayerCustomizer extends GuiEntity implements ButtonListener{
 		clothes = Clothes.STEEL;
 		weapon = Weapon.SWORD;
 		hair = Hair.NORMAL;
+
+        background = TextureHandler.getInstance().getImageByName("playerCustomizerBackground.png");
 		
 		reinitializeAnimation();
 	}
@@ -127,6 +131,8 @@ public class PlayerCustomizer extends GuiEntity implements ButtonListener{
 
 	@Override
 	public void draw(Graphics g) {
+        g.drawImage(background, getxPos(), getyPos());
+
 		leftHeadButton.draw(g);
 		rightHeadButton.draw(g);
 		leftBodyButton.draw(g);
@@ -135,7 +141,7 @@ public class PlayerCustomizer extends GuiEntity implements ButtonListener{
 		rightWeaponButton.draw(g);
 		setFemaleButton.draw(g);
 		setMaleButton.draw(g);
-		g.setColor(Color.blue);
+		g.setColor(Color.white);
 		g.fillRect(getxPos()+50, getyPos(), 128, 150);
 		animation.draw(g, getxPos()+50, getyPos()+25);
 		

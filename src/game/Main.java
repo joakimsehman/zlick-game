@@ -16,7 +16,7 @@ public class Main {
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new Application("Za Bleyzpleyz"));
 			//when you remake ui, change screen size first here
-			appgc.setDisplayMode(1350, 700, false);
+			appgc.setDisplayMode(1280, 720, false);
             Model.model.initGameContainer(appgc);
 			appgc.start();
 

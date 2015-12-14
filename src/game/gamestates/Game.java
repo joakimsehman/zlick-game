@@ -21,8 +21,6 @@ import gui.CastBar;
 public class Game implements GameState {
 
 	private final int stateID;
-	private int screenWidth;
-	private int screenHeight;
 
 	public Game(int GAME) {
 
@@ -96,27 +94,27 @@ public class Game implements GameState {
 		case 2:
 			// 1 pressed
 			Model.model
-					.useAbility(1, Mouse.getX(), screenHeight - Mouse.getY());
+					.useAbility(1, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		case 3:
 			// 2 pressed
 			Model.model
-					.useAbility(2, Mouse.getX(), screenHeight - Mouse.getY());
+					.useAbility(2, Mouse.getX(), Model.model.getScreenHeight()- Mouse.getY());
 			break;
 		case 4:
 			// 3 pressed
 			Model.model
-					.useAbility(3, Mouse.getX(), screenHeight - Mouse.getY());
+					.useAbility(3, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		case 5:
 			// 4 pressed
 			Model.model
-					.useAbility(4, Mouse.getX(), screenHeight - Mouse.getY());
+					.useAbility(4, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		case 57:
 			// Space pressed
 			Model.model
-					.useAbility(5, Mouse.getX(), screenHeight - Mouse.getY());
+					.useAbility(5, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		}
 
@@ -195,10 +193,7 @@ public class Game implements GameState {
 
 		Model.model.initLevel(new Level());
 
-		screenWidth = gc.getScreenWidth();
-		screenHeight = gc.getScreenHeight();
-
-		gc.setFullscreen(true);
+        Model.model.setFullScreen();
 
 		Model.model.clearGui();
 		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,23 +31,22 @@ public class GamesViewer extends GuiEntity {
 
         selectedGame = null;
 
-        ResultSet hostedGames = HostGameManager.getInstance().getHostedGames();
+        List<HostGameManager.GameTemplate> hostedGames = HostGameManager.getInstance().getHostedGames();
 
         gameEntities = new ArrayList<GameEntity>();
 
+
+
         int gameCounter = 0;
-        try {
-            while(hostedGames.next()){
+        for(int i = 0; i < hostedGames.size(); i++){
 
+            HostGameManager.GameTemplate currentGame = hostedGames.get(i);
 
-                GameEntity gameEntity = new GameEntity(getxPos(), getyPos() + 20*gameCounter, width, 20, hostedGames.getString(1), hostedGames.getString(2), hostedGames.getString(3));
+            GameEntity gameEntity = new GameEntity(getxPos(), getyPos() + 20*gameCounter, width, 20, currentGame.getUser(), currentGame.getGlobalip(), currentGame.getLocalip());
 
-                gameEntities.add(gameEntity);
+            gameEntities.add(gameEntity);
 
-                gameCounter++;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            gameCounter++;
         }
     }
 

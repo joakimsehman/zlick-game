@@ -17,7 +17,7 @@ import abilities.Teleport;
  * Whenever a new ability is created in game(for example when you or another player has chosen an ability) it will be created from this class, 
  * that is why every time you make a new ability you will need to change this class in the following ways:
  * - increase getNumberOfAbilities() by 1
- * - make loadAbilityIcons load your abilitys icon (remember to add icon to textureHandler)
+ * - make loadAbilityIcons load your abilitys icons (remember to add the icons to textureHandler)
  * - make getNewAbility able to return your ability(each ability should have a unique Id, an abilitysId is set in the Ability constructor, ie in the super constructor for every class extending Ability)
  * 
  * this will make the ability visible and selectable in the lobby, so this should be done when you first want to start testing your ability. ie it should contain no compilationerrors
@@ -26,6 +26,7 @@ public class AbilityCreator {
 	
 	private static AbilityCreator abilityCreator;
 	private static Image[] abilityIcons;
+    private static Image[] smallAbilityIcons;
 	
 	private AbilityCreator(){
 		
@@ -52,6 +53,19 @@ public class AbilityCreator {
 		abilityIcons[5] = TextureHandler.getInstance().getImageByName("elementalDischargeIcon.png");
 		abilityIcons[6] = TextureHandler.getInstance().getImageByName("cure-3.png");
 		abilityIcons[7] = TextureHandler.getInstance().getImageByName("stealth.png");
+
+        smallAbilityIcons = new Image[getNumberOfAbilities()];
+
+        smallAbilityIcons[0] = TextureHandler.getInstance().getImageByName("fireballIconSmall.png");
+        smallAbilityIcons[1] = TextureHandler.getInstance().getImageByName("massPolymorphIconSmall.png");
+        smallAbilityIcons[2] = TextureHandler.getInstance().getImageByName("bolaIconSmall.png");
+        smallAbilityIcons[3] = TextureHandler.getInstance().getImageByName("teleportIconSmall.png");
+        smallAbilityIcons[4] = TextureHandler.getInstance().getImageByName("icelanceIconSmall.png");
+        smallAbilityIcons[5] = TextureHandler.getInstance().getImageByName("elementalDischargeIconSmall.png");
+        smallAbilityIcons[6] = TextureHandler.getInstance().getImageByName("cure-3.png");
+        smallAbilityIcons[7] = TextureHandler.getInstance().getImageByName("stealthIconSmall.png");
+
+
 	}
 	
 	public Ability getNewAbility(int abilityID, int usingPlayerId){
@@ -86,4 +100,8 @@ public class AbilityCreator {
 	public Image getSpellIconFromId(int id){
 		return abilityIcons[id];
 	}
+
+    public Image getSmallSpellIconFromId(int id){
+        return smallAbilityIcons[id];
+    }
 }

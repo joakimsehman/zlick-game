@@ -8,7 +8,6 @@ import gui.Button;
 import gui.GamesViewer;
 import listener.ButtonListener;
 import org.newdawn.slick.*;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 import utilities.TextureHandler;
 
@@ -65,6 +64,7 @@ public class GameSelection extends LoggedIn {
                         HostGameManager.getInstance().hostNewGame();
 
                         stateBasedGame.enterState(Application.LOBBY);
+
                     }else if(buttonId == joinGameButton.getId()){
 
                         Model.model.setName(LoginInfo.getInstance().getNick());

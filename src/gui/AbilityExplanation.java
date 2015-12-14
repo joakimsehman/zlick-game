@@ -4,18 +4,17 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import utilities.TextureHandler;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * Created by joakim on 2015-12-14.
+ */
+public class AbilityExplanation extends GuiEntity {
 
-public class Chat extends GuiEntity{
-
-    private List<String> messages;
     private Image background;
 
-    public Chat(int xPos, int yPos) {
+    public AbilityExplanation(int xPos, int yPos) {
         super(xPos, yPos);
-        messages = new ArrayList<String>();
-        background = TextureHandler.getInstance().getImageByName("chatArea.png");
+
+        background = TextureHandler.getInstance().getImageByName("abilityExplanationBackground.png");
     }
 
     @Override
