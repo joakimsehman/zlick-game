@@ -2,9 +2,12 @@ package gui;
 
 import game.Model;
 import listener.ButtonListener;
+
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
 import utilities.AbilityCreator;
 import utilities.TextureHandler;
 
@@ -19,10 +22,13 @@ public class AbilitySelection extends GuiEntity implements ButtonListener {
     private ChangableIconButton[] abilityButtons;
     private int selectedAbility;
     private Button[] abilityChoiceButtons;
+    
+    private int currentHoveringAbility;
 
     public AbilitySelection(int xPos, int yPos) {
         super(xPos, yPos);
         selectedAbility = 0;
+        currentHoveringAbility = -1;
         background = TextureHandler.getInstance().getImageByName("abilitySelectionBackground.png");
 
         chosenAbilitySpace = TextureHandler.getInstance().getImageByName("chosenAbilitySpace.png");
@@ -70,10 +76,16 @@ public class AbilitySelection extends GuiEntity implements ButtonListener {
         for(int i = 0; i < abilityButtons.length; i++){
             abilityButtons[i].update(delta);
         }
-
+        
+        currentHoveringAbility = -1;
         for(int i = 0; i < abilityChoiceButtons.length; i++){
             abilityChoiceButtons[i].update(delta);
+            if(abilityChoiceButtons[i].intersects(Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY())){
+            	currentHoveringAbility = i;
+            }
         }
+        
+        
     }
 
     @Override
@@ -105,6 +117,15 @@ public class AbilitySelection extends GuiEntity implements ButtonListener {
             }
         }
     }
+    
+    public String getHoveringAbilityDescription() {
+    	if(currentHoveringAbility != -1){
+    		return AbilityCreator.getInstance().getDescriptionFromId(currentHoveringAbility);
+    	}else{
+    		return "";
+    	}
+	}
+    
 
     private class ChangableIconButton extends Button{
 
@@ -127,4 +148,6 @@ public class AbilitySelection extends GuiEntity implements ButtonListener {
             icon = image;
         }
     }
+
+	
 }

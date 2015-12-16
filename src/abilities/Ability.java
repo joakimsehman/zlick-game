@@ -79,4 +79,6 @@ public abstract class Ability{
 		msSinceLastUsed = getCooldown();
 	}
 	
+	
+	
 }

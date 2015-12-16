@@ -1,5 +1,6 @@
 package abilities;
 
+import entities.BolaEffect;
 import entities.FireballEffect;
 import entities.Player;
 import entities.SpellAreaOfEffect;
@@ -89,5 +90,8 @@ public class Fireball extends Ability{
 		
 		return true;
 	}
+
+
+
 
 }

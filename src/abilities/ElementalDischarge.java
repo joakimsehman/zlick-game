@@ -2,6 +2,7 @@ package abilities;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import entities.BolaEffect;
 import entities.ElementalDischargeEffect;
 import entities.Player;
 import game.Model;
@@ -19,7 +20,7 @@ public class ElementalDischarge extends Ability {
 		// TODO Auto-generated constructor stub
 		duration = 10000;
 		casttime = 1000;
-		cooldown = 30000;
+		cooldown = 20000;
 		cost = 50;
 		this.resetCooldown();
 	}
@@ -47,7 +48,7 @@ public class ElementalDischarge extends Ability {
 			cost = 0;
 		}else{
 			spell.onActivate();
-			cooldown = 30000;
+			cooldown = 20000;
 			casttime = 1000;
 			cost = 50;
 		}
@@ -56,7 +57,7 @@ public class ElementalDischarge extends Ability {
 	public void update(int delta){
 		super.update(delta);
 		if(cooldown == 0 && getMsSinceLastUse() > 10000){
-			cooldown = 30000;
+			cooldown = 20000;
 			casttime = 1000;
 			cost = 50;
 		}
@@ -74,19 +75,19 @@ public class ElementalDischarge extends Ability {
 
 	@Override
 	public int getCastTime() {
-		// TODO Auto-generated method stub
+		
 		return casttime;
 	}
 
 	@Override
 	public boolean isCastableWhileMoving() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public int getCooldown() {
-		// TODO Auto-generated method stub
+		
 		return cooldown;
 	}
 
@@ -95,5 +96,7 @@ public class ElementalDischarge extends Ability {
 
 		return true;
 	}
+
+	
 
 }

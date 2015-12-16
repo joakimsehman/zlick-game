@@ -68,7 +68,7 @@ public class Lobby implements GameState{
         AbilitySelection abilitySelection = new AbilitySelection(788, 45);
         Model.model.addActiveGui(abilitySelection);
 
-        AbilityExplanation abilityExplanation = new AbilityExplanation(650,450);
+        AbilityExplanation abilityExplanation = new AbilityExplanation(650,450, abilitySelection);
         Model.model.addActiveGui(abilityExplanation);
 
         startButton = new Button(670, 500, TextureHandler.getInstance().getImageByName("startGame.png"), 215, 70);

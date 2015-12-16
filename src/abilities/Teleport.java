@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Vector2f;
 import animation.AnimationGroup;
 import animation.DirectedAnimation;
 import entities.AnimatedDecoration;
+import entities.BolaEffect;
 import game.Model;
 
 public class Teleport extends Ability{
@@ -62,5 +63,7 @@ public class Teleport extends Ability{
 		}
 		return false;
 	}
+
+	
 
 }

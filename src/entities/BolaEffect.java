@@ -20,7 +20,7 @@ public class BolaEffect extends SpellAreaOfEffect {
 
 	
 	private int playerId;
-	private int damage;
+	private static int damage = 8;
 	private static AnimationGroup animation;
 	
 
@@ -29,7 +29,6 @@ public class BolaEffect extends SpellAreaOfEffect {
 		super(xPos, yPos, vector, new Circle(xPos, yPos, 20), null,
 				duration, true, playerId, spellEffectId);
 		this.playerId = playerId;
-		damage = 5;
 		
 		if(animation == null){
 			animation = new AnimationGroup();
@@ -41,11 +40,15 @@ public class BolaEffect extends SpellAreaOfEffect {
 			SoundHandler.getInstance().bolaSound.play();
 		}
 	}
+	
+	public static int getDamage(){
+		return damage;
+	}
 
 	// make it multiply? Model.model.launchCustomSpellAreaOfEffect?
 	public void applyEffect(Player p) {
 		super.applyEffect(p);
-		p.applyMovementModifyer(0.1f, 2000);
+		p.applyMovementModifyer(0.3f, 2000);
 		p.applyDamage(-damage);
 		if (playerId == Model.model.getMyself().getID()) {
 			Model.model.launchCustomSpellAreaOfEffect(getEffectId(), this.getXPos() + this.getVectorX()/2, this.getYPos() + this.getVectorY()/2, getVectorX(), getVectorY(), 500, this.playerId, Model.model.getNextSpellEffectId());

@@ -1,5 +1,6 @@
 package abilities;
 
+import entities.BolaEffect;
 import entities.Player;
 import entities.SoulReleaseEffect;
 import game.Model;
@@ -64,5 +65,7 @@ public class SoulRelease extends Ability {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	
 
 }

@@ -30,6 +30,8 @@ public abstract class GuiEntity {
 
     protected abstract boolean isSelectable();
 
+    
+    
     public abstract boolean intersects(int x, int y);
 	
 	public int getxPos() {

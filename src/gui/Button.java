@@ -69,7 +69,11 @@ public class Button extends GuiEntity {
 
     @Override
     public boolean intersects(int x, int y) {
-        return false;
+    	if(x > this.getxPos() && y > this.getyPos() && x <= this.getxPos() + width && y <= this.getyPos() + height){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean getButtonPressed(){

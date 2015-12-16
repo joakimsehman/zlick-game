@@ -3,6 +3,7 @@ package abilities;
 import animation.AnimationGroup;
 import animation.DirectedAnimation;
 import entities.AttachedAnimatedDecoration;
+import entities.BolaEffect;
 import entities.Player;
 import game.Model;
 
@@ -21,7 +22,7 @@ public class Healcharge extends Ability {
 
 	public Healcharge(String name, int playerCreatedId) {
 		super(name, 6, playerCreatedId);
-		duration = 3000;
+		duration = 3150;
 		cooldown = 10000;
 		cost = 30;
 		isActive = false;
@@ -97,7 +98,7 @@ public class Healcharge extends Ability {
 				}
 
 				if (tickCounter == 4) {
-					cooldown = 10000;
+					cooldown = 8000;
 					cost = 30;
 					isActive = false;
 					
@@ -112,31 +113,31 @@ public class Healcharge extends Ability {
 
 	@Override
 	public int getCost() {
-		// TODO Auto-generated method stub
+		
 		return cost;
 	}
 
 	@Override
 	public int getSpellEffectAmount() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public int getCastTime() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public boolean isCastableWhileMoving() {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 
 	@Override
 	public int getCooldown() {
-		// TODO Auto-generated method stub
+		
 		return cooldown;
 	}
 
@@ -162,5 +163,7 @@ public class Healcharge extends Ability {
 		}
 		return false;
 	}
+
+	
 
 }

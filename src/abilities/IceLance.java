@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Vector2f;
 import animation.AnimationGroup;
 import animation.DirectedAnimation;
 import entities.AttachedAnimatedDecoration;
+import entities.BolaEffect;
 import entities.FireballEffect;
 import entities.IceLanceEffect;
 import entities.Player;
@@ -36,38 +37,41 @@ public class IceLance extends Ability {
 	
 	@Override
 	public int getCost() {
-		// TODO Auto-generated method stub
+		
 		return 10;
 	}
 
 	@Override
 	public int getSpellEffectAmount() {
-		// TODO Auto-generated method stub
+		
 		return 1;
 	}
 
 	@Override
 	public int getCastTime() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public boolean isCastableWhileMoving() {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 
 	@Override
 	public int getCooldown() {
-		// TODO Auto-generated method stub
+		
 		return 500;
 	}
 
 	@Override
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
+
+
+	
 
 }
