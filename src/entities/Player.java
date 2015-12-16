@@ -422,12 +422,12 @@ public class Player extends Minion {
 			if ((!isMoving() || getAbility(abilityNumber)
 					.isCastableWhileMoving())
 					&& getAbility(abilityNumber).getCost() < this.energy) {
-
+				
 				castTime = this.getAbility(abilityNumber).getCastTime();
 				castTimeLeft = castTime;
 				isCasting = true;
 				if (Model.model.isOnScreen(getXPos(), getYPos())) {
-					SoundHandler.getInstance().castingSound.play(1.0f, 0.1f);
+					SoundHandler.getInstance().castingSound.play(1.0f, 0.5f);
 				}
 				this.castingSpellAbilityNumber = abilityNumber;
 				this.castingSpellXPos = mouseGameX;
@@ -441,7 +441,7 @@ public class Player extends Minion {
 		if (this.isCasting != isCasting) {
 			this.isCasting = isCasting;
 			if (isCasting && Model.model.isOnScreen(getXPos(), getYPos())) {
-				SoundHandler.getInstance().castingSound.play();
+				SoundHandler.getInstance().castingSound.play(1.0f, 0.5f);
 			}
 		}
 	}

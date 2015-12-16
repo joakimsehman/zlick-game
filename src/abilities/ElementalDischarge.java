@@ -2,6 +2,7 @@ package abilities;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import entities.BolaEffect;
 import entities.ElementalDischargeEffect;
 import entities.Player;
 import game.Model;
@@ -13,14 +14,17 @@ public class ElementalDischarge extends Ability {
 	private int cooldown;
 	private int casttime;
 	private int cost;
+	
+	private boolean isCastableWhileMoving;
 
 	public ElementalDischarge(String name, int id, int playerCreatedId) {
 		super(name, 5, playerCreatedId);
 		// TODO Auto-generated constructor stub
 		duration = 10000;
 		casttime = 1000;
-		cooldown = 30000;
+		cooldown = 15000;
 		cost = 50;
+		isCastableWhileMoving = false;
 		this.resetCooldown();
 	}
 
@@ -45,20 +49,23 @@ public class ElementalDischarge extends Ability {
 			cooldown = 0;
 			casttime = 0;
 			cost = 0;
+			isCastableWhileMoving = true;
 		}else{
 			spell.onActivate();
-			cooldown = 30000;
+			cooldown = 15000;
 			casttime = 1000;
 			cost = 50;
+			isCastableWhileMoving = false;
 		}
 	}
 	
 	public void update(int delta){
 		super.update(delta);
 		if(cooldown == 0 && getMsSinceLastUse() > 10000){
-			cooldown = 30000;
+			cooldown = 15000;
 			casttime = 1000;
 			cost = 50;
+			isCastableWhileMoving = false;
 		}
 	}
 
@@ -74,19 +81,19 @@ public class ElementalDischarge extends Ability {
 
 	@Override
 	public int getCastTime() {
-		// TODO Auto-generated method stub
+		
 		return casttime;
 	}
 
 	@Override
 	public boolean isCastableWhileMoving() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return isCastableWhileMoving;
 	}
 
 	@Override
 	public int getCooldown() {
-		// TODO Auto-generated method stub
+		
 		return cooldown;
 	}
 
@@ -95,5 +102,7 @@ public class ElementalDischarge extends Ability {
 
 		return true;
 	}
+
+	
 
 }

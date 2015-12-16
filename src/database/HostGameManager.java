@@ -11,9 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by joakim on 2015-12-08.
@@ -70,7 +68,7 @@ public class HostGameManager {
 
             localip = localip.replaceAll("/", "");
 
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO activegames(user, globalip, localip) VALUES('"+user+"', '"+globalip+"', '"+localip+"')");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO activegames(user, globalip, localip) VALUES('"+user+"', '"+globalip+"', '"+localip+"') ON DUPLICATE KEY UPDATE globalip='"+globalip+"', localip='"+localip+"'");
             preparedStatement.executeUpdate();
 
             System.out.println("Host Game Success");
@@ -172,18 +170,23 @@ public class HostGameManager {
     }
 
 
-    public ResultSet getHostedGames(){
+    public List<GameTemplate> getHostedGames(){
 
         Connection connection = DatabaseConfiguration.getConnection();
 
         PreparedStatement preparedStatement = null;
 
         ResultSet resultSet = null;
+        ArrayList<GameTemplate> openGames = new ArrayList<GameTemplate>();
 
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM activegames");
 
             resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                openGames.add(new GameTemplate(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3)));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -196,8 +199,31 @@ public class HostGameManager {
             e.printStackTrace();
         }
 
-        return resultSet;
+        return openGames;
 
+    }
+
+    public class GameTemplate{
+
+        private String user, globalip, localip;
+
+        public GameTemplate(String user, String globalip, String localip){
+            this.user = user;
+            this.globalip = globalip;
+            this.localip = localip;
+        }
+
+        public String getUser(){
+            return user;
+        }
+
+        public String getGlobalip(){
+            return globalip;
+        }
+
+        public String getLocalip(){
+            return localip;
+        }
     }
 
 }

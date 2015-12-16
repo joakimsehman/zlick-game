@@ -14,9 +14,10 @@ public class Application extends StateBasedGame{
     public static final int LOGINSCREEN = 0;
 	public static final int MAINMENU = 1;
 	public static final int GAME = 2;
-	public static final int LOBBY = 3;
+	public static final int OLDLOBBY = 3;
 	public static final int PROFILE = 4;
     public static final int GAMESELECTION = 5;
+    public static final int LOBBY = 6;
     //IMPLEMENT
 	
 	
@@ -25,7 +26,7 @@ public class Application extends StateBasedGame{
 		Model.model = new Model();
 //		this.addState(new MainMenu(MAINMENU));
 //		this.addState(new Game(GAME));
-//		this.addState(new Lobby(LOBBY));
+//		this.addState(new Lobby(OLDLOBBY));
 	}
 	
 	
@@ -36,12 +37,13 @@ public class Application extends StateBasedGame{
 			Model.model.initModel();
 //			this.getState(MAINMENU).init(gc, this);
 //			this.getState(GAME).init(gc, this);
-//			this.getState(LOBBY).init(gc, this);
+//			this.getState(OLDLOBBY).init(gc, this);
             this.addState(new LoginScreen(LOGINSCREEN));
             this.addState(new Profile(PROFILE));
 			this.addState(new MainMenu(MAINMENU));
 			this.addState(new Game(GAME));
-			this.addState(new Lobby(LOBBY));
+			//this.addState(new OldLobby(OLDLOBBY));
+            this.addState(new Lobby(LOBBY));
             this.addState(new GameSelection(GAMESELECTION));
 	}
 	

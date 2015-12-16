@@ -30,9 +30,9 @@ public class Profile extends LoggedIn {
         super.render(gameContainer, stateBasedGame, graphics);
         graphics.setBackground(Color.darkGray);
 
-        graphics.setColor(Color.white);
-        graphics.drawString("User:" + LoginInfo.getInstance().getUserName(), 100, 230);
-        graphics.drawString("Nick:" + LoginInfo.getInstance().getNick(), 100, 260);
+        graphics.setColor(Color.black);
+        graphics.drawString("User:" + LoginInfo.getInstance().getUserName(), 140, 200);
+        graphics.drawString("Nick:" + LoginInfo.getInstance().getNick(), 140, 230);
     }
 
     @Override

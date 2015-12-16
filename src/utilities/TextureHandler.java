@@ -65,6 +65,7 @@ public class TextureHandler {
 			addImage("female.png");
 			addImage("background.jpg");
             addImage("background2.jpg");
+            addImage("loginbackground.png");
 			addImage("title.png");
 			addImage("teleportIcon.png");
 			addImage("icelanceIcon.png");
@@ -72,7 +73,36 @@ public class TextureHandler {
 			addImage("actionbar.png");
 			addImage("cure-3.png");
 			addImage("stealth.png");
-            addImage("login_knapp.png");
+            addImage("textfield.png");
+            addImage("signin.png");
+            addImage("chatArea.png");
+            addImage("lobbybackground.png");
+            addImage("teamselectionbackground.png");
+            addImage("playerCustomizerBackground.png");
+            addImage("abilityExplanationBackground.png");
+            addImage("abilitySelectionBackground.png");
+            addImage("chosenAbilitySpace.png");
+            addImage("chosenUltimateSpace.png");
+            addImage("abilitySpace.png");
+            addImage("ultimateAbilitySpace.png");
+
+            addImage("fireballIconSmall.png");
+            addImage("massPolymorphIconSmall.png");
+            addImage("bolaIconSmall.png");
+            addImage("teleportIconSmall.png");
+            addImage("icelanceIconSmall.png");
+            addImage("elementalDischargeIconSmall.png");
+            addImage("stealthIconSmall.png");
+
+            addImage("joinTeam.png");
+            addImage("joinButton.png");
+            addImage("hostButton.png");
+            addImage("gamesButton.png");
+            addImage("profileButton.png");
+            addImage("abilitiesButton.png");
+            
+            addImage("loggedInWindow.png");
+            addImage("loggedInBackground.png");
 
 		} catch (IOException e) {
 			e.printStackTrace();

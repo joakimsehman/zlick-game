@@ -96,6 +96,21 @@ public abstract class Entity {
 			}
 		}
 	}
+	
+	public void setVectorByRadians(float length, float radians){
+		if (isAbleToMove) {
+			length = length * speedModifier;
+			float dx = (float) (length * Math.cos(radians));
+			float dy = (float) (length * Math.sin(radians));
+			vector.set(dx, dy);
+			if(length == 0){
+				setIsMoving(false);
+			}else{
+				setIsMoving(true);
+				checkAndSetDirection();
+			}
+		}
+	}
 
 	private void checkAndSetDirection() {
 //		if ((int) vector.getX() == 0) {
@@ -190,6 +205,7 @@ public abstract class Entity {
 
 			if (moveForbidden) {
 				setBoundingBox(xPos, yPos);
+				setVectorWithoutSpeedModifier(0, 0);
 			} else {
 				xPos = newXPos;
 				yPos = newYPos;

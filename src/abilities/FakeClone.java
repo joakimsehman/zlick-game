@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import entities.BolaEffect;
 import entities.Minion;
 import entities.Player;
 import game.Model;
@@ -37,38 +38,40 @@ public class FakeClone extends Ability{
 
 	@Override
 	public int getCost() {
-		// TODO Auto-generated method stub
+		
 		return 30;
 	}
 
 	@Override
 	public int getSpellEffectAmount() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public int getCastTime() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public boolean isCastableWhileMoving() {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 
 	@Override
 	public int getCooldown() {
-		// TODO Auto-generated method stub
-		return 20000;
+		
+		return 15000;
 	}
 
 	@Override
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
+
+	
 
 }

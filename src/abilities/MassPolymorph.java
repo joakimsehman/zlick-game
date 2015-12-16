@@ -4,6 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Vector2f;
 
+import entities.BolaEffect;
 import entities.Player;
 import entities.PolymorphingEffect;
 import entities.SpellAreaOfEffect;
@@ -61,6 +62,8 @@ public class MassPolymorph extends Ability{
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
 		return true;
 	}
+
+	
 
 	
 	

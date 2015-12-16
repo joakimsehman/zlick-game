@@ -53,10 +53,10 @@ public class LoginScreen implements GameState {
             Model.model.getActiveGui().get(i).draw(graphics);
         }
         graphics.setColor(Color.white);
-        graphics.drawString("Username:", 100, 70);
-        graphics.drawString("Password:", 100, 270);
+        graphics.drawString("Username:", 488, 210);
+        graphics.drawString("Password:", 488, 300);
         graphics.setColor(Color.red);
-        graphics.drawString(message, 100, 400);
+        graphics.drawString(message, 488, 400);
 
     }
 
@@ -69,14 +69,18 @@ public class LoginScreen implements GameState {
     public void enter(GameContainer gameContainer, final StateBasedGame stateBasedGame) throws SlickException {
 
 
-        final TextField userName = new TextField(100,100, 300, 50);
+        final TextField userName = new TextField(488,240, 300, 50);
+        userName.setBackgroundImage(TextureHandler.getInstance().getImageByName("textfield.png"));
         Model.model.addActiveGui(userName);
 
-        final TextField password = new TextField(100, 300, 300, 50);
+
+
+        final TextField password = new TextField(488, 330, 300, 50);
+        password.setBackgroundImage(TextureHandler.getInstance().getImageByName("textfield.png"));
         password.setTextHidden(true);
         Model.model.addActiveGui(password);
 
-        final Button loginButton = new Button(100, 500, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
+        final Button loginButton = new Button(485, 450, TextureHandler.getInstance().getImageByName("signin.png"), 310, 52);
         Model.model.addActiveGui(loginButton);
 
 
@@ -86,48 +90,15 @@ public class LoginScreen implements GameState {
                 if(b == Button.ButtonEvent.BUTTON_CLICKED) {
                     if (buttonId == loginButton.getId()){
 
-                        Connection connection = DatabaseConfiguration.getConnection();
-
-                        try {
-                            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM playerinfo");
-
-                            ResultSet resultSet = preparedStatement.executeQuery();
-
-                            boolean foundUser = false;
-                            while(resultSet.next()){
-
-                                if(resultSet.getString(1).equals(userName.getText())){
-                                    foundUser = true;
-
-                                    if(resultSet.getString(2).equals(password.getText())){
-                                        message = "login successfull";
-
-                                        LoginInfo.getInstance().logIn(resultSet.getString(1), resultSet.getString(3));
-
-                                        SoundHandler.getInstance().loginMusic.stop();
-                                        stateBasedGame.enterState(Application.PROFILE);
-                                    }else{
-                                        message = "login failed";
-                                    }
-                                }
-                            }
-                            if(!foundUser){
-                                message = "User not found";
-                            }
-
-
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }finally{
-                            try {
-                                connection.close();
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-
-                        //TODO: login implement
+                    	if(LoginInfo.getInstance().logIn(userName.getText(), password.getText())){
+                    		message = "login successfull";
+                    		SoundHandler.getInstance().loginMusic.stop();
+                            stateBasedGame.enterState(Application.PROFILE);
+                    	}else{
+                    		message = "login failed";
+                    	}
+                        
+                    	                        
                     }
                 }
             }
@@ -137,7 +108,7 @@ public class LoginScreen implements GameState {
 
         SoundHandler.getInstance().loginMusic.loop();
 
-        background = TextureHandler.getInstance().getImageByName("background2.jpg");
+        background = TextureHandler.getInstance().getImageByName("loginbackground.png");
 
     }
 

@@ -1,5 +1,6 @@
 package abilities;
 
+import entities.BolaEffect;
 import entities.FireballEffect;
 import entities.Player;
 import entities.SpellAreaOfEffect;
@@ -11,6 +12,23 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Vector2f;
 
 import utilities.TextureHandler;
+
+
+/* (tutorial start in abilities.Ability.java)
+ * 
+ * 
+ * 
+HOW TO CREATE AN ABILITY TUTORIAL:
+
+PART 2.
+
+Quickly check this simple ability out and then return to Ability.java for part 3.
+
+
+The useAbility method is called when an abilitybutton is pressed on the keyboard (only if not on cooldown).
+Note the 'FireballEffect spell' object, this is the actual spell traveling the screen and colliding with players.
+*/
+
 
 public class Fireball extends Ability{
 
@@ -89,5 +107,8 @@ public class Fireball extends Ability{
 		
 		return true;
 	}
+
+
+
 
 }
