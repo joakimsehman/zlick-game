@@ -21,7 +21,7 @@ import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import abilities.Ability;
-import utilities.AbilityCreator;
+import abilities.AbilityInfo;
 import utilities.SoundHandler;
 import utilities.TextureHandler;
 
@@ -182,7 +182,7 @@ public class OldLobby implements GameState, ButtonListener{
 		selectedAbility = 1;
 		
 		abilityButtons = new Button[4];
-		abilityChoiceButtonId = new int[AbilityCreator.getInstance().getNumberOfAbilities()];
+		abilityChoiceButtonId = new int[AbilityInfo.getInstance().getNumberOfAbilities()];
 		
 		for(int i = 0; i < 4; i++){
 			abilityButtons[i] = new Button(300 + 85 * i, 90, TextureHandler.getInstance().getImageByName("questionmarkIcon.png"), 81, 81);
@@ -193,7 +193,7 @@ public class OldLobby implements GameState, ButtonListener{
 		for(int i = 0; i < abilityChoiceButtonId.length; i++){
 //			// draw all ability choices
 			Button button = new Button(gc.getScreenWidth() / 2 + (i % 5) * 85,
-					90 + (i / 5) * 85, AbilityCreator.getInstance().getSpellIconFromId(i), 81, 81);
+					90 + (i / 5) * 85, AbilityInfo.getInstance().getSpellIconFromId(i), 81, 81);
 			Model.model.addActiveGui(button);
 			abilityChoiceButtonId[i] = button.getId();
 			button.addButtonListener(this);
@@ -353,7 +353,7 @@ public class OldLobby implements GameState, ButtonListener{
 			for(int i = 0; i < abilityChoiceButtonId.length; i++){
 				if(buttonId == abilityChoiceButtonId[i]){
 					Model.model.getMyself().setAbility(
-							AbilityCreator.getInstance().getNewAbility(i, Model.model.getMyself().getID()),
+							AbilityInfo.getInstance().getNewAbility(i, Model.model.getMyself().getID()),
 							selectedAbility);
 					abilityButtons[selectedAbility-1].setImage(Model.model.getMyself().getAbility(selectedAbility).getIcon());
 				}

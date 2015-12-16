@@ -1,6 +1,5 @@
 package networking;
 
-import utilities.AbilityCreator;
 import entities.Player;
 import game.Model;
 import networking.Packet.Packet0LoginRequest;
@@ -16,6 +15,7 @@ import networking.Packet.Packet6UseAbility;
 import networking.Packet.Packet7AddAbility;
 import networking.Packet.Packet8SetTeam;
 import networking.Packet.Packet9SpellHit;
+import abilities.AbilityInfo;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;

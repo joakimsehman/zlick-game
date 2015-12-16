@@ -3,8 +3,6 @@ package abilities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
-import utilities.AbilityCreator;
-
 
 
 
@@ -24,6 +22,10 @@ public abstract class Ability{
 	private int playerCreatedId;
 	private int id;
 	private int msSinceLastUsed;
+	
+	public enum AbilityType{
+		FIRE, FROST, PHYSICAL, HEAL, MAGIC, POISON, ULTIMATE
+	};
 	
 	public Ability(String name, int id, int playerCreatedId){
 		this.name = name;
@@ -58,7 +60,7 @@ public abstract class Ability{
 	public abstract int getCost();
 	
 	public Image getIcon(){
-		return AbilityCreator.getInstance().getSpellIconFromId(id);
+		return AbilityInfo.getInstance().getSpellIconFromId(id);
 	}
 	
 	public abstract int getSpellEffectAmount();

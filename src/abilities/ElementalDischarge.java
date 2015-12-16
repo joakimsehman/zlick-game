@@ -20,7 +20,7 @@ public class ElementalDischarge extends Ability {
 		// TODO Auto-generated constructor stub
 		duration = 10000;
 		casttime = 1000;
-		cooldown = 20000;
+		cooldown = 15000;
 		cost = 50;
 		this.resetCooldown();
 	}
@@ -48,7 +48,7 @@ public class ElementalDischarge extends Ability {
 			cost = 0;
 		}else{
 			spell.onActivate();
-			cooldown = 20000;
+			cooldown = 15000;
 			casttime = 1000;
 			cost = 50;
 		}
@@ -57,7 +57,7 @@ public class ElementalDischarge extends Ability {
 	public void update(int delta){
 		super.update(delta);
 		if(cooldown == 0 && getMsSinceLastUse() > 10000){
-			cooldown = 20000;
+			cooldown = 15000;
 			casttime = 1000;
 			cost = 50;
 		}

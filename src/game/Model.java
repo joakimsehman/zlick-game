@@ -16,7 +16,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import abilities.Ability;
-import utilities.AbilityCreator;
+import abilities.AbilityInfo;
 import utilities.SpellAreaOfEffectCreator;
 import utilities.TextureHandler;
 import entities.AnimatedDecoration;
@@ -476,7 +476,7 @@ public class Model {
 	}
 
 	public void setPlayerAbility(int playerID, int abilityID, int abilityNumber) {
-		getPlayer(playerID).setAbility(AbilityCreator.getInstance().getNewAbility(abilityID, playerID),
+		getPlayer(playerID).setAbility(AbilityInfo.getInstance().getNewAbility(abilityID, playerID),
 				abilityNumber);
 	}
 

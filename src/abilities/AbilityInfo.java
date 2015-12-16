@@ -1,18 +1,11 @@
-package utilities;
+package abilities;
 
 import org.newdawn.slick.Image;
 
+import abilities.Ability.AbilityType;
+import utilities.TextureHandler;
 import entities.BolaEffect;
 import entities.FireballEffect;
-import abilities.Ability;
-import abilities.Bola;
-import abilities.ElementalDischarge;
-import abilities.FakeClone;
-import abilities.Fireball;
-import abilities.Healcharge;
-import abilities.IceLance;
-import abilities.MassPolymorph;
-import abilities.Teleport;
 
 /*
  * Whenever a new ability is created in game(for example when you or another player has chosen an ability) it will be created from this class, 
@@ -23,20 +16,20 @@ import abilities.Teleport;
  * 
  * this will make the ability visible and selectable in the lobby, so this should be done when you first want to start testing your ability. ie it should contain no compilationerrors
  */
-public class AbilityCreator {
+public class AbilityInfo {
 
-	private static AbilityCreator abilityCreator;
+	private static AbilityInfo abilityCreator;
 	private static Image[] abilityIcons;
 	private static Image[] smallAbilityIcons;
 
-	private AbilityCreator() {
+	private AbilityInfo() {
 
 	}
 
-	public static AbilityCreator getInstance() {
+	public static AbilityInfo getInstance() {
 
 		if (abilityCreator == null) {
-			abilityCreator = new AbilityCreator();
+			abilityCreator = new AbilityInfo();
 			abilityCreator.loadAbilityIcons();
 		}
 		return abilityCreator;
@@ -105,7 +98,6 @@ public class AbilityCreator {
 			return new FakeClone("invis", usingPlayerId);
 		}
 		return null;
-
 	}
 
 	//increase this everytime you add an ability
@@ -119,6 +111,43 @@ public class AbilityCreator {
 
 	public Image getSmallSpellIconFromId(int id) {
 		return smallAbilityIcons[id];
+	}
+	
+	public AbilityType getAbilityType(int id){
+		
+		AbilityType abilityType;
+		
+		switch(id){
+		case 0:
+			abilityType = AbilityType.FIRE;
+			break;
+		case 1:
+			abilityType = AbilityType.MAGIC;
+			break;
+		case 2:
+			abilityType = AbilityType.PHYSICAL;
+			break;
+		case 3:
+			abilityType = AbilityType.MAGIC;
+			break;
+		case 4:
+			abilityType = AbilityType.FROST;
+			break;
+		case 5:
+			abilityType = AbilityType.ULTIMATE;
+			break;
+		case 6:
+			abilityType = AbilityType.HEAL;
+			break;
+		case 7:
+			abilityType = AbilityType.MAGIC;
+			break;
+		default:
+			abilityType = null;
+		}
+			
+		return abilityType;
+		
 	}
 
 	public String getDescriptionFromId(int id) {
@@ -182,7 +211,7 @@ public class AbilityCreator {
 					+ "sending out 4 Fireballs and 4 Icelance in 8 directions\n\n"
 					+ "Travels 5000 pixels over 10 sec\n"
 					+ "Cost: 50 energy, Casttime: 1 sec\n"
-					+ "Slow: 30% - 2 sec, Cooldown: 20 sec\n\n"
+					+ "Slow: 30% - 2 sec, Cooldown: 15 sec\n\n"
 					+ "Is castable while moving: false";
 			break;
 		case 6:
