@@ -10,6 +10,8 @@ import networking.BlazeServer;
 import networking.Network;
 import networking.Packet.Packet5StartThread;
 
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -41,6 +43,8 @@ public class Model {
 
 	private Network network;
 
+    private AppGameContainer appGameContainer;
+
 	public enum NetState {
 		SERVER, CLIENT
 	};
@@ -67,9 +71,6 @@ public class Model {
 	private int id;
 	private float cameraX;
 	private float cameraY;
-	
-	private int screenWidth;
-	private int screenHeight;
 
 	private Level level;
 	private float mouseGameX;
@@ -92,11 +93,6 @@ public class Model {
 		temporaryMinionTimers = new ArrayList<Integer>();
 		spellEffectIdCounter = 0;
 	}
-	
-	public void setScreenSize(int width, int height){
-		screenWidth = width;
-		screenHeight = height;
-	}
 
 	public static Model getModel() {
 		return model;
@@ -104,10 +100,34 @@ public class Model {
 
 	public void initModel() {
 		terrain = new ArrayList<Entity>();
-		terrain.add(new Terrain(300, 300, null,
+	/*	terrain.add(new Terrain(300, 300, null,
 				new Rectangle(300, 300, 50, 50), TextureHandler.getInstance()
 						.getImageByName("red.png")));
-	}
+	*/
+    }
+
+    public void initGameContainer(AppGameContainer appgc){
+        appGameContainer = appgc;
+    }
+
+    public void setFullScreen(){
+        try {
+            appGameContainer.setDisplayMode(appGameContainer.getScreenWidth(), appGameContainer.getScreenHeight(), true);
+        } catch (SlickException e) {
+            e.printStackTrace();
+            System.out.println("FULLSCREEN2 METHOD BUG");
+        }
+    }
+
+    public void setDisplayMode(int width, int height, boolean fullscreen){
+        try {
+            appGameContainer.setDisplayMode(width, height, fullscreen);
+        } catch (SlickException e) {
+            e.printStackTrace();
+
+            System.out.println("FULLSCREEN METHOD BUG");
+        }
+    }
 
 	public Player getMyself() {
 		return myself;
@@ -508,13 +528,11 @@ public class Model {
 
 	public void clearGui() {
 		activeGui.clear();
+        GuiEntity.resetGui();
 	}
 
 	public void updateGui(int delta) {
-		for (int i = 0; i < activeGui.size(); i++) {
-			activeGui.get(i).update(delta);
-		}
-
+        GuiEntity.updateGUI(delta);
 	}
 
 	public void initLevel(Level level) {
@@ -522,18 +540,18 @@ public class Model {
 	}
 	
 	public boolean isOnScreen(float xPos, float yPos){
-		if(xPos > cameraX && xPos < cameraX + screenWidth && yPos > cameraY && yPos < cameraY + screenHeight){
+		if(xPos > cameraX && xPos < cameraX + getScreenWidth() && yPos > cameraY && yPos < cameraY + getScreenHeight()){
 			return true;
 		}
 		return false;
 	}
 	
 	public int getScreenWidth(){
-		return screenWidth;
+		return appGameContainer.getWidth();
 	}
 	
 	public int getScreenHeight(){
-		return screenHeight;
+		return appGameContainer.getHeight();
 	}
 
 	public void setAndSendPlayerCustomization(Gender gender,

@@ -44,4 +44,14 @@ public class AbilityBar extends GuiEntity {
 
 	}
 
+    @Override
+    protected boolean isSelectable() {
+        return false;
+    }
+
+    @Override
+    public boolean intersects(int x, int y) {
+        return false;
+    }
+
 }
