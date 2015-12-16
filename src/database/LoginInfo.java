@@ -1,5 +1,14 @@
 package database;
 
+import game.Application;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import utilities.SoundHandler;
+
 /**
  * Created by joakim on 2015-12-08.
  */
@@ -22,12 +31,56 @@ public class LoginInfo {
 
         return instance;
     }
+    
+    
+    public boolean logIn(String userName, String password){
+    	
+    	Connection connection = DatabaseConfiguration.getConnection();
+        
+    	boolean loginSuccessfull = false;
+    	
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM playerinfo");
 
-    public void logIn(String user, String nick){
-        isLoggedIn = true;
-        this.user = user;
-        this.nick = nick;
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            boolean foundUser = false;
+            while(resultSet.next()){
+
+                if(resultSet.getString(1).equals(userName)){
+                    foundUser = true;
+
+                    if(resultSet.getString(2).equals(password)){
+                        
+                        this.user = resultSet.getString(1);
+                        this.nick = resultSet.getString(3);
+                        isLoggedIn = true;
+
+                        loginSuccessfull = true;
+                    }else{
+                        
+                    }
+                }
+            }
+            if(!foundUser){
+                loginSuccessfull = false;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return loginSuccessfull;
+    	
     }
+    
 
     public boolean isLoggedIn(){
         return isLoggedIn;

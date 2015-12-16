@@ -90,48 +90,15 @@ public class LoginScreen implements GameState {
                 if(b == Button.ButtonEvent.BUTTON_CLICKED) {
                     if (buttonId == loginButton.getId()){
 
-                        Connection connection = DatabaseConfiguration.getConnection();
-
-                        try {
-                            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM playerinfo");
-
-                            ResultSet resultSet = preparedStatement.executeQuery();
-
-                            boolean foundUser = false;
-                            while(resultSet.next()){
-
-                                if(resultSet.getString(1).equals(userName.getText())){
-                                    foundUser = true;
-
-                                    if(resultSet.getString(2).equals(password.getText())){
-                                        message = "login successfull";
-
-                                        LoginInfo.getInstance().logIn(resultSet.getString(1), resultSet.getString(3));
-
-                                        SoundHandler.getInstance().loginMusic.stop();
-                                        stateBasedGame.enterState(Application.PROFILE);
-                                    }else{
-                                        message = "login failed";
-                                    }
-                                }
-                            }
-                            if(!foundUser){
-                                message = "User not found";
-                            }
-
-
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }finally{
-                            try {
-                                connection.close();
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-
-                        //TODO: login implement
+                    	if(LoginInfo.getInstance().logIn(userName.getText(), password.getText())){
+                    		message = "login successfull";
+                    		SoundHandler.getInstance().loginMusic.stop();
+                            stateBasedGame.enterState(Application.PROFILE);
+                    	}else{
+                    		message = "login failed";
+                    	}
+                        
+                    	                        
                     }
                 }
             }
