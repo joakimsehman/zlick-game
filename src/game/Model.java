@@ -219,13 +219,15 @@ public class Model {
 		}
 	}
 
-	public void createClient(String ip) {
+	public boolean createClient(String ip) {
 		try {
 			network = new BlazeClient(name, ip);
 			modelNetState = NetState.CLIENT;
+			return true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			return false;
 		}
 	}
 

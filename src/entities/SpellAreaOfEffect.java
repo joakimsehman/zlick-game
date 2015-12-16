@@ -9,6 +9,32 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 
+
+
+/*(tutorial start in abilities.Ability.java)
+ * 
+ * 
+ * 
+ * HOW TO CREATE AN ABILITY TUTORIAL:
+ * 
+ * 
+ * PART 3:
+ * 
+ * This abstract class is an extension of entity, it is an entity on the game field
+ * It represents a spell effect with an area (Example: Could be a single fireball or a healing area)
+ * it is extended to build spell functionality
+ * 
+ * note that the constructor takes boolean argument disappearsIfTouched
+ * if disappearsIfTouched is set to true the applyEffect method will be called on player hit and then the effect will delete itself
+ * if disappearsIfTouched is set to false, instead the onTic method will be called each update for each player affected
+ * 
+ * 
+ * Check out this class quickly and continue to entities.FireballEffect.java for part 4
+ */
+
+
+
+//Ex
 //dont forget to overwrite getEffectId() if you extend this class
 public abstract class SpellAreaOfEffect extends Entity {
 

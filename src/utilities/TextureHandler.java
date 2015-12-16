@@ -73,7 +73,6 @@ public class TextureHandler {
 			addImage("actionbar.png");
 			addImage("cure-3.png");
 			addImage("stealth.png");
-            addImage("login_knapp.png");
             addImage("textfield.png");
             addImage("signin.png");
             addImage("chatArea.png");
@@ -96,6 +95,14 @@ public class TextureHandler {
             addImage("stealthIconSmall.png");
 
             addImage("joinTeam.png");
+            addImage("joinButton.png");
+            addImage("hostButton.png");
+            addImage("gamesButton.png");
+            addImage("profileButton.png");
+            addImage("abilitiesButton.png");
+            
+            addImage("loggedInWindow.png");
+            addImage("loggedInBackground.png");
 
 		} catch (IOException e) {
 			e.printStackTrace();

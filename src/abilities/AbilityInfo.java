@@ -8,6 +8,17 @@ import entities.BolaEffect;
 import entities.FireballEffect;
 
 /*
+ * 
+ * /*(tutorial start in abilities.Ability.java)
+ * 
+ * 
+ * 
+ * HOW TO CREATE AN ABILITY TUTORIAL:
+ * 
+ * 
+ * PART 5:
+ * 
+ *
  * Whenever a new ability is created in game(for example when you or another player has chosen an ability) it will be created from this class, 
  * that is why every time you make a new ability you will need to change this class in the following ways:
  * - increase getNumberOfAbilities() by 1

@@ -4,11 +4,14 @@ import game.Application;
 import game.Model;
 import gui.Button;
 import listener.ButtonListener;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
+
 import utilities.TextureHandler;
 
 /**
@@ -18,6 +21,8 @@ public abstract class LoggedIn implements GameState {
 
 
     private final int stateID;
+    private Image loggedInWindow;
+    private Image background;
 
     public LoggedIn(int gameState){
         stateID = gameState;
@@ -32,9 +37,13 @@ public abstract class LoggedIn implements GameState {
     @Override
     public void enter(GameContainer gameContainer, final StateBasedGame stateBasedGame) throws SlickException {
 
-        final Button gamesButton = new Button(100, 20, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
-        final Button profileButton = new Button(500, 20, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
-        final Button abilitiesButton = new Button(900, 20, TextureHandler.getInstance().getImageByName("login_knapp.png"), 300, 150);
+    	
+    	loggedInWindow = TextureHandler.getInstance().getImageByName("loggedInWindow.png");
+    	background = TextureHandler.getInstance().getImageByName("loggedInBackground.png");
+    	
+        final Button gamesButton = new Button(218, 95, TextureHandler.getInstance().getImageByName("gamesButton.png"), 285, 90);
+        final Button profileButton = new Button(505, 95, TextureHandler.getInstance().getImageByName("profileButton.png"), 285, 90);
+        final Button abilitiesButton = new Button(791, 95, TextureHandler.getInstance().getImageByName("abilitiesButton.png"), 285, 90);
 
         Model.model.addActiveGui(gamesButton);
         Model.model.addActiveGui(profileButton);
@@ -72,6 +81,10 @@ public abstract class LoggedIn implements GameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 
+    	graphics.drawImage(background, 0, 0);
+    	
+    	graphics.drawImage(loggedInWindow, 60, 60);
+    	
         for (int i = 0; i < Model.model.getActiveGui().size(); i++) {
             Model.model.getActiveGui().get(i).draw(graphics);
         }

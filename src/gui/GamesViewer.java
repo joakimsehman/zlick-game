@@ -18,16 +18,12 @@ import java.util.Map;
  */
 public class GamesViewer extends GuiEntity {
 
-    private int width, height;
     private ArrayList<GameEntity> gameEntities;
 
     private GameEntity selectedGame;
 
-    public GamesViewer(int xPos, int yPos, int width, int height) {
+    public GamesViewer(int xPos, int yPos) {
         super(xPos, yPos);
-
-        this.width = width;
-        this.height = height;
 
         selectedGame = null;
 
@@ -42,7 +38,7 @@ public class GamesViewer extends GuiEntity {
 
             HostGameManager.GameTemplate currentGame = hostedGames.get(i);
 
-            GameEntity gameEntity = new GameEntity(getxPos(), getyPos() + 20*gameCounter, width, 20, currentGame.getUser(), currentGame.getGlobalip(), currentGame.getLocalip());
+            GameEntity gameEntity = new GameEntity(getxPos(), getyPos() + 20*gameCounter, 500, 20, currentGame.getUser(), currentGame.getGlobalip(), currentGame.getLocalip());
 
             gameEntities.add(gameEntity);
 
@@ -52,9 +48,6 @@ public class GamesViewer extends GuiEntity {
 
     @Override
     public void draw(Graphics g) {
-
-        g.setColor(Color.white);
-        g.fillRect(getxPos(), getyPos(), width, height);
 
         for(int i = 0; i < gameEntities.size(); i++){
             gameEntities.get(i).draw(g);

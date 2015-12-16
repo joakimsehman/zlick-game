@@ -16,6 +16,26 @@ import animation.DirectedAnimation;
 import utilities.SoundHandler;
 import utilities.TextureHandler;
 
+/*(tutorial start in abilities.Ability.java)
+ * 
+ * 
+ * 
+ * HOW TO CREATE AN ABILITY TUTORIAL:
+ * 
+ * 
+ * PART 4:
+ * 
+ * This is an example of a spell effect implementation
+ * 
+ * notes:
+ * sets dissappearsIfTouched to true when calling super constructor
+ * overrides applyEffect(Player player) to apply effects
+ * 
+ * return to abilities.Ability.java
+ */
+
+
+
 public class FireballEffect extends SpellAreaOfEffect {
 
 	private int damage;

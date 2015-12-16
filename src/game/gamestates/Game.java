@@ -193,7 +193,10 @@ public class Game implements GameState {
 
 		Model.model.initLevel(new Level());
 
-		Model.model.setFullScreen();
+		
+		//TODO: CHANGE WHEN DONE TESTING
+		//Model.model.setFullScreen();
+		Model.model.setDisplayMode(1920, 1080, false);
 
 		Model.model.clearGui();
 		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc.getScreenHeight() / 2 - 10));

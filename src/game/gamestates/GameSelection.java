@@ -31,7 +31,7 @@ public class GameSelection extends LoggedIn {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         super.render(gameContainer, stateBasedGame, graphics);
 
-        graphics.setColor(Color.cyan);
+        
     }
 
     @Override
@@ -43,13 +43,13 @@ public class GameSelection extends LoggedIn {
     public void enter(GameContainer gameContainer, final StateBasedGame stateBasedGame) throws SlickException {
         super.enter(gameContainer, stateBasedGame);
 
-        final GamesViewer gamesViewer = new GamesViewer(100, 180, 1100, 450);
+        final GamesViewer gamesViewer = new GamesViewer(160, 210);
         Model.model.addActiveGui(gamesViewer);
 
-        final Button hostGameButton = new Button(1000 ,640, TextureHandler.getInstance().getImageByName("hostGame.png"), 200, 50);
+        final Button hostGameButton = new Button(637 ,555, TextureHandler.getInstance().getImageByName("hostButton.png"), 200, 50);
         Model.model.addActiveGui(hostGameButton);
 
-        final Button joinGameButton = new Button(100, 640, TextureHandler.getInstance().getImageByName("joinGame.png"), 200, 50);
+        final Button joinGameButton = new Button(343, 555, TextureHandler.getInstance().getImageByName("joinButton.png"), 200, 50);
         Model.model.addActiveGui(joinGameButton);
 
         ButtonListener buttonListener = new ButtonListener(){
@@ -68,7 +68,11 @@ public class GameSelection extends LoggedIn {
                     }else if(buttonId == joinGameButton.getId()){
 
                         Model.model.setName(LoginInfo.getInstance().getNick());
-                        Model.model.createClient(gamesViewer.getSelectedGameGlobalIp());
+                        if(Model.model.createClient(gamesViewer.getSelectedGameGlobalIp())){
+                        	stateBasedGame.enterState(Application.LOBBY);
+                        }else if(Model.model.createClient(gamesViewer.getSelectedGameLocalIp())){
+                        	stateBasedGame.enterState(Application.LOBBY);
+                        }
                     }
                 }
             }

@@ -23,6 +23,7 @@ public class IceLanceEffect extends SpellAreaOfEffect{
 	private Chill chillBuff;
 	private Freeze freezeBuff;
 	
+	
 	public IceLanceEffect(float xPos, float yPos, Vector2f vector, int duration,
 			int playerId, int spellEffectId) {
 		super(xPos, yPos, vector, new Circle(xPos, yPos, 10), null, duration, true,
