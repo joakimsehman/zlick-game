@@ -155,7 +155,7 @@ public class AbilityInfo {
 		String description;
 		switch (id) {
 		case 0:
-			description = "Fireball\n"
+			description = "FIREBALL\n"
 					+ "Shoots Fireball towards mouse location\n\n" 
 					+ "Ignites for 10 damage over 10 sec\n"
 					+ "Damage: 10 damage or 20 damage if ignited\n"
@@ -166,7 +166,7 @@ public class AbilityInfo {
 			break;
 
 		case 1:
-			description = "MassPolymorph\n"
+			description = "MASS POLYMORPH\n"
 					+ "Spawns area at mouse location that polymorphs enemies inside\n\n"
 					+ "Duration: 5 sec\n"
 					+ "Cost: 40 energy, Casttime: 1 sec\n"
@@ -175,7 +175,7 @@ public class AbilityInfo {
 					+ "Is castable while moving: false";
 			break;
 		case 2:
-			description = "Bola\n"
+			description = "RENGAR E++\n"
 					+ "Throws a bola towards mouse location\n"
 					+ "Spawns another ability copy\nbehind target on hit\n\n"
 					+ "damage: "
@@ -186,7 +186,7 @@ public class AbilityInfo {
 					+ "Is castable while moving: true\n\n";
 			break;
 		case 3:
-			description = "Teleport\n"
+			description = "TELEPORT\n"
 					+ "Teleports yourself to target location\n\n"
 					+ "Condition: Mouse within 500 pixels of player\n"
 					+ "Cost: 20 energy, Casttime: 0 sec\n"
@@ -194,7 +194,7 @@ public class AbilityInfo {
 					+ "Is castable while moving: true";
 			break;
 		case 4:
-			description = "Icelance\n"
+			description = "ICELANCE\n"
 					+ "Shoots Icelance towards mouse location\n"
 					+ "Applies chill, or freeze if target already chilled\n\n"
 					+ "Travels 1000 pixels over 1 sec\n"
@@ -205,7 +205,7 @@ public class AbilityInfo {
 					+ "Freeze: 100% slow - 3 sec\n";
 			break;
 		case 5:
-			description = "Placebo Hallucinations\n"
+			description = "PLACEBO HALLUCINATIONS\n"
 					+ "Shoots elemental ball towards mouse location\n"
 					+ "Activate again to detonate the ball\n"
 					+ "sending out 4 Fireballs and 4 Icelance in 8 directions\n\n"
@@ -215,7 +215,7 @@ public class AbilityInfo {
 					+ "Is castable while moving: false";
 			break;
 		case 6:
-			description = "Bong Smoke\n"
+			description = "BONG SMOKE\n"
 					+ "Teleports to mouse location and begins channeling (~3.1 sec)\n"
 					+ "Healing players withing 500 pixels\n"
 					+ "Activate again to interrupt spell and return to previous location\n"
@@ -227,7 +227,7 @@ public class AbilityInfo {
 					+ "Cooldown: 10 sec, Is castable while moving: true\n";
 			break;
 		case 7:
-			description = "Troll Pass\n"
+			description = "TROLL PASS\n"
 					+ "Makes you invisible and summons smoke clone of yourself \n"
 					+ "that will travel in your current direction\n\n"
 					+ "Cost: 30 energy, Casttime: 0 sec\n"

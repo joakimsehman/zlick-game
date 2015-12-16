@@ -30,7 +30,7 @@ public class Game implements GameState {
 	@Override
 	public void mouseClicked(int arg0, int arg1, int arg2, int arg3) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -47,8 +47,12 @@ public class Game implements GameState {
 
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		if(button == 0){
+		System.out.println("button: " + button);
+		
+		if (button == 0) {
 			Model.model.useMouseAttack(button, x, y);
+		}else if(button == 1){
+			Model.model.clickToMove();
 		}
 	}
 
@@ -93,37 +97,34 @@ public class Game implements GameState {
 		switch (keyNr) {
 		case 2:
 			// 1 pressed
-			Model.model
-					.useAbility(1, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
+			Model.model.useAbility(1, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		case 3:
 			// 2 pressed
-			Model.model
-					.useAbility(2, Mouse.getX(), Model.model.getScreenHeight()- Mouse.getY());
+			Model.model.useAbility(2, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		case 4:
 			// 3 pressed
-			Model.model
-					.useAbility(3, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
+			Model.model.useAbility(3, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		case 5:
 			// 4 pressed
-			Model.model
-					.useAbility(4, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
+			Model.model.useAbility(4, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		case 57:
 			// Space pressed
-			Model.model
-					.useAbility(5, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
+			Model.model.useAbility(5, Mouse.getX(), Model.model.getScreenHeight() - Mouse.getY());
 			break;
 		}
 
 	}
 
 	@Override
-	public void keyReleased(int arg0, char arg1) {
-		// TODO Auto-generated method stub
-
+	public void keyReleased(int keyNr, char c) {
+		
+		if(keyNr == 17 || (keyNr > 29 && keyNr < 33)){
+			Model.model.onMovementKeyRelease();
+		}
 	}
 
 	@Override
@@ -187,23 +188,21 @@ public class Game implements GameState {
 	}
 
 	@Override
-	public void enter(GameContainer gc, StateBasedGame sbg)
-			throws SlickException {
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// TODO Auto-generated method stub
 
 		Model.model.initLevel(new Level());
 
-        Model.model.setFullScreen();
+		Model.model.setFullScreen();
 
 		Model.model.clearGui();
-		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc
-				.getScreenHeight() / 2 - 10));
+		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc.getScreenHeight() / 2 - 10));
 		Model.model.addActiveGui(new AbilityBar(gc.getScreenWidth() / 2 - 206, gc.getScreenHeight() - 137));
 
 		gc.getInput().addKeyListener(this);
-		
+
 		SoundHandler.getInstance().menuMusic.stop();
-		
+
 	}
 
 	@Override
@@ -212,31 +211,28 @@ public class Game implements GameState {
 	}
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame arg1)
-			throws SlickException {
+	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
 
 	}
 
 	@Override
-	public void leave(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
+	public void leave(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame app, Graphics g)
-			throws SlickException {
-		
+	public void render(GameContainer gc, StateBasedGame app, Graphics g) throws SlickException {
+
 		float cameraX = Model.model.getCameraX();
 		float cameraY = Model.model.getCameraY();
-		
+
 		Model.model.getLevel().render((int) -cameraX, (int) -cameraY);
 
-		for(int i = 0; i < Model.model.getTemporaryDecorations().size(); i++){
+		for (int i = 0; i < Model.model.getTemporaryDecorations().size(); i++) {
 			Model.model.getTemporaryDecorations().get(i).draw(g, cameraX, cameraY);
 		}
-		
+
 		for (int i = 0; i < Model.model.getActiveSpells().size(); i++) {
 			Model.model.getActiveSpells().get(i).draw(g, cameraX, cameraY);
 		}
@@ -245,26 +241,25 @@ public class Game implements GameState {
 		for (Entity e : Model.model.getTerrain()) {
 			e.draw(g, cameraX, cameraY);
 		}
-		for(int i = 0; i < Model.model.getTemporaryMinions().size(); i++){
+		for (int i = 0; i < Model.model.getTemporaryMinions().size(); i++) {
 			Model.model.getTemporaryMinions().get(i).draw(g, cameraX, cameraY);
 		}
 		for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
 			Model.model.getOtherPlayers().get(i).draw(g, cameraX, cameraY);
 		}
-		
-		for(int i = 0; i < Model.model.getTemporaryAbovePlayerDecorations().size(); i++){
+
+		for (int i = 0; i < Model.model.getTemporaryAbovePlayerDecorations().size(); i++) {
 			Model.model.getTemporaryAbovePlayerDecorations().get(i).draw(g, cameraX, cameraY);
 		}
 
 		Model.model.getLevel().renderDecorations((int) -cameraX, (int) -cameraY);
-		
-		// shows coordinates and stuff
-//		g.setColor(Color.blue);
-//		g.drawString("cameraX:" + cameraX + "  cameraY:" + cameraY
-//				+ "   playerX:" + Model.model.getMyself().getXPos()
-//				+ "   playerY:" + Model.model.getMyself().getYPos(), 100, 100);
 
-		
+		// shows coordinates and stuff
+		//		g.setColor(Color.blue);
+		//		g.drawString("cameraX:" + cameraX + "  cameraY:" + cameraY
+		//				+ "   playerX:" + Model.model.getMyself().getXPos()
+		//				+ "   playerY:" + Model.model.getMyself().getYPos(), 100, 100);
+
 		// draw gui
 		for (int i = 0; i < Model.model.getActiveGui().size(); i++) {
 			Model.model.getActiveGui().get(i).draw(g);
@@ -273,9 +268,10 @@ public class Game implements GameState {
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame app, int delta)
-			throws SlickException {
+	public void update(GameContainer gc, StateBasedGame app, int delta) throws SlickException {
 
+		
+		
 		boolean leftKeyPressed = false;
 		boolean rightKeyPressed = false;
 		boolean upKeyPressed = false;
@@ -294,29 +290,26 @@ public class Game implements GameState {
 			rightKeyPressed = true;
 		}
 
-		Model.model.handlePlayerMovement(upKeyPressed, downKeyPressed,
-				leftKeyPressed, rightKeyPressed);
+		Model.model.handlePlayerMovement(upKeyPressed, downKeyPressed, leftKeyPressed, rightKeyPressed);
 
 		Model.model.getMyself().update(delta, Model.model.getTerrain());
 
 		for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
 			Model.model.getOtherPlayers().get(i).update(delta, null);
 		}
-		
+
 		Model.model.updateTemporaryMinions(delta);
 
 		// calculating camera position
-		float cameraX = Model.model.getMyself().getXPos() - gc.getScreenWidth()
-				/ 2;
-		float cameraY = Model.model.getMyself().getYPos()
-				- gc.getScreenHeight() / 2;
+		float cameraX = Model.model.getMyself().getXPos() - gc.getScreenWidth() / 2;
+		float cameraY = Model.model.getMyself().getYPos() - gc.getScreenHeight() / 2;
 
 		Model.model.setCamera(cameraX, cameraY);
-		
+
 		Model.model.updateMouseGameXY(Mouse.getX(), gc.getScreenHeight() - Mouse.getY());
 
 		Model.model.updateSpells(delta);
-		
+
 		Model.model.updateTemporaryDecorations(delta);
 
 		Model.model.checkForExpiredSpells();

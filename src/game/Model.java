@@ -75,6 +75,13 @@ public class Model {
 	private Level level;
 	private float mouseGameX;
 	private float mouseGameY;
+	
+	private boolean upKeyPressed;
+	private boolean downKeyPressed;
+	private boolean leftKeyPressed;
+	private boolean rightKeyPressed;
+	
+	private boolean movementKeyReleased;
 
 	public static Model model;
 
@@ -92,6 +99,13 @@ public class Model {
 		temporaryMinions = new ArrayList<Minion>();
 		temporaryMinionTimers = new ArrayList<Integer>();
 		spellEffectIdCounter = 0;
+		
+		upKeyPressed = false;
+		downKeyPressed = false;
+		leftKeyPressed = false;
+		rightKeyPressed = false;
+		
+		movementKeyReleased = false;
 	}
 
 	public static Model getModel() {
@@ -148,6 +162,12 @@ public class Model {
 	public void handlePlayerMovement(boolean upKeyPressed,
 			boolean downKeyPressed, boolean leftKeyPressed,
 			boolean rightKeyPressed) {
+		
+		this.upKeyPressed = upKeyPressed;
+		this.downKeyPressed = downKeyPressed;
+		this.leftKeyPressed = leftKeyPressed;
+		this.rightKeyPressed = rightKeyPressed;
+		
 		if (upKeyPressed && !downKeyPressed) {
 			if (leftKeyPressed && !rightKeyPressed) {
 				myself.setVectorByDegree(playerSpeed, 225);
@@ -170,9 +190,16 @@ public class Model {
 			} else if (rightKeyPressed && !leftKeyPressed) {
 				myself.setVectorByDegree(playerSpeed, 0);
 			} else {
-				myself.setVectorByDegree(0, 0);
+				if(movementKeyReleased){
+					myself.setVectorWithoutSpeedModifier(0, 0);
+					movementKeyReleased = false;
+				}
 			}
 		}
+	}
+	
+	public void onMovementKeyRelease(){
+		movementKeyReleased = true;
 	}
 
 	public void setName(String nameStr) {
@@ -336,6 +363,11 @@ public class Model {
 
 			if (getMyself().isAbleToCast()) {
 				if (getMyself().getAbility(abilityNumber) != null && getMyself().getAbility(abilityNumber).getMsSinceLastUse() > getMyself().getAbility(abilityNumber).getCooldown() && getMyself().getAbility(abilityNumber).isCastable(-1, mouseGameX, mouseGameY)) {
+					
+					if(!getMyself().getAbility(abilityNumber).isCastableWhileMoving()){
+						getMyself().setVectorWithoutSpeedModifier(0, 0);
+					}
+					
 					if (getMyself().getAbility(abilityNumber).getCastTime() == 0) {
 						if (getMyself()
 								.reduceEnergy(
@@ -643,6 +675,12 @@ public class Model {
 		}else{
 			return true;
 		}
+	}
+
+	public void clickToMove() {
+		float angle = (float) Math.atan2(mouseGameY - getMyself().getYPos(),mouseGameX - getMyself().getXPos());
+		
+		getMyself().setVectorByRadians(playerSpeed, angle);
 	}
 
 	

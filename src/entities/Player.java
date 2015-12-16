@@ -422,7 +422,7 @@ public class Player extends Minion {
 			if ((!isMoving() || getAbility(abilityNumber)
 					.isCastableWhileMoving())
 					&& getAbility(abilityNumber).getCost() < this.energy) {
-
+				
 				castTime = this.getAbility(abilityNumber).getCastTime();
 				castTimeLeft = castTime;
 				isCasting = true;

@@ -14,6 +14,8 @@ public class ElementalDischarge extends Ability {
 	private int cooldown;
 	private int casttime;
 	private int cost;
+	
+	private boolean isCastableWhileMoving;
 
 	public ElementalDischarge(String name, int id, int playerCreatedId) {
 		super(name, 5, playerCreatedId);
@@ -22,6 +24,7 @@ public class ElementalDischarge extends Ability {
 		casttime = 1000;
 		cooldown = 15000;
 		cost = 50;
+		isCastableWhileMoving = false;
 		this.resetCooldown();
 	}
 
@@ -46,11 +49,13 @@ public class ElementalDischarge extends Ability {
 			cooldown = 0;
 			casttime = 0;
 			cost = 0;
+			isCastableWhileMoving = true;
 		}else{
 			spell.onActivate();
 			cooldown = 15000;
 			casttime = 1000;
 			cost = 50;
+			isCastableWhileMoving = false;
 		}
 	}
 	
@@ -60,6 +65,7 @@ public class ElementalDischarge extends Ability {
 			cooldown = 15000;
 			casttime = 1000;
 			cost = 50;
+			isCastableWhileMoving = false;
 		}
 	}
 
@@ -82,7 +88,7 @@ public class ElementalDischarge extends Ability {
 	@Override
 	public boolean isCastableWhileMoving() {
 		
-		return false;
+		return isCastableWhileMoving;
 	}
 
 	@Override
