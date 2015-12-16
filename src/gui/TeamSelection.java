@@ -49,11 +49,11 @@ public class TeamSelection extends GuiEntity implements ButtonListener {
 
         for(int i = 0; i < Model.model.getOtherPlayers().size(); i++){
             if(Model.Team.GREEN == Model.model.getOtherPlayers().get(i).getTeam()){
-                g.drawString(Model.model.getOtherPlayers().get(i).getName(), getxPos()+ 60, getyPos() + 80 + 20*greenPlayerCount);
+                g.drawString(Model.model.getOtherPlayers().get(i).getName(), getxPos()+ 60, getyPos() + 95 + 20*greenPlayerCount);
 
                 greenPlayerCount++;
             }else{
-                g.drawString(Model.model.getOtherPlayers().get(i).getName(), getxPos() + 60, getyPos() + 80 + 20*brownPlayerCount);
+                g.drawString(Model.model.getOtherPlayers().get(i).getName(), getxPos() + 230, getyPos() + 95 + 20*brownPlayerCount);
 
                 brownPlayerCount++;
             }

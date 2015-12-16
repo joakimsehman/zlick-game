@@ -205,6 +205,7 @@ public abstract class Entity {
 
 			if (moveForbidden) {
 				setBoundingBox(xPos, yPos);
+				setVectorWithoutSpeedModifier(0, 0);
 			} else {
 				xPos = newXPos;
 				yPos = newYPos;
