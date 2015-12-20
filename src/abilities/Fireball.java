@@ -54,7 +54,7 @@ public class Fireball extends Ability{
 		float angle = (float) Math.toDegrees(Math.atan2(mouseGameY - usingPlayer.getYPos(),mouseGameX - usingPlayer.getXPos()));
 		
 		FireballEffect spell = new FireballEffect(usingPlayer.getXPos(), usingPlayer.getYPos(), new Vector2f(0,0), duration, getPlayerCreatedId(), spellEffectId[0]);
-		spell.setVectorByDegree(80, angle);
+		spell.setVectorByDegree(160, angle);
 		
 		Model.model.addActiveSpell(spell);
 		
