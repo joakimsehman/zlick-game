@@ -318,7 +318,7 @@ public class Player extends Minion {
 
 		}
 
-		if (isCasting()) {
+		if (isCasting() && getID() == Model.model.getMyself().getID()) {
 			if (!isMoving() || isChanneling || getAbility(castingSpellAbilityNumber).isCastableWhileMoving()) {
 				if (castTimeLeft > 0) {
 					castTimeLeft = castTimeLeft - delta;
