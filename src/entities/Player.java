@@ -460,8 +460,8 @@ public class Player extends Minion {
 				SoundHandler.getInstance().runningSound.stop();
 			}
 
-			super.setIsMoving(isMoving);
 		}
+		super.setIsMoving(isMoving);
 	}
 
 	public boolean isMouseAttackReady() {

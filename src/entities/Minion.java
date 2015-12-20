@@ -232,7 +232,6 @@ public abstract class Minion extends Entity {
 	}
 
 	protected void setIsMoving(boolean isMoving) {
-
 		if (isMoving != isMoving() && isTransformed) {
 			if (isMoving && transformWalkingAnimationNumber != -1) {
 
