@@ -79,12 +79,12 @@ public abstract class SpellAreaOfEffect extends Entity {
 				}
 			} else {
 				//here each client is responsible for applying the spell themself
-				if(Model.model.getPlayer(getPlayerUsedId()).getTeam() != myself.getTeam() && (this.getBoundingBox().intersects(myself.getBoundingBox()) || this.getBoundingBox().contains(myself.getBoundingBox()))){
+				if(Model.model.getPlayer(getPlayerUsedId()).getTeam() != myself.getTeam() && ( this.getBoundingBox().intersects(myself.getBoundingBox()) || this.getBoundingBox().contains(myself.getBoundingBox()))){
 					onTic(delta, myself);
 				}
 				for (Player p : entities) {
 					
-					if (Model.model.getPlayer(getPlayerUsedId()).getTeam() != p.getTeam() && this.getBoundingBox().intersects(p.getBoundingBox()) || this.getBoundingBox().contains(p.getBoundingBox())) {
+					if (Model.model.getPlayer(getPlayerUsedId()).getTeam() != p.getTeam() && (this.getBoundingBox().intersects(p.getBoundingBox()) || this.getBoundingBox().contains(p.getBoundingBox()))) {
 						onTic(delta, p);
 					}
 				}
