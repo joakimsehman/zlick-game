@@ -21,6 +21,7 @@ $RECYCLE.BIN/
 .project
 TheBlazePlazeProject.iml
 
+*.iml
 # =========================
 # Operating System Files
 # =========================
