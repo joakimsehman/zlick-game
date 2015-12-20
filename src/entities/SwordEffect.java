@@ -31,7 +31,7 @@ public class SwordEffect {
 		}
 		
 		public void applyEffect(Player player){
-			onApply(player);
+			onApply(player, getPlayerUsedId());
 		}
 		
 		public static int getEffectId(){
@@ -53,7 +53,7 @@ public class SwordEffect {
 		}
 		
 		public void applyEffect(Player player){
-			onApply(player);
+			onApply(player, getPlayerUsedId());
 		}
 		
 		public static int getEffectId(){
@@ -75,7 +75,7 @@ public class SwordEffect {
 		}
 		
 		public void applyEffect(Player player){
-			onApply(player);
+			onApply(player, getPlayerUsedId());
 		}
 		
 		public static int getEffectId(){
@@ -96,7 +96,7 @@ public class SwordEffect {
 		}
 		
 		public void applyEffect(Player player){
-			onApply(player);
+			onApply(player, getPlayerUsedId());
 		}
 		
 		public static int getEffectId(){
@@ -117,7 +117,7 @@ public class SwordEffect {
 		}
 		
 		public void applyEffect(Player player){
-			onApply(player);
+			onApply(player, getPlayerUsedId());
 		}
 		
 		public static int getEffectId(){
@@ -138,7 +138,7 @@ public class SwordEffect {
 		}
 		
 		public void applyEffect(Player player){
-			onApply(player);
+			onApply(player, getPlayerUsedId());
 		}
 		
 		public void draw(Graphics g, float cameraX, float cameraY){
@@ -163,7 +163,7 @@ public class SwordEffect {
 		}
 		
 		public void applyEffect(Player player){
-			onApply(player);
+			onApply(player, getPlayerUsedId());
 		}
 		
 		public static int getEffectId(){
@@ -184,7 +184,7 @@ public class SwordEffect {
 		}
 		
 		public void applyEffect(Player player){
-			onApply(player);
+			onApply(player, getPlayerUsedId());
 		}
 		
 		public static int getEffectId(){
@@ -192,8 +192,8 @@ public class SwordEffect {
 		}
 	}
 	
-	private static void onApply(Player player){
-		player.applyDamage(-damage, EffectAnimation.BLOOD);
+	private static void onApply(Player player, int playerCreatedId){
+		player.applyDamage(-damage, EffectAnimation.BLOOD, playerCreatedId);
 	}
 	
 	public static int getIdFromDirection(Direction direction){

@@ -87,13 +87,13 @@ public class Healcharge extends Ability {
 				if (500 > Model.model.getMyself().getDistanceTo(
 						playerCreated) && Model.model.getMyself().getTeam() == playerCreated.getTeam()) {
 					Model.model.getMyself().applyDamage(healAmount,
-							Player.EffectAnimation.HEAL);
+							Player.EffectAnimation.HEAL, getPlayerCreatedId());
 				}
 				for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
 					Player otherPlayer = Model.model.getOtherPlayers().get(i);
 					if(otherPlayer.getTeam() == playerCreated.getTeam())
 					otherPlayer.applyDamage(healAmount,
-									Player.EffectAnimation.HEAL);
+									Player.EffectAnimation.HEAL, getPlayerCreatedId());
 					
 				}
 

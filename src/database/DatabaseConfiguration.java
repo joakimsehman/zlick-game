@@ -24,8 +24,8 @@ public class DatabaseConfiguration {
         }
 
         try {
-            String url = "jdbc:mysql://localhost:3306/championwarfare";
-            connection = DriverManager.getConnection(url, "root", "hejjocke");
+            String url = "jdbc:mysql://46.239.124.63:3306/championwarfare";
+            connection = DriverManager.getConnection(url, "client", "hejsan");
 
         } catch (SQLException e) {
             e.printStackTrace();

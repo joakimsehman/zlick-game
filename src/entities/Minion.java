@@ -113,7 +113,9 @@ public abstract class Minion extends Entity {
 	}
 
 	public void addBuff(Buff buff) {
+		
 		boolean hasBuff = false;
+		
 		for (int i = 0; i < activeBuffs.size(); i++) {
 			if (activeBuffs.get(i).getID() == buff.getID()) {
 				hasBuff = true;
@@ -225,10 +227,8 @@ public abstract class Minion extends Entity {
 			if (activeBuffs.get(i).getDurationLeft() < 0) {
 				activeBuffs.get(i).onRemove(this);
 				activeBuffs.remove(i);
-				break;
 			}
 		}
-
 	}
 
 	protected void setIsMoving(boolean isMoving) {

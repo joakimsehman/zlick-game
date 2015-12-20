@@ -8,19 +8,18 @@ public class Ignite extends Buff{
 	
 	public Ignite(int duration) {
 		super(duration);
-		// TODO Auto-generated constructor stub
+		
 		dmgCounter = 0;
 	}
 
 	@Override
 	public void onApply(Minion minion) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onUpdate(int delta, Minion minion) {
-		// TODO Auto-generated method stub
+		
 		dmgCounter += delta;
 		if(dmgCounter > 1000){
 			dmgCounter -=1000;

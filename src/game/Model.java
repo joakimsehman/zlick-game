@@ -18,6 +18,7 @@ import org.newdawn.slick.geom.Vector2f;
 import abilities.Ability;
 import abilities.AbilityInfo;
 import utilities.SpellAreaOfEffectCreator;
+import utilities.Statistics;
 import utilities.TextureHandler;
 import entities.AnimatedDecoration;
 import entities.Entity;
@@ -29,6 +30,8 @@ import entities.Player.Hair;
 import entities.Player.Weapon;
 import entities.SpellAreaOfEffect;
 import entities.Terrain;
+import gamemodes.GameMode;
+import gamemodes.TeamDeathmatch;
 import gui.GuiEntity;
 
 public class Model {
@@ -76,10 +79,10 @@ public class Model {
 	private float mouseGameX;
 	private float mouseGameY;
 	
-	private boolean upKeyPressed;
-	private boolean downKeyPressed;
-	private boolean leftKeyPressed;
-	private boolean rightKeyPressed;
+	private Statistics statistics;
+	private ArrayList<Statistics> loggedStatistics;
+	
+	private GameMode gameMode;
 	
 	private boolean movementKeyReleased;
 
@@ -100,10 +103,7 @@ public class Model {
 		temporaryMinionTimers = new ArrayList<Integer>();
 		spellEffectIdCounter = 0;
 		
-		upKeyPressed = false;
-		downKeyPressed = false;
-		leftKeyPressed = false;
-		rightKeyPressed = false;
+		loggedStatistics = new ArrayList<Statistics>();
 		
 		movementKeyReleased = false;
 	}
@@ -163,11 +163,6 @@ public class Model {
 			boolean downKeyPressed, boolean leftKeyPressed,
 			boolean rightKeyPressed) {
 		
-		this.upKeyPressed = upKeyPressed;
-		this.downKeyPressed = downKeyPressed;
-		this.leftKeyPressed = leftKeyPressed;
-		this.rightKeyPressed = rightKeyPressed;
-		
 		if (upKeyPressed && !downKeyPressed) {
 			if (leftKeyPressed && !rightKeyPressed) {
 				myself.setVectorByDegree(playerSpeed, 225);
@@ -209,12 +204,11 @@ public class Model {
 	public void createHost() {
 		try {
 			network = new BlazeServer(name);
-			id = 1;
+			id = 0;
 			modelNetState = NetState.SERVER;
 			myself = new Player(50f, 50f, new Vector2f(0, 0), new Rectangle(
 					50f, 50f, 50, 50), 100, name, id);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -316,6 +310,18 @@ public class Model {
 			return false;
 		}
 	}
+	
+	public void gameCompleted(){
+		isGaming = false;
+		network.stopNetworkThread();
+	}
+	
+	public void resetGame(){
+		getMyself().goToSpawnPoint();
+		getMyself().setHealthToMax();
+		loggedStatistics.add(statistics);
+		statistics = new Statistics(otherPlayers.size() + 1);
+	}
 
 	public void startGame() {
 		if (getMyself().getTeam() == Team.GREEN) {
@@ -325,6 +331,10 @@ public class Model {
 			getMyself().setSpawnPoint(2650, 1550);
 			getMyself().goToSpawnPoint();
 		}
+		
+		statistics = new Statistics(otherPlayers.size() + 1);
+		gameMode = new TeamDeathmatch();
+		
 		network.startNetworkThread();
 		isGaming = true;
 		sendAbilities();
@@ -435,7 +445,6 @@ public class Model {
 	public void launchCustomSpellAreaOfEffect(int effectId, float xPos, float yPos, float vectorX, float vectorY, int duration, int playerUsedId, int spellEffectId){
 		network.sendCustomSpellAreaOfEffect(effectId, xPos, yPos, vectorX, vectorY, duration, playerUsedId, spellEffectId);
 		recieveCustomSpellAreaOfEffect(effectId, xPos, yPos, vectorX, vectorY, duration, playerUsedId, spellEffectId);
-		
 	}
 	
 	public void recieveCustomSpellAreaOfEffect(int effectId, float xPos, float yPos, float vectorX, float vectorY, int duration, int playerUsedId, int spellEffectId){
@@ -482,6 +491,29 @@ public class Model {
 	
 	public float getCameraY(){
 		return cameraY;
+	}
+	
+	public void update(int delta){
+		Model.model.getMyself().update(delta, getTerrain());
+
+		for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
+			Model.model.getOtherPlayers().get(i).update(delta, null);
+		}
+		
+		updateTemporaryMinions(delta);
+		
+		updateSpells(delta);
+
+		updateTemporaryDecorations(delta);
+
+		checkForExpiredSpells();
+		
+		statistics.update(delta);
+		gameMode.update(delta);
+		
+		updateGui(delta);
+		
+		
 	}
 	
 	public void updateMouseGameXY(int mouseXPos, int mouseYPos){
@@ -684,6 +716,12 @@ public class Model {
 		
 		getMyself().setVectorByRadians(playerSpeed, angle);
 	}
-
 	
+	public Statistics getStatistics(){
+		return statistics;
+	}
+
+	public GameMode getGameMode(){
+		return gameMode;
+	}
 }

@@ -103,6 +103,8 @@ public class TextureHandler {
             
             addImage("loggedInWindow.png");
             addImage("loggedInBackground.png");
+            
+            addImage("kda.png");
 
 		} catch (IOException e) {
 			e.printStackTrace();

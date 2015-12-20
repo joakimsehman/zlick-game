@@ -29,6 +29,8 @@ public abstract class Network {
 	
 	public abstract void startNetworkThread();
 	
+	public abstract void stopNetworkThread();
+	
 	public abstract void sendUDPToAll(Object obj);
 	
 	public abstract void sendTCPToAll(Object obj);

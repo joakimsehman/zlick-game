@@ -62,7 +62,7 @@ public class Player extends Minion {
 	private int fireAnimationNr;
 	private int iceAnimationNr;
 	private int bloodAnimationNr;
-	
+
 	private int mouseAttackCooldown;
 	private int mouseAttackCooldownCounter;
 
@@ -125,10 +125,8 @@ public class Player extends Minion {
 		}
 	};
 
-	public Player(float xPos, float yPos, Vector2f vector, Shape boundingBox,
-			int healthPoints, String name, int id) {
-		super(xPos, yPos, vector, boundingBox, TextureHandler.getInstance()
-				.getImageByName("playerLeft.png"), healthPoints);
+	public Player(float xPos, float yPos, Vector2f vector, Shape boundingBox, int healthPoints, String name, int id) {
+		super(xPos, yPos, vector, boundingBox, TextureHandler.getInstance().getImageByName("playerLeft.png"), healthPoints);
 		this.id = id;
 
 		gender = Gender.MALE;
@@ -136,15 +134,9 @@ public class Player extends Minion {
 		weapon = Weapon.SWORD;
 
 		playerAnimation = new AnimationGroup();
-		playerAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("male_steel_armor.png", 0,
-						32, 0, 8)));
-		playerAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("male_head2.png", 0, 32, 0,
-						8)));
-		playerAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("male_greatsword.png", 0,
-						32, 0, 8)));
+		playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_steel_armor.png", 0, 32, 0, 8)));
+		playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_head2.png", 0, 32, 0, 8)));
+		playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_greatsword.png", 0, 32, 0, 8)));
 
 		playerStillAnimation = playerAnimation.addNewPartAnimation(0, 4);
 		playerMoveAnimation = playerAnimation.addNewPartAnimation(4, 8);
@@ -155,26 +147,21 @@ public class Player extends Minion {
 		playerAnimation.setImageSwitchSpeed(110);
 
 		healAnimation = new AnimationGroup();
-		healAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation
-						.getSpritesAlongX("healEffect.png", 0, 6, 0, 1)));
+		healAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("healEffect.png", 0, 6, 0, 1)));
 		healAnimation.setImageSwitchSpeed(170);
 
 		bloodAnimation = new AnimationGroup();
-		bloodAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 0, 2)));
+		bloodAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 0, 2)));
 		bloodAnimation.setImageSwitchSpeed(100);
 		bloodAnimationNr = bloodAnimation.addNewPartAnimation(0, 4);
 
 		fireAnimation = new AnimationGroup();
-		fireAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 2, 2)));
+		fireAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 2, 2)));
 		fireAnimation.setImageSwitchSpeed(100);
 		fireAnimationNr = fireAnimation.addNewPartAnimation(0, 4);
 
 		iceAnimation = new AnimationGroup();
-		iceAnimation.addDirectedAnimation(new DirectedAnimation(
-				DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 4, 2)));
+		iceAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("sparks.png", 0, 4, 4, 2)));
 		iceAnimation.setImageSwitchSpeed(100);
 		iceAnimationNr = iceAnimation.addNewPartAnimation(0, 4);
 
@@ -190,34 +177,28 @@ public class Player extends Minion {
 
 		healthBar = new HealthBar(0, 0, id);
 
-		
 		mouseAttackCooldown = 1000;
 		mouseAttackCooldownCounter = 0;
 	}
 
 	public Player(float xPos, float yPos, String name, int id) {
-		this(xPos, yPos, new Vector2f(0, 0), new Rectangle(50f, 50f, 50, 50),
-				100, name, id);
+		this(xPos, yPos, new Vector2f(0, 0), new Rectangle(50f, 50f, 50, 50), 100, name, id);
 	}
 
 	public int getID() {
-		// TODO Auto-generated method stub
 		return id;
 	}
 
 	public void draw(Graphics g, float cameraX, float cameraY) {
 
-		if (isInvisible()
-				&& Model.model.getPlayer(Model.model.getID()).getTeam() != this
-						.getTeam()) {
+		if (isInvisible() && Model.model.getPlayer(Model.model.getID()).getTeam() != this.getTeam()) {
 
 		} else {
 			healthBar.draw(g);
 
 			if (!isTransformed()) {
 
-				playerAnimation.draw(g, getXPos() - cameraX - 45, getYPos()
-						- cameraY - 50);
+				playerAnimation.draw(g, getXPos() - cameraX - 45, getYPos() - cameraY - 50);
 
 			} else {
 				super.draw(g, cameraX, cameraY);
@@ -226,8 +207,7 @@ public class Player extends Minion {
 			if (name != null) {
 
 				g.setColor(getTeamColor());
-				g.drawString(name, getXPos() - cameraX, getYPos() - cameraY
-						- 25);
+				g.drawString(name, getXPos() - cameraX, getYPos() - cameraY - 25);
 				if (Model.model.getID() == id) {
 					g.drawString("Energy: " + (int) energy, 800, 50);
 					g.drawString("Health: " + getHealthPoints(), 800, 70);
@@ -280,8 +260,8 @@ public class Player extends Minion {
 	public float getEnergy() {
 		return energy;
 	}
-	
-	public void update(int delta, ArrayList<Entity> entities, boolean collidesWithTerrain){
+
+	public void update(int delta, ArrayList<Entity> entities, boolean collidesWithTerrain) {
 		update(delta, entities);
 	}
 
@@ -290,7 +270,7 @@ public class Player extends Minion {
 
 		healthBar.update1(delta, getXPos() - 5, getYPos() - 35);
 		mouseAttackCooldownCounter += delta;
-		
+
 		if (energy < 100) {
 			energy = energy + ((float) delta) / 100;
 		}
@@ -339,10 +319,7 @@ public class Player extends Minion {
 		}
 
 		if (isCasting()) {
-			if (!isMoving()
-					|| isChanneling
-					|| getAbility(castingSpellAbilityNumber)
-							.isCastableWhileMoving()) {
+			if (!isMoving() || isChanneling || getAbility(castingSpellAbilityNumber).isCastableWhileMoving()) {
 				if (castTimeLeft > 0) {
 					castTimeLeft = castTimeLeft - delta;
 				} else {
@@ -363,7 +340,7 @@ public class Player extends Minion {
 				abilities[i].update(delta);
 			}
 		}
-		
+
 	}
 
 	public Ability getAbility(int abilityNumber) {
@@ -416,13 +393,10 @@ public class Player extends Minion {
 	//
 	// }
 
-	public void startCastedAbility(int abilityNumber, float mouseGameX,
-			float mouseGameY) {
+	public void startCastedAbility(int abilityNumber, float mouseGameX, float mouseGameY) {
 		if (!isChanneling) {
-			if ((!isMoving() || getAbility(abilityNumber)
-					.isCastableWhileMoving())
-					&& getAbility(abilityNumber).getCost() < this.energy) {
-				
+			if ((!isMoving() || getAbility(abilityNumber).isCastableWhileMoving()) && getAbility(abilityNumber).getCost() < this.energy) {
+
 				castTime = this.getAbility(abilityNumber).getCastTime();
 				castTimeLeft = castTime;
 				isCasting = true;
@@ -461,12 +435,10 @@ public class Player extends Minion {
 
 	private void useCastedSpell() {
 		if (this == Model.model.getMyself()) {
-			if (this.getAbility(castingSpellAbilityNumber)
-					.isCastableWhileMoving()) {
+			if (this.getAbility(castingSpellAbilityNumber).isCastableWhileMoving()) {
 				Model.model.finishCastingAbility(castingSpellAbilityNumber);
 			} else {
-				Model.model.finishCastingAbility(castingSpellAbilityNumber,
-						castingSpellXPos, castingSpellYPos);
+				Model.model.finishCastingAbility(castingSpellAbilityNumber, castingSpellXPos, castingSpellYPos);
 			}
 		}
 	}
@@ -480,8 +452,7 @@ public class Player extends Minion {
 	}
 
 	protected void setIsMoving(boolean isMoving) {
-		if (isMoving != isMoving()
-				&& this.getID() == Model.model.getMyself().getID()) {
+		if (isMoving != isMoving() && this.getID() == Model.model.getMyself().getID()) {
 
 			if (isMoving) {
 				SoundHandler.getInstance().runningSound.loop(1.0f, 0.5f);
@@ -494,12 +465,11 @@ public class Player extends Minion {
 	}
 
 	public boolean isMouseAttackReady() {
-		
+
 		return mouseAttackCooldownCounter > mouseAttackCooldown;
 	}
 
-	public void useMouseAttack(int mouseButton, float mouseGameX,
-			float mouseGameY) {
+	public void useMouseAttack(int mouseButton, float mouseGameX, float mouseGameY) {
 		double angle = this.getAngleToPoint(mouseGameX, mouseGameY);
 
 		//should be correct, but somehow it feels like the player is not always hitting the correct direction
@@ -509,33 +479,33 @@ public class Player extends Minion {
 			angle = 0;
 		}
 		mouseAttackCooldownCounter = 0;
-		if(weapon == Weapon.BOW){
+		if (weapon == Weapon.BOW) {
 			playerAnimation.playAnimationOnce(playerShootAnimation, angle);
-			if(this.getID() == Model.model.getID()){
+			if (this.getID() == Model.model.getID()) {
 				setIsAbleToMove(false, 300);
 				float length = 80;
-				
-				float angleToMouse = (float) Math.atan2(mouseGameY - getYPos(),mouseGameX - getXPos());
-				
+
+				float angleToMouse = (float) Math.atan2(mouseGameY - getYPos(), mouseGameX - getXPos());
+
 				float dx = (float) (length * Math.cos(angleToMouse));
 				float dy = (float) (length * Math.sin(angleToMouse));
-				
+
 				Model.model.launchCustomSpellAreaOfEffect(6, getXPos(), getYPos(), dx, dy, 1000, getID(), Model.model.getNextSpellEffectId());
 			}
-			
-		}else{
+
+		} else {
 			playerAnimation.playAnimationOnce(playerAttackAnimation, angle);
-			if(this.getID() == Model.model.getID()){
+			if (this.getID() == Model.model.getID()) {
 				this.setIsAbleToMove(false, 150);
-				
+
 				Direction dir = this.getDirectionToPoint(mouseGameX, mouseGameY);
-				Model.model.launchCustomSpellAreaOfEffect(SwordEffect.getIdFromDirection(dir), this.getCenterX(), getCenterY(), 0, 0, 300, getID(), Model.model.getNextSpellEffectId());
+				Model.model.launchCustomSpellAreaOfEffect(SwordEffect.getIdFromDirection(dir), this.getCenterX(), getCenterY(), 0, 0, 300, getID(),
+						Model.model.getNextSpellEffectId());
 			}
 		}
 	}
-	
-	public void setCustomization(Gender gender, Clothes clothes, Hair hair,
-			Weapon weapon) {
+
+	public void setCustomization(Gender gender, Clothes clothes, Hair hair, Weapon weapon) {
 		this.gender = gender;
 		this.clothes = clothes;
 		this.hair = hair;
@@ -545,92 +515,52 @@ public class Player extends Minion {
 
 		if (gender == Gender.MALE) {
 			if (hair == Hair.NORMAL) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX("male_head1.png", 0,
-								32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_head1.png", 0, 32, 0, 8)));
 			} else if (hair == Hair.BALD) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX("male_head2.png", 0,
-								32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_head2.png", 0, 32, 0, 8)));
 			} else if (hair == Hair.HOOD) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX("male_head3.png", 0,
-								32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_head3.png", 0, 32, 0, 8)));
 			}
 
 			if (clothes == Clothes.CLOTHES) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX("male_clothes.png",
-								0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_clothes.png", 0, 32, 0, 8)));
 			} else if (clothes == Clothes.LETHER) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"male_leather_armor.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_leather_armor.png", 0, 32, 0, 8)));
 			} else if (clothes == Clothes.STEEL) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"male_steel_armor.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_steel_armor.png", 0, 32, 0, 8)));
 
 			}
 			if (weapon == Weapon.BOW) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX("male_greatbow.png",
-								0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_greatbow.png", 0, 32, 0, 8)));
 			} else if (weapon == Weapon.SWORD) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"male_greatsword.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_greatsword.png", 0, 32, 0, 8)));
 			} else if (weapon == Weapon.STAFF) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"male_greatstaff.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_greatstaff.png", 0, 32, 0, 8)));
 			} else if (weapon == Weapon.SHIELD) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"male_longsword.png", 0, 32, 0, 8)));
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX("male_shield.png",
-								0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_longsword.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("male_shield.png", 0, 32, 0, 8)));
 			}
 
 		} else {
-			playerAnimation.addDirectedAnimation(new DirectedAnimation(
-					DirectedAnimation.getSpritesAlongX("female_head_long.png",
-							0, 32, 0, 8)));
+			playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_head_long.png", 0, 32, 0, 8)));
 
 			if (clothes == Clothes.CLOTHES) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"female_clothes.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_clothes.png", 0, 32, 0, 8)));
 			} else if (clothes == Clothes.LETHER) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"female_leather_armor.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_leather_armor.png", 0, 32, 0, 8)));
 			} else if (clothes == Clothes.STEEL) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"female_steel_armor.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_steel_armor.png", 0, 32, 0, 8)));
 
 			}
 			if (weapon == Weapon.BOW) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"female_greatbow.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_greatbow.png", 0, 32, 0, 8)));
 			} else if (weapon == Weapon.SWORD) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"female_greatsword.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_greatsword.png", 0, 32, 0, 8)));
 			} else if (weapon == Weapon.STAFF) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"female_greatstaff.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_greatstaff.png", 0, 32, 0, 8)));
 			} else if (weapon == Weapon.SHIELD) {
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX(
-								"female_longsword.png", 0, 32, 0, 8)));
-				playerAnimation.addDirectedAnimation(new DirectedAnimation(
-						DirectedAnimation.getSpritesAlongX("female_shield.png",
-								0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_longsword.png", 0, 32, 0, 8)));
+				playerAnimation.addDirectedAnimation(new DirectedAnimation(DirectedAnimation.getSpritesAlongX("female_shield.png", 0, 32, 0, 8)));
 			}
 
 		}
@@ -640,10 +570,10 @@ public class Player extends Minion {
 		playerCastAnimation = playerAnimation.addNewPartAnimation(24, 4);
 		playerAttackAnimation = playerAnimation.addNewPartAnimation(12, 4);
 		playerShootAnimation = playerAnimation.addNewPartAnimation(28, 4);
-		
-		if(weapon == Weapon.BOW){
+
+		if (weapon == Weapon.BOW) {
 			mouseAttackCooldown = 300;
-		}else{
+		} else {
 			mouseAttackCooldown = 300;
 		}
 
@@ -652,33 +582,48 @@ public class Player extends Minion {
 	}
 
 	protected void onDying() {
+
+		Model.model.getStatistics().registerDeath(getID());
+
 		if (Model.model.getMyself().getID() == this.getID()) {
 			setHealthToMax();
 			goToSpawnPoint();
 		}
 	}
 
-	public void applyDamage(int amount, EffectAnimation ea) {
+	/*
+	 * Warning: using this will apply damage without enabling damage tracking for kills, assists, etc
+	 * Use one of the other to enable game to track kills deaths
+	 * @see entities.Minion#applyDamage(int)
+	 */
+	public void applyDamage(int amount) {
 		super.applyDamage(amount);
+	}
+
+	public void applyDamage(int amount, int playerId) {
+		if (amount < 0) {
+			Model.model.getStatistics().registerDamage(amount, getID(), playerId);
+		}
+		super.applyDamage(amount);
+	}
+
+	public void applyDamage(int amount, EffectAnimation ea, int playerId) {
+		applyDamage(amount, playerId);
 		playAnimation(ea);
 	}
 
 	protected void playAnimation(EffectAnimation ea) {
 		if (ea == EffectAnimation.FIRE) {
 			fireAnimation.playAnimationOnce(fireAnimationNr, Math.random());
-			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
-					this, fireAnimation, -15, -5), 400, true);
+			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(this, fireAnimation, -15, -5), 400, true);
 		} else if (ea == EffectAnimation.ICE) {
 			iceAnimation.playAnimationOnce(iceAnimationNr, Math.random());
-			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
-					this, iceAnimation, -15, -5), 400, true);
+			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(this, iceAnimation, -15, -5), 400, true);
 		} else if (ea == EffectAnimation.HEAL) {
-			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
-					this, healAnimation, -15, -5), 1000, true);
+			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(this, healAnimation, -15, -5), 1000, true);
 		} else if (ea == EffectAnimation.BLOOD) {
 			bloodAnimation.playAnimationOnce(bloodAnimationNr, Math.random());
-			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(
-					this, bloodAnimation, -15, -5), 400, true);
+			Model.model.addTemporaryDecoration(new AttachedAnimatedDecoration(this, bloodAnimation, -15, -5), 400, true);
 		}
 	}
 

@@ -43,7 +43,7 @@ public class IceLanceEffect extends SpellAreaOfEffect{
 	
 	public void applyEffect(Player player){
 		super.applyEffect(player);
-		player.applyDamage(-damage);
+		player.applyDamage(-damage, getPlayerUsedId());
 		if(player.hasBuff(chillBuff)){
 			player.addBuff(freezeBuff);
 		}else{

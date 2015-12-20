@@ -50,7 +50,6 @@ public class BlazeClient extends Network implements Runnable{
 		client.connect(60000, IP, 54555, 54777);
 		
 		
-		
 	}
 	
 	private void registerPackets(){
@@ -76,6 +75,10 @@ public class BlazeClient extends Network implements Runnable{
 		netThread = new Thread(this, "ClientThread");
 		netThread.start();
 		
+	}
+	
+	public void stopNetworkThread(){
+		isRunning = false;
 	}
 
 	@Override

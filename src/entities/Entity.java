@@ -8,6 +8,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+
+//TODO: We should consider refactoring this into an entity that can collide with terrain, and one that cant.
 public abstract class Entity {
 
 	public enum Direction {

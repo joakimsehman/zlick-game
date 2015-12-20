@@ -33,9 +33,7 @@ import org.newdawn.slick.geom.Vector2f;
  */
 
 
-
-//Ex
-//dont forget to overwrite getEffectId() if you extend this class
+//TODO: Separate this class into 2 classes, or make 2 that extends this class, 1 that is an area that dissapears if touched, 1 that is an area that does not
 public abstract class SpellAreaOfEffect extends Entity {
 
 	
@@ -81,12 +79,12 @@ public abstract class SpellAreaOfEffect extends Entity {
 				}
 			} else {
 				//here each client is responsible for applying the spell themself
-				if(Model.model.getPlayer(getPlayerUsedId()).getTeam() != myself.getTeam() && this.getBoundingBox().intersects(myself.getBoundingBox())){
+				if(Model.model.getPlayer(getPlayerUsedId()).getTeam() != myself.getTeam() && (this.getBoundingBox().intersects(myself.getBoundingBox()) || this.getBoundingBox().contains(myself.getBoundingBox()))){
 					onTic(delta, myself);
 				}
 				for (Player p : entities) {
 					
-					if (Model.model.getPlayer(getPlayerUsedId()).getTeam() != p.getTeam() && this.getBoundingBox().intersects(p.getBoundingBox())) {
+					if (Model.model.getPlayer(getPlayerUsedId()).getTeam() != p.getTeam() && this.getBoundingBox().intersects(p.getBoundingBox()) || this.getBoundingBox().contains(p.getBoundingBox())) {
 						onTic(delta, p);
 					}
 				}
@@ -130,9 +128,6 @@ public abstract class SpellAreaOfEffect extends Entity {
 
 	}
 	
-	public static int getEffectId(){
-		return 0;
-	}
 	
 	public void setDurationLeft(int duration){
 		this.durationLeft = duration;

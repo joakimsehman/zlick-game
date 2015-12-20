@@ -59,7 +59,7 @@ public class Arrow extends SpellAreaOfEffect{
 	
 	public void applyEffect(Player player) {
 		super.applyEffect(player);
-		player.applyDamage(-5, EffectAnimation.BLOOD);
+		player.applyDamage(-5, EffectAnimation.BLOOD, this.getPlayerUsedId());
 	}
 	
 	public static int getEffectId(){

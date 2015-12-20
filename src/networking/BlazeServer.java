@@ -42,7 +42,7 @@ public class BlazeServer extends Network implements Runnable{
 		//SET VALID VALUEE BEFORE TESTING
 		TCPPORT = 54555;
 		UDPPORT = 54777;
-		idCounter = 1;
+		idCounter = 0;
 		clients = new ArrayList<Connection>();
 		
 		Log.set(Log.LEVEL_DEBUG);
@@ -85,6 +85,10 @@ public class BlazeServer extends Network implements Runnable{
 		netThread = new Thread(this, "ServerThread");
 		netThread.start();
 		
+	}
+	
+	public void stopNetworkThread(){
+		isRunning = false;
 	}
 
 	@Override

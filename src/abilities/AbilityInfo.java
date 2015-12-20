@@ -187,13 +187,13 @@ public class AbilityInfo {
 			break;
 		case 2:
 			description = "RENGAR E++\n"
-					+ "Throws a bola towards mouse location\n"
-					+ "Spawns another ability copy\nbehind target on hit\n\n"
+					+ "Throws a bola towards mouse location\n\n"
+					+ "Spawns another ability copybehind target on hit\n\n"
 					+ "damage: "
 					+ BolaEffect.getDamage() + ", Slow: 30% - 2 sec\n"
 					+ "Travels 1000 pixels over 1 sec\n"
 					+ "Cost: 20 energy, Casttime: 0 sec\n"
-					+ "Cooldown: 5 sec\n\n"
+					+ "Cooldown: 4 sec\n\n"
 					+ "Is castable while moving: true\n\n";
 			break;
 		case 3:

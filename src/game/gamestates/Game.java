@@ -1,5 +1,6 @@
 package game.gamestates;
 
+import game.Application;
 import game.Model;
 import map.Level;
 
@@ -17,6 +18,7 @@ import utilities.TextureHandler;
 import entities.Entity;
 import gui.AbilityBar;
 import gui.CastBar;
+import gui.KDAbar;
 
 public class Game implements GameState {
 
@@ -202,6 +204,8 @@ public class Game implements GameState {
 		Model.model.addActiveGui(new CastBar(gc.getScreenWidth() / 2, gc.getScreenHeight() / 2 - 10));
 		Model.model.addActiveGui(new AbilityBar(gc.getScreenWidth() / 2 - 206, gc.getScreenHeight() - 137));
 
+		Model.model.addActiveGui(new KDAbar(gc.getScreenWidth() - 381, 50));
+		
 		gc.getInput().addKeyListener(this);
 
 		SoundHandler.getInstance().menuMusic.stop();
@@ -271,7 +275,7 @@ public class Game implements GameState {
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame app, int delta) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame stateBasedGame, int delta) throws SlickException {
 
 		
 		
@@ -295,14 +299,6 @@ public class Game implements GameState {
 
 		Model.model.handlePlayerMovement(upKeyPressed, downKeyPressed, leftKeyPressed, rightKeyPressed);
 
-		Model.model.getMyself().update(delta, Model.model.getTerrain());
-
-		for (int i = 0; i < Model.model.getOtherPlayers().size(); i++) {
-			Model.model.getOtherPlayers().get(i).update(delta, null);
-		}
-
-		Model.model.updateTemporaryMinions(delta);
-
 		// calculating camera position
 		float cameraX = Model.model.getMyself().getXPos() - gc.getScreenWidth() / 2;
 		float cameraY = Model.model.getMyself().getYPos() - gc.getScreenHeight() / 2;
@@ -311,13 +307,13 @@ public class Game implements GameState {
 
 		Model.model.updateMouseGameXY(Mouse.getX(), gc.getScreenHeight() - Mouse.getY());
 
-		Model.model.updateSpells(delta);
-
-		Model.model.updateTemporaryDecorations(delta);
-
-		Model.model.checkForExpiredSpells();
-
-		Model.model.updateGui(delta);
+		Model.model.update(delta);
+		
+		if(!Model.model.isGaming()){
+			Model.model.clearGui();
+			stateBasedGame.enterState(Application.LOBBY);
+			Model.model.setDisplayMode(1280, 720, false);
+		}
 
 	}
 
