@@ -152,7 +152,8 @@ public class TextureHandler {
         
         addSpriteSheet("quake_withheal.png", 256, 128);
         
-
+        addSpriteSheet("wyvern_fire.png", 256, 256);
+        addSpriteSheet("wyvern_shadow.png", 256, 256);
         
 	}
 	

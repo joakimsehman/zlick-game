@@ -30,8 +30,8 @@ public class GameSelection extends LoggedIn {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         super.render(gameContainer, stateBasedGame, graphics);
-
-        
+        graphics.setColor(Color.black);
+        graphics.drawString("Hosting requires ports 54555(TCP), 54777(UDP) open", 637, 640);
     }
 
     @Override
