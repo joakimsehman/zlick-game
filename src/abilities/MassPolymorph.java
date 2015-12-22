@@ -16,7 +16,7 @@ public class MassPolymorph extends Ability{
 	private int duration;
 	
 	public MassPolymorph(String name, int duration, int playerCreatedId) {
-		super(name, 1, playerCreatedId);
+		super(name, playerCreatedId);
 		this.duration = duration;
 	}
 
@@ -61,6 +61,11 @@ public class MassPolymorph extends Ability{
 	@Override
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
 		return true;
+	}
+
+	@Override
+	public int getId() {
+		return 1;
 	}
 
 	

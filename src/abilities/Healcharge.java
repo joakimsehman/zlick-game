@@ -21,7 +21,7 @@ public class Healcharge extends Ability {
 	private int healAnimation;
 
 	public Healcharge(String name, int playerCreatedId) {
-		super(name, 6, playerCreatedId);
+		super(name, playerCreatedId);
 		duration = 3150;
 		cooldown = 10000;
 		cost = 30;
@@ -162,6 +162,11 @@ public class Healcharge extends Ability {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public int getId() {
+		return 6;
 	}
 
 	

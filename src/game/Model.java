@@ -20,6 +20,7 @@ import abilities.AbilityInfo;
 import utilities.SpellAreaOfEffectCreator;
 import utilities.Statistics;
 import utilities.TextureHandler;
+import utilities.Updatable;
 import entities.AnimatedDecoration;
 import entities.Entity;
 import entities.Minion;
@@ -70,6 +71,8 @@ public class Model {
 
 	private ArrayList<Minion> temporaryMinions;
 	private ArrayList<Integer> temporaryMinionTimers;
+	
+	private ArrayList<Updatable> updateHooks;
 
 	private int id;
 	private float cameraX;
@@ -104,6 +107,7 @@ public class Model {
 		spellEffectIdCounter = 0;
 
 		loggedStatistics = new ArrayList<Statistics>();
+		updateHooks = new ArrayList<Updatable>();
 
 		movementKeyReleased = false;
 	}
@@ -337,11 +341,14 @@ public class Model {
 	private void sendAbilities() {
 		for (int i = 0; i < 4; i++) {
 			if (getMyself().getAbility(i + 1) != null) {
-				network.sendAddAbility(getMyself().getID(), getMyself().getAbility(i + 1).getID(), i + 1);
+				network.sendAddAbility(getMyself().getID(), getMyself().getAbility(i + 1).getId(), i + 1);
 			}
 
 		}
-
+	}
+	
+	public void resendAbilitiesToOthers(){
+		sendAbilities();
 	}
 
 	public ArrayList<Player> getOtherPlayers() {
@@ -360,9 +367,6 @@ public class Model {
 
 	public void useAbility(int abilityNumber, int mouseXPos, int mouseYPos) {
 		System.out.println("ability: " + abilityNumber + " used");
-		//		we keep this in model now so not needed, might be this should be refactored some..
-		//		float mouseGameX = cameraX + mouseXPos;
-		//		float mouseGameY = cameraY + mouseYPos;
 
 		if (abilityNumber > 0 && abilityNumber < 5) {
 
@@ -484,6 +488,10 @@ public class Model {
 		updateTemporaryMinions(delta);
 
 		updateSpells(delta);
+		
+		for(int i = 0; i < updateHooks.size(); i++){
+			updateHooks.get(i).update(delta);
+		}
 
 		updateTemporaryDecorations(delta);
 
@@ -702,5 +710,13 @@ public class Model {
 
 	public GameMode getGameMode() {
 		return gameMode;
+	}
+	
+	public void addUpdateHook(Updatable updatable){
+		updateHooks.add(updatable);
+	}
+	
+	public void removeUpdateHook(Updatable updatable){
+		updateHooks.remove(updatable);
 	}
 }

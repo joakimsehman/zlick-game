@@ -18,7 +18,7 @@ public class ElementalDischarge extends Ability {
 	private boolean isCastableWhileMoving;
 
 	public ElementalDischarge(String name, int id, int playerCreatedId) {
-		super(name, 5, playerCreatedId);
+		super(name, playerCreatedId);
 		// TODO Auto-generated constructor stub
 		duration = 10000;
 		casttime = 1000;
@@ -101,6 +101,11 @@ public class ElementalDischarge extends Ability {
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
 
 		return true;
+	}
+
+	@Override
+	public int getId() {
+		return 5;
 	}
 
 	

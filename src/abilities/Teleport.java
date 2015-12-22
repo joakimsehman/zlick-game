@@ -11,7 +11,7 @@ import game.Model;
 public class Teleport extends Ability{
 
 	public Teleport(String name, int playerCreatedId) {
-		super(name, 3, playerCreatedId);
+		super(name, playerCreatedId);
 		
 	}
 	
@@ -62,6 +62,11 @@ public class Teleport extends Ability{
 				}
 		}
 		return false;
+	}
+
+	@Override
+	public int getId() {
+		return 3;
 	}
 
 	

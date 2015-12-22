@@ -182,7 +182,7 @@ public class OldLobby implements GameState, ButtonListener{
 		selectedAbility = 1;
 		
 		abilityButtons = new Button[4];
-		abilityChoiceButtonId = new int[AbilityInfo.getInstance().getNumberOfAbilities()];
+		abilityChoiceButtonId = new int[AbilityInfo.getInstance().getNumberOfLobbyAbilities()];
 		
 		for(int i = 0; i < 4; i++){
 			abilityButtons[i] = new Button(300 + 85 * i, 90, TextureHandler.getInstance().getImageByName("questionmarkIcon.png"), 81, 81);

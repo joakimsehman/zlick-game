@@ -37,7 +37,7 @@ public class Fireball extends Ability{
 	
 	
 	public Fireball(String name, int duration, int playerCreatedId) {
-		super(name, 0, playerCreatedId);
+		super(name, playerCreatedId);
 		this.duration = duration;
 		
 	}
@@ -106,6 +106,15 @@ public class Fireball extends Ability{
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
 		
 		return true;
+	}
+
+
+
+
+
+	@Override
+	public int getId() {
+		return 0;
 	}
 
 

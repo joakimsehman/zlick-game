@@ -11,6 +11,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import abilities.Ability.AbilityCategory;
 import abilities.Ability.AbilityType;
 import abilities.AbilityInfo;
 import utilities.TextureHandler;
@@ -41,7 +42,7 @@ public class AbilitySelection extends GuiEntity implements ButtonListener {
 		ultimateAbilitySpace = TextureHandler.getInstance().getImageByName("ultimateAbilitySpace.png");
 
 		abilityButtons = new ChangableIconButton[3];
-		abilityChoiceButtons = new Button[AbilityInfo.getInstance().getNumberOfAbilities()];
+		abilityChoiceButtons = new Button[AbilityInfo.getInstance().getNumberOfLobbyAbilities()];
 
 		for (int i = 0; i < 3; i++) {
 			abilityButtons[i] = new ChangableIconButton(getxPos() + 50 + 94 * i, getyPos() + 53, chosenAbilitySpace, 94, 94);
@@ -50,19 +51,22 @@ public class AbilitySelection extends GuiEntity implements ButtonListener {
 
 		int abilityCount = 0;
 		int ultimateCount = 0;
-		for (int i = 0; i < AbilityInfo.getInstance().getNumberOfAbilities(); i++) {
+		for (int i = 0; i < AbilityInfo.getInstance().getNumberOfLobbyAbilities(); i++) {
 
 			Button button;
-			if (AbilityInfo.getInstance().getAbilityType(i) != AbilityType.ULTIMATE) {
+			if (AbilityInfo.getInstance().getAbilityCategory(i) == AbilityCategory.NORMAL) {
 				button = new Button(getxPos() + 70 + (abilityCount % 4) * 60, getyPos() + 175 + (abilityCount / 4) * 60, AbilityInfo.getInstance()
 						.getSmallSpellIconFromId(i), 56, 56);
 				abilityCount++;
-			} else {
+				button.addButtonListener(this);
+				abilityChoiceButtons[i] = button;
+			} else if(AbilityInfo.getInstance().getAbilityCategory(i) == AbilityCategory.ULTIMATE){
 				button = new Button(getxPos() + 355, getyPos() + 175 + (ultimateCount * 60), AbilityInfo.getInstance().getSmallSpellIconFromId(i), 56, 56);
 				ultimateCount++;
+				button.addButtonListener(this);
+				abilityChoiceButtons[i] = button;
 			}
-			button.addButtonListener(this);
-			abilityChoiceButtons[i] = button;
+			
 			//			}else{
 			//				
 			//				Button button = new Button(getxPos() + 270, getyPos() + 175 + (ultimateCount * 60), AbilityInfo.getInstance().getSmallSpellIconFromId(i), 56, 56);
@@ -138,12 +142,12 @@ public class AbilitySelection extends GuiEntity implements ButtonListener {
 			for (int i = 0; i < abilityChoiceButtons.length; i++) {
 				if (buttonId == abilityChoiceButtons[i].getId()) {
 
-					if (AbilityInfo.getInstance().getAbilityType(i) != AbilityType.ULTIMATE) {
+					if (AbilityInfo.getInstance().getAbilityCategory(i) == AbilityCategory.NORMAL) {
 						
 						Model.model.getMyself().setAbility(AbilityInfo.getInstance().getNewAbility(i, Model.model.getMyself().getID()), selectedAbility + 1);
 						abilityButtons[selectedAbility].setIcon(Model.model.getMyself().getAbility(selectedAbility + 1).getIcon());
 						
-					} else {
+					} else if(AbilityInfo.getInstance().getAbilityCategory(i) == AbilityCategory.ULTIMATE){
 						Model.model.getMyself().setAbility(AbilityInfo.getInstance().getNewAbility(i, Model.model.getMyself().getID()), 4);
 					}
 

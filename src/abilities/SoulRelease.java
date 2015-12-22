@@ -15,7 +15,7 @@ public class SoulRelease extends Ability {
 	private int cooldown;
 
 	public SoulRelease(String name, int duration, int playerCreatedId) {
-		super(name, 6, playerCreatedId);
+		super(name, playerCreatedId);
 
 		cooldown = 0;
 
@@ -64,6 +64,11 @@ public class SoulRelease extends Ability {
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public int getId() {
+		return 6;
 	}
 
 	

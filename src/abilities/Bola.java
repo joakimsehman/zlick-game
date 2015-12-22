@@ -14,7 +14,7 @@ public class Bola extends Ability{
 	private int duration;
 	
 	public Bola(String name, int duration, int playerCreatedId) {
-		super(name, 2, playerCreatedId);
+		super(name, playerCreatedId);
 		this.duration = duration;
 	}
 
@@ -65,6 +65,11 @@ public class Bola extends Ability{
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
 		
 		return true;
+	}
+
+	@Override
+	public int getId() {
+		return 2;
 	}
 
 	

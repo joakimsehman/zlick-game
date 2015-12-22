@@ -3,6 +3,8 @@ package abilities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
+import utilities.Updatable;
+
 
 
 
@@ -55,7 +57,7 @@ other spell related content:
 
  */
 
-public abstract class Ability{
+public abstract class Ability implements Updatable{
 
 	private String name;
 	private int playerCreatedId;
@@ -63,12 +65,15 @@ public abstract class Ability{
 	private int msSinceLastUsed;
 	
 	public enum AbilityType{
-		FIRE, FROST, PHYSICAL, HEAL, MAGIC, POISON, ULTIMATE
+		FIRE, FROST, PHYSICAL, HEAL, MAGIC, POISON, LIGHTNING
 	};
 	
-	public Ability(String name, int id, int playerCreatedId){
+	public enum AbilityCategory{
+		ULTIMATE, NORMAL, BONUS
+	}
+	
+	public Ability(String name, int playerCreatedId){
 		this.name = name;
-		this.id = id;
         this.playerCreatedId = playerCreatedId;
         msSinceLastUsed = getCooldown();
 	}
@@ -80,16 +85,14 @@ public abstract class Ability{
 		msSinceLastUsed = 0;
 	}
 	
+	public abstract int getId();
+	
 	public void update(int delta){
 		msSinceLastUsed += delta;
 	}
 	
 	public final String getName(){
 		return name;
-	}
-
-	public final int getID(){
-		return id;
 	}
 	
 	public int getPlayerCreatedId(){

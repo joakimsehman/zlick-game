@@ -31,17 +31,19 @@ public abstract class Minion extends Entity {
 	private boolean isAbleToCast;
 
 	private boolean isStunned;
-	
+
 	private int notAbleToMoveDuration;
-	
+
 	private boolean isInvisible;
 	private int invisibilityDuration;
 
 	private int totalTransformationTime;
 	private int transformationTimeLeft;
 
-	public Minion(float xPos, float yPos, Vector2f vector, Shape boundingBox,
-			Image image, float maxHealthPoints) {
+	private boolean transAnimOverriden;
+	private int transAnimOverNumber;
+
+	public Minion(float xPos, float yPos, Vector2f vector, Shape boundingBox, Image image, float maxHealthPoints) {
 		super(xPos, yPos, vector, boundingBox, image);
 		this.maxHealthPoints = maxHealthPoints;
 		hp = maxHealthPoints;
@@ -58,11 +60,14 @@ public abstract class Minion extends Entity {
 
 		spawnX = 0;
 		spawnY = 0;
-		
+
 		isInvisible = false;
 		invisibilityDuration = 0;
-		
+
 		notAbleToMoveDuration = -1;
+
+		transAnimOverriden = false;
+		transAnimOverNumber = -1;
 	}
 
 	public void setMaxHealthPoints(int healthPoints) {
@@ -93,8 +98,7 @@ public abstract class Minion extends Entity {
 		hp = maxHealthPoints;
 	}
 
-	public void applyPlayerVector(Vector2f vector, int duration,
-			boolean canPlayerMove) {
+	public void applyPlayerVector(Vector2f vector, int duration, boolean canPlayerMove) {
 
 	}
 
@@ -103,8 +107,8 @@ public abstract class Minion extends Entity {
 		invisibilityDuration = duration;
 		onInvis(isInvisible);
 	}
-	
-	public boolean isInvisible(){
+
+	public boolean isInvisible() {
 		return isInvisible;
 	}
 
@@ -113,9 +117,9 @@ public abstract class Minion extends Entity {
 	}
 
 	public void addBuff(Buff buff) {
-		
+
 		boolean hasBuff = false;
-		
+
 		for (int i = 0; i < activeBuffs.size(); i++) {
 			if (activeBuffs.get(i).getID() == buff.getID()) {
 				hasBuff = true;
@@ -136,13 +140,11 @@ public abstract class Minion extends Entity {
 	public void draw(Graphics g, float cameraX, float cameraY) {
 
 		if (isTransformed()) {
-			transformAnimation
-					.draw(g, getXPos() - cameraX, getYPos() - cameraY);
+			transformAnimation.draw(g, getXPos() - cameraX, getYPos() - cameraY);
 		}
 	}
 
-	public void update(int delta, ArrayList<Entity> entities,
-			boolean collidesWithTerrain) {
+	public void update(int delta, ArrayList<Entity> entities, boolean collidesWithTerrain) {
 		super.update(delta, entities, collidesWithTerrain);
 		if (speedDurationLeft > 0) {
 			speedDurationLeft = speedDurationLeft - delta;
@@ -159,63 +161,63 @@ public abstract class Minion extends Entity {
 					isTransformed = false;
 				}
 			}
-			double animSpritePercent = 0;
+			double animDegrees = 0;
 			switch (getDirection()) {
-			case WEST:
-			case NORTHWEST:
-				animSpritePercent = 0.25;
-				break;
-			case NORTH:
-			case NORTHEAST:
-				animSpritePercent = 0.9;
-				break;
-			case EAST:
-			case SOUTHEAST:
-				animSpritePercent = 0.5;
-				break;
-			case SOUTH:
-			case SOUTHWEST:
-				animSpritePercent = 0;
-				break;
-			}
-			//		case WEST:
-			//			animDegrees = 0;
-			//			break;
-			//		case NORTHWEST:
-			//			animDegrees = 45;
-			//			break;
-			//		case NORTH:
-			//			animDegrees = 90;
-			//			break;
-			//		case NORTHEAST:
-			//			animDegrees = 135;
-			//			break;
-			//		case EAST:
-			//			animDegrees = 180;
-			//			break;
-			//		case SOUTHEAST:
-			//			animDegrees = 225;
-			//			break;
-			//		case SOUTH:
-			//			animDegrees = 270;
-			//			break;
-			//		case SOUTHWEST:
-			//			animDegrees = 315;
-			//			break;
-			//		}
-			transformAnimation.update1(delta, animSpritePercent);
+//			case WEST:
+//			case NORTHWEST:
+//				animSpritePercent = 0.25;
+//				break;
+//			case NORTH:
+//			case NORTHEAST:
+//				animSpritePercent = 0.9;
+//				break;
+//			case EAST:
+//			case SOUTHEAST:
+//				animSpritePercent = 0.5;
+//				break;
+//			case SOUTH:
+//			case SOUTHWEST:
+//				animSpritePercent = 0;
+//				break;
+//			}
+					case WEST:
+						animDegrees = 0;
+						break;
+					case NORTHWEST:
+						animDegrees = 45;
+						break;
+					case NORTH:
+						animDegrees = 90;
+						break;
+					case NORTHEAST:
+						animDegrees = 135;
+						break;
+					case EAST:
+						animDegrees = 180;
+						break;
+					case SOUTHEAST:
+						animDegrees = 225;
+						break;
+					case SOUTH:
+						animDegrees = 270;
+						break;
+					case SOUTHWEST:
+						animDegrees = 315;
+						break;
+					}
+			transformAnimation.update(delta, animDegrees);
 
 		}
-		if(isInvisible){
+		if (isInvisible) {
 			invisibilityDuration -= delta;
-			if(invisibilityDuration < 0){
+			if (invisibilityDuration < 0) {
 				isInvisible = false;
 				onInvis(isInvisible);
 			}
 		}
-		if(notAbleToMoveDuration > 0){
+		if (notAbleToMoveDuration > 0) {
 			notAbleToMoveDuration -= delta;
-			if(notAbleToMoveDuration <= 0){
+			if (notAbleToMoveDuration <= 0) {
 				setIsAbleToMove(true);
 			}
 		}
@@ -233,15 +235,15 @@ public abstract class Minion extends Entity {
 
 	protected void setIsMoving(boolean isMoving) {
 		if (isMoving != isMoving() && isTransformed) {
-			if (isMoving && transformWalkingAnimationNumber != -1) {
 
-				transformAnimation
-						.setCurrentAnimation(transformWalkingAnimationNumber);
+			if (!transAnimOverriden) {
 
-			} else {
-				if (transformStandingAnimationNumber != -1) {
-					transformAnimation
-							.setCurrentAnimation(transformStandingAnimationNumber);
+				if (isMoving && transformWalkingAnimationNumber != -1) {
+					transformAnimation.setCurrentAnimation(transformWalkingAnimationNumber);
+				} else {
+					if (transformStandingAnimationNumber != -1) {
+						transformAnimation.setCurrentAnimation(transformStandingAnimationNumber);
+					}
 				}
 			}
 		}
@@ -268,9 +270,7 @@ public abstract class Minion extends Entity {
 		isTransformed = false;
 	}
 
-	public void setTransformed(AnimationGroup transAnim, int transformDuration,
-			int transformWalkingAnimationNumber,
-			int transformStandingAnimationNumber) {
+	public void setTransformed(AnimationGroup transAnim, int transformDuration, int transformWalkingAnimationNumber, int transformStandingAnimationNumber) {
 		isTransformed = true;
 		this.transformAnimation = transAnim;
 		this.totalTransformationTime = transformDuration;
@@ -279,13 +279,26 @@ public abstract class Minion extends Entity {
 		this.transformStandingAnimationNumber = transformStandingAnimationNumber;
 
 		if (isMoving()) {
-			transformAnimation
-					.setCurrentAnimation(transformWalkingAnimationNumber);
+			transformAnimation.setCurrentAnimation(transformWalkingAnimationNumber);
 		} else {
-			transformAnimation
-					.setCurrentAnimation(transformStandingAnimationNumber);
+			transformAnimation.setCurrentAnimation(transformStandingAnimationNumber);
 		}
 
+	}
+
+	public void overrideTransformationAnimation(int animationNumber) {
+		transAnimOverriden = true;
+		transAnimOverNumber = animationNumber;
+		transformAnimation.setCurrentAnimation(animationNumber);
+	}
+
+	public void stopOverrideTransformationAnimation() {
+		transAnimOverriden = false;
+		if (isMoving() && transformWalkingAnimationNumber != -1) {
+			transformAnimation.setCurrentAnimation(transformWalkingAnimationNumber);
+		}else if(transformStandingAnimationNumber != -1){
+			transformAnimation.setCurrentAnimation(transformStandingAnimationNumber);
+		}
 	}
 
 	public boolean hasBuff(Buff buff) {
@@ -319,21 +332,21 @@ public abstract class Minion extends Entity {
 			this.hp = hp;
 		}
 	}
-	
+
 	//only works if isAbleToMove is not already set to false without a duration
-	public void setIsAbleToMove(boolean isAbleToMove, int duration){
-		if(!isAbleToMove() && notAbleToMoveDuration <= 0){
+	public void setIsAbleToMove(boolean isAbleToMove, int duration) {
+		if (!isAbleToMove() && notAbleToMoveDuration <= 0) {
 			return;
-		}else{
+		} else {
 			setIsAbleToMove(isAbleToMove);
-			if(!isAbleToMove){
+			if (!isAbleToMove) {
 				notAbleToMoveDuration = duration;
 			}
 		}
 	}
-	
+
 	public abstract void onInvis(boolean invis);
-	
+
 	public abstract int getID();
 
 }

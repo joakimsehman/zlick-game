@@ -284,6 +284,7 @@ public abstract class Entity {
 	public Direction getDirection() {
 		return direction;
 	}
+	
 
 	public Direction getDirectionToPoint(float x, float y) {
 		double angle = getAngleToPoint(x, y);

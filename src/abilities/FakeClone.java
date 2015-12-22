@@ -15,7 +15,7 @@ public class FakeClone extends Ability{
 	private int duration;
 	
 	public FakeClone(String name, int playerCreatedId) {
-		super(name, 7, playerCreatedId);
+		super(name, playerCreatedId);
 		duration = 4000;
 	}
 	
@@ -70,6 +70,11 @@ public class FakeClone extends Ability{
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
 		
 		return true;
+	}
+
+	@Override
+	public int getId() {
+		return 7;
 	}
 
 	

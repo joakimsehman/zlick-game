@@ -16,7 +16,7 @@ public class IceLance extends Ability {
 	private int duration;
 	
 	public IceLance(String name, int duration, int playerCreatedId) {
-		super(name, 4, playerCreatedId);
+		super(name, playerCreatedId);
 		this.duration = duration;
 	}
 
@@ -69,6 +69,12 @@ public class IceLance extends Ability {
 	public boolean isCastable(int id, float mouseGameX, float mouseGameY) {
 		
 		return true;
+	}
+
+
+	@Override
+	public int getId() {
+		return 4;
 	}
 
 

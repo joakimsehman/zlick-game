@@ -2,7 +2,9 @@ package abilities;
 
 import org.newdawn.slick.Image;
 
+import abilities.Ability.AbilityCategory;
 import abilities.Ability.AbilityType;
+import abilities.transformation.FlameDragon;
 import utilities.TextureHandler;
 import entities.BolaEffect;
 import entities.FireballEffect;
@@ -25,7 +27,7 @@ import entities.FireballEffect;
  * - make loadAbilityIcons load your abilitys icons (remember to add the icons to textureHandler)
  * - make getNewAbility able to return your ability(each ability should have a unique Id, an abilitysId is set in the Ability constructor, ie in the super constructor for every class extending Ability)
  * 
- * this will make the ability visible and selectable in the lobby, so this should be done when you first want to start testing your ability. ie it should contain no compilationerrors
+ * this will make the ability visible and selectable in the lobby, so this should be done when you first want to start testing your ability. 
  */
 public class AbilityInfo {
 
@@ -46,6 +48,8 @@ public class AbilityInfo {
 		return abilityCreator;
 
 	}
+	
+	
 
 	public void loadAbilityIcons() {
 		abilityIcons = new Image[getNumberOfAbilities()];
@@ -66,6 +70,16 @@ public class AbilityInfo {
 				"cure-3.png");
 		abilityIcons[7] = TextureHandler.getInstance().getImageByName(
 				"stealth.png");
+		abilityIcons[8] = TextureHandler.getInstance().getImageByName(
+				"stealth.png");
+		abilityIcons[9] = TextureHandler.getInstance().getImageByName(
+				"stealth.png");
+		abilityIcons[10] = TextureHandler.getInstance().getImageByName(
+				"stealth.png");
+		abilityIcons[11] = TextureHandler.getInstance().getImageByName(
+				"stealth.png");
+		abilityIcons[12] = TextureHandler.getInstance().getImageByName(
+				"stealth.png");
 
 		smallAbilityIcons = new Image[getNumberOfAbilities()];
 
@@ -85,6 +99,17 @@ public class AbilityInfo {
 				"cure-3.png");
 		smallAbilityIcons[7] = TextureHandler.getInstance().getImageByName(
 				"stealthIconSmall.png");
+		smallAbilityIcons[8] = TextureHandler.getInstance().getImageByName(
+				"stealthIconSmall.png");
+		smallAbilityIcons[9] = TextureHandler.getInstance().getImageByName(
+				"stealthIconSmall.png");
+		smallAbilityIcons[10] = TextureHandler.getInstance().getImageByName(
+				"stealthIconSmall.png");
+		smallAbilityIcons[11] = TextureHandler.getInstance().getImageByName(
+				"stealthIconSmall.png");
+		smallAbilityIcons[12] = TextureHandler.getInstance().getImageByName(
+				"stealthIconSmall.png");
+		
 
 	}
 
@@ -107,13 +132,19 @@ public class AbilityInfo {
 			return new Healcharge("heal", usingPlayerId);
 		} else if (abilityID == 7) {
 			return new FakeClone("invis", usingPlayerId);
+		} else if (abilityID == 8){
+			return new FlameDragon("FlameDragon", usingPlayerId);
 		}
 		return null;
 	}
 
 	//increase this everytime you add an ability
-	public int getNumberOfAbilities() {
-		return 8;
+	public int getNumberOfLobbyAbilities() {
+		return 9;
+	}
+	
+	private int getNumberOfAbilities(){
+		return 13;
 	}
 
 	public Image getSpellIconFromId(int id) {
@@ -145,7 +176,7 @@ public class AbilityInfo {
 			abilityType = AbilityType.FROST;
 			break;
 		case 5:
-			abilityType = AbilityType.ULTIMATE;
+			abilityType = AbilityType.MAGIC;
 			break;
 		case 6:
 			abilityType = AbilityType.HEAL;
@@ -153,12 +184,77 @@ public class AbilityInfo {
 		case 7:
 			abilityType = AbilityType.MAGIC;
 			break;
+		case 8:
+			abilityType = AbilityType.FIRE;
+			break;
+		case 9:
+			abilityType = AbilityType.PHYSICAL;
+			break;
+		case 10:
+			abilityType = AbilityType.PHYSICAL;
+			break;
+		case 11:
+			abilityType = AbilityType.PHYSICAL;
+			break;
+		case 12:
+			abilityType = AbilityType.FIRE;
+			break;
 		default:
 			abilityType = null;
 		}
 			
 		return abilityType;
+	}
+	
+	public AbilityCategory getAbilityCategory(int id){
 		
+		AbilityCategory abilityCategory;
+		
+		switch(id){
+		case 0:
+			abilityCategory = AbilityCategory.NORMAL;
+			break;
+		case 1:
+			abilityCategory =AbilityCategory.NORMAL;
+			break;
+		case 2:
+			abilityCategory = AbilityCategory.NORMAL;
+			break;
+		case 3:
+			abilityCategory = AbilityCategory.NORMAL;
+			break;
+		case 4:
+			abilityCategory = AbilityCategory.NORMAL;
+			break;
+		case 5:
+			abilityCategory = AbilityCategory.ULTIMATE;
+			break;
+		case 6:
+			abilityCategory = AbilityCategory.NORMAL;
+			break;
+		case 7:
+			abilityCategory = AbilityCategory.NORMAL;
+			break;
+		case 8:
+			abilityCategory = AbilityCategory.ULTIMATE;
+			break;
+		case 9:
+			abilityCategory = AbilityCategory.BONUS;
+			break;
+		case 10:
+			abilityCategory = AbilityCategory.BONUS;
+			break;
+		case 11:
+			abilityCategory = AbilityCategory.BONUS;
+			break;
+		case 12:
+			abilityCategory = AbilityCategory.BONUS;
+			break;
+		default:
+			abilityCategory = null;
+		}
+			
+		return abilityCategory;
 	}
 
 	public String getDescriptionFromId(int id) {
