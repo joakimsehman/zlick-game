@@ -102,7 +102,7 @@ public abstract class Ability implements Updatable{
 	public abstract int getCost();
 	
 	public Image getIcon(){
-		return AbilityInfo.getInstance().getSpellIconFromId(id);
+		return AbilityInfo.getInstance().getSpellIconFromId(getId());
 	}
 	
 	public abstract int getSpellEffectAmount();

@@ -75,10 +75,10 @@ public abstract class TransformationAbility extends Ability{
 			if(durationLeft < 0){
 				
 				Player castingPlayer = Model.model.getPlayer(getPlayerCreatedId());
-				
+				castingPlayer.abortChanneling();
 				for(int i = 0; i < abilityStorage.length; i++){
 					
-					castingPlayer.setAbility(abilityStorage[i], i);
+					castingPlayer.setAbility(abilityStorage[i], i+1);
 					
 					if(abilityStorage[i] != null){
 						Model.model.removeUpdateHook(abilityStorage[i]);
