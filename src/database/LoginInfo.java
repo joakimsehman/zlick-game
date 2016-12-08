@@ -14,92 +14,87 @@ import utilities.SoundHandler;
  */
 public class LoginInfo {
 
-    private String user;
-    private String nick;
-    private boolean isLoggedIn;
+	private String user;
+	private String nick;
+	private boolean isLoggedIn;
 
-    private static LoginInfo instance;
+	private static LoginInfo instance;
 
-    private LoginInfo(){
-        isLoggedIn = false;
-    }
+	private LoginInfo() {
+		isLoggedIn = false;
+	}
 
-    public static LoginInfo getInstance(){
-        if(instance == null){
-            instance = new LoginInfo();
-        }
+	public static LoginInfo getInstance() {
+		if (instance == null) {
+			instance = new LoginInfo();
+		}
 
-        return instance;
-    }
-    
-    
-    public boolean logIn(String userName, String password){
-    	
-    	Connection connection = DatabaseConfiguration.getConnection();
-        
-    	boolean loginSuccessfull = false;
-    	
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM playerinfo");
+		return instance;
+	}
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+	public boolean logIn(String userName, String password) {
 
-            boolean foundUser = false;
-            while(resultSet.next()){
+		Connection connection = DatabaseConfiguration.getConnection();
 
-                if(resultSet.getString(1).equals(userName)){
-                    foundUser = true;
+		boolean loginSuccessfull = false;
 
-                    if(resultSet.getString(2).equals(password)){
-                        
-                        this.user = resultSet.getString(1);
-                        this.nick = resultSet.getString(3);
-                        isLoggedIn = true;
+		if (connection != null) {
+			try {
+				PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM playerinfo");
 
-                        loginSuccessfull = true;
-                    }else{
-                        
-                    }
-                }
-            }
-            if(!foundUser){
-                loginSuccessfull = false;
-            }
+				ResultSet resultSet = preparedStatement.executeQuery();
 
+				boolean foundUser = false;
+				while (resultSet.next()) {
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally{
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        return loginSuccessfull;
-    	
-    }
-    
+					if (resultSet.getString(1).equals(userName)) {
+						foundUser = true;
 
-    public boolean isLoggedIn(){
-        return isLoggedIn;
-    }
+						if (resultSet.getString(2).equals(password)) {
 
-    public String getUserName(){
-        if(isLoggedIn) {
-            return user;
-        }else{
-            return "NOT LOGGED IN";
-        }
-    }
+							this.user = resultSet.getString(1);
+							this.nick = resultSet.getString(3);
+							isLoggedIn = true;
 
-    public String getNick(){
-        if(isLoggedIn) {
-            return nick;
-        }else{
-            return "NOT LOGGED IN";
-        }
-    }
+							loginSuccessfull = true;
+						} else {
+
+						}
+					}
+				}
+				if (!foundUser) {
+					loginSuccessfull = false;
+				}
+
+				connection.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return loginSuccessfull;
+
+	}
+
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public String getUserName() {
+		if (isLoggedIn) {
+			return user;
+		} else {
+			return "NOT LOGGED IN";
+		}
+	}
+
+	public String getNick() {
+		if (isLoggedIn) {
+			return nick;
+		} else {
+			return "NOT LOGGED IN";
+		}
+	}
 
 }
